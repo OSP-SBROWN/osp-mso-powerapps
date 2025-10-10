@@ -1,0 +1,59 @@
+ComponentDefinitions:
+  NavMenu:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    Properties:
+      Fill: =RGBA(0,0,0,0.5)
+      Height: =App.DesignHeight
+      Width: =App.DesignWidth
+    Children:
+      - Container2:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Height: =Parent.Height-16
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutGap: =8
+            RadiusBottomLeft: =12
+            RadiusBottomRight: =12
+            RadiusTopLeft: =12
+            RadiusTopRight: =12
+            Width: =Parent.Width-16
+            X: =8
+            Y: =8
+          Children:
+            - Gallery2:
+                Control: Gallery@2.15.0
+                Variant: BrowseLayout_Flexible_SocialFeed_ver5.0
+                Properties:
+                  Fill: =App.Theme.Colors.Darker60
+                  Items: =NavItems
+                  TemplateSize: |+
+                    =64
+                Children:
+                  - ButtonCanvas3:
+                      Control: Button@0.0.45
+                      Properties:
+                        Align: =Align.Left
+                        BasePaletteColor: =If(ThisItem.Selected,App.Theme.Colors.Primary, App.Theme.Colors.Darker10)
+                        FontSize: =28
+                        Height: =Parent.TemplateHeight
+                        Icon: =ThisItem.Icon
+                        OnSelect: |+
+                          =If(ThisItem.Selected, 
+                              Set(Vis_Nav,false), 
+                              Switch(ThisItem.ID,
+                                  0, Exit(), 
+                              UpdateIf(NavItems, true, {Selected: false});
+                              Patch(NavItems, ThisItem, {Selected: true});
+                              Navigate(ThisItem.Screen, ScreenTransition.Fade);
+                              Set(Vis_Nav, false)
+                              ));
+
+                        Text: =ThisItem.Name
+                        Width: =Parent.TemplateWidth
+            - Rectangle2_1:
+                Control: Rectangle@2.3.0
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  FillPortions: =2
