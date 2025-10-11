@@ -221,33 +221,48 @@ With(
 Func_GetMainGrid(ReportID: Number, GranularityCode: Text): Void = 
 {If(
     Func_InlineCheckReportExists(ReportID),
-    /* THEN: proceed to fetch data */
+    /* THEN: proceed to fetch data concurrently */
     Set(AppStatus, "Loading"); 
-    Set(AppStatusText, "Fetching report content, please wait...");
+    Set(AppStatusText, "Fetching report content and bay rules, please wait...");
     With(
-        { sql: sp.uiNEWGetReportData({ ReportID: ReportID, Granularity: GranularityCode }) },
+        { 
+            reportSql: sp.uiNEWGetReportData({ ReportID: ReportID, Granularity: GranularityCode }),
+            bayRulesSql: sp.uiNEWGetBayRulesByReportID({ReportID:ReportID})
+        },
         If(
-            sql.OutputParameters.SQL_Success = false,
+            reportSql.OutputParameters.SQL_Success = false,
             Set(AppStatus, "Error"); 
-            Set(AppStatusText, sql.OutputParameters.SQL_Message),
-            Set(AppStatus, "Success"); 
-            Set(AppStatusText, sql.OutputParameters.SQL_Message);
-            ClearCollect(ReportGrid, sql.ResultSets.Table1);
-            Func_BayRule_GetAllForReport(ReportID);
-            ClearCollect(
-    ReportGridWithOverrides,
-    AddColumns(
-        ReportGrid,
-        BayOutputOverride,
-        LookUp(
-            BayRules,
-            Group_Key = "OutputOverrides" && Gran_Code = Category_Code,
-            ValueToSet
-        )
-    )
-);
-
-            If(AppStatusText="Success: Rules retrieved successfully.", Set(AppStatus,"Success"); Set(AppStatusText,"Report data and overrides successfully loaded."))
+            Set(AppStatusText, reportSql.OutputParameters.SQL_Message),
+            If(
+                bayRulesSql.OutputParameters.SQL_Success = false,
+                Set(AppStatus, "Error"); 
+                Set(AppStatusText, bayRulesSql.OutputParameters.SQL_Message),
+                /* Both calls succeeded - combine the data in one operation */
+                Set(AppStatus, "Success"); 
+                Set(AppStatusText, "Report data and overrides successfully loaded.");
+                ClearCollect(ReportGrid, reportSql.ResultSets.Table1);
+                ClearCollect(BayRules, bayRulesSql.ResultSets.Table1);
+                ClearCollect(
+                    ReportGridWithOverrides,
+                    AddColumns(
+                        AddColumns(
+                            ReportGrid,
+                            BayOutputOverride,
+                            Value(LookUp(
+                                BayRules,
+                                Group_Key = "OutputOverrides" && Gran_Code = Category_Code,
+                                ValueToSet
+                            ))
+                        ),
+                        ExcludeFromAnalysis_Override,
+                        Value(LookUp(
+                            BayRules,
+                            Group_Key = "Excludes" && Gran_Code = Category_Code,
+                            ValueToSet
+                        ))
+                    )
+                )
+            )
         )
     ),
     /* ELSE: block and prompt the user to run the build first */
@@ -259,3 +274,92 @@ Func_GetMainGrid(ReportID: Number, GranularityCode: Text): Void =
 Func_Update_BayOutputOverride_Single(CategoryCode: Number, BayOverride:Number, ClearOut:Boolean):Void =
 {Patch(ReportGridWithOverrides,LookUp(ReportGridWithOverrides,Category_Code=CategoryCode),{BayOutputOverride:If(ClearOut=true,Blank(), BayOverride)})};
 
+//Exclude From Analysis Override Update Single Value Local
+Func_Update_ExcludeFromAnalysis_Single(CategoryCode: Number, ExcludeValue:Number, ClearOut:Boolean):Void =
+{Patch(ReportGridWithOverrides,LookUp(ReportGridWithOverrides,Category_Code=CategoryCode),{ExcludeFromAnalysis_Override:If(ClearOut=true,Blank(), ExcludeValue)})};
+
+//Toggle Exclude From Analysis Override - OnSelect Formula for Toggle Button
+Func_Toggle_ExcludeFromAnalysis_Override(CategoryCode: Number): Void =
+{Set(currentRecord, LookUp(ReportGridWithOverrides, Category_Code = CategoryCode));
+If(
+    IsBlank(currentRecord),
+    /* Record not found - show error */
+    Set(AppStatus, "Error"); Set(AppStatusText, "Record not found for Category_Code: " & CategoryCode),
+    If(
+        IsBlank(currentRecord.ExcludeFromAnalysis_Override),
+        /* No override exists - set override to opposite of base value */
+        Set(AppStatus, "Processing"); Set(AppStatusText, "Setting override for Category " & CategoryCode);
+        Set(newOverrideValue, If(Coalesce(currentRecord.Exclude_from_analysis, 0) = 1, 0, 1));
+        Func_Update_ExcludeFromAnalysis_Single(CategoryCode, newOverrideValue, false);
+        Set(AppStatus, "Success"); Set(AppStatusText, "Override set to " & newOverrideValue & " for Category " & CategoryCode & " (unsaved)"),
+        /* Override exists - clear it */
+        Set(AppStatus, "Processing"); Set(AppStatusText, "Clearing override for Category " & CategoryCode);
+        Func_Update_ExcludeFromAnalysis_Single(CategoryCode, 0, true);
+        Set(AppStatus, "Success"); Set(AppStatusText, "Override cleared for Category " & CategoryCode & ". Using base value: " & currentRecord.Exclude_from_analysis & " (unsaved)")
+    )
+)};
+
+//Save Override Values to Database - Manages OutputOverrides and Excludes BayRules  
+Func_SaveOverridesToDatabase(ReportID: Number): Void =
+{Set(AppStatus, "Loading"); Set(AppStatusText, "Saving override values to database, please wait...");
+// Build JSON payload with current local override state
+// Empty collection = "[]" (clears all), populated collection = JSON with overrides
+Set(
+    jsonPayload,
+    "[" & 
+    Concat(
+        Filter(ReportGridWithOverrides, Not(IsBlank(BayOutputOverride))),
+        "{""Granularity"":""C"",""Gran_Code"":" & Category_Code & 
+        ",""ApplyColumn"":""BayOutput"",""ValueToSet"":""" & BayOutputOverride & 
+        """,""Var_or_Col"":""C"",""Group_Key"":""OutputOverrides""}",
+        ","
+    ) & 
+    If(
+        Not(IsBlank(Concat(Filter(ReportGridWithOverrides, Not(IsBlank(BayOutputOverride))), "x"))) && 
+        Not(IsBlank(Concat(Filter(ReportGridWithOverrides, Not(IsBlank(ExcludeFromAnalysis_Override))), "x"))), 
+        ",", 
+        ""
+    ) & 
+    Concat(
+        Filter(ReportGridWithOverrides, Not(IsBlank(ExcludeFromAnalysis_Override))),
+        "{""Granularity"":""C"",""Gran_Code"":" & Category_Code & 
+        ",""ApplyColumn"":""Exclude_from_analysis"",""ValueToSet"":""" & ExcludeFromAnalysis_Override & 
+        """,""Var_or_Col"":""C"",""Group_Key"":""Excludes""}",
+        ","
+    ) & 
+    "]"
+);
+// Single call: Replace all bay rules with current local state
+Set(
+    sqlResult,
+    sp.uiNEWManageBayRules({ReportID: ReportID, BayRulesLocal: jsonPayload})
+);
+If(
+    sqlResult.OutputParameters.SQL_Success = false,
+    Set(AppStatus, "Error"); Set(AppStatusText, "Save failed: " & sqlResult.OutputParameters.SQL_Message),
+    Set(AppStatus, "Success"); Set(AppStatusText, "Override changes saved successfully")
+)};
+
+//Save All Changes - Complete save operation for all overrides
+Func_SaveAllChanges(ReportID: Number): Void =
+{If(
+    CountRows(Filter(ReportGridWithOverrides, Not(IsBlank(BayOutputOverride)) Or Not(IsBlank(ExcludeFromAnalysis_Override)))) > 0,
+    /* Has changes to save */
+    Func_SaveOverridesToDatabase(ReportID),
+    /* No changes to save */
+    Set(AppStatus, "Info"); Set(AppStatusText, "No override changes to save.")
+)};
+
+//Get Report Details from RVA
+Func_GetReportDetails(ReportID: Number): Void = 
+{
+    If(IsBlankOrError(ReportID),Set(AppStatus,"Warning");Set(AppStatusText,"Please select a report before editing details."),
+        Set(AppStatus,"Loading");Set(AppStatusText,"Fetching report details from database, please wait..."); 
+        With({sql: sp.uiRVAGetDetails({ReportID:ReportID})}, 
+            If(sql.OutputParameters.SQL_Success=false, 
+            Set(AppStatus,"Error"); Set(AppStatusText,sql.OutputParameters.SQL_Message), 
+            Set(AppStatus,"Success"); Set(AppStatusText,sql.OutputParameters.SQL_Message);
+            Set(Report_Selected_Details,sql.OutputParameters)))
+    
+    )
+};
