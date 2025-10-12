@@ -359,7 +359,133 @@ Func_GetReportDetails(ReportID: Number): Void =
             If(sql.OutputParameters.SQL_Success=false, 
             Set(AppStatus,"Error"); Set(AppStatusText,sql.OutputParameters.SQL_Message), 
             Set(AppStatus,"Success"); Set(AppStatusText,sql.OutputParameters.SQL_Message);
-            Set(Report_Selected_Details,sql.OutputParameters)))
+            // Store original details (read-only reference)
+            Set(Selected_Report_Details,sql.OutputParameters);
+            // Create true copy for modifications (bind controls to this)
+            Set(Updated_Report_Details, sql.OutputParameters);
+            // Initialize UI selections
+            Func_SetComboBoxSelections()))
+    )
+};
+
+//Check if Report Details have been modified
+Func_HasReportDetailsChanged(): Boolean = 
+{
+    JSON(Selected_Report_Details) <> JSON(Updated_Report_Details)
+};
+
+//Reset Report Details to original values
+Func_ResetReportDetails(): Void = 
+{
+    // Reset data to original values
+    Set(Updated_Report_Details, Selected_Report_Details);
+    // Reset UI selections to match the original data
+    Func_SetComboBoxSelections();
+    Set(AppStatus, "Info"); 
+    Set(AppStatusText, "Report details reset to original values")
+};
+
+//Set UI combo box selections to match global variable data
+Func_SetComboBoxSelections(): Void = 
+{
+    Set(UI_SelectedLocation, LookUp(Locations, Location_Code = Value(Updated_Report_Details.RVA_BranchNumber)));
+    Set(AppStatus, "Info"); 
+    Set(AppStatusText, "UI selections updated to match report data")
+};
+
+//Update a single field in Updated_Report_Details
+Func_UpdateReportDetail(FieldName: Text, NewValue: Text): Void = 
+{
+    // Debug: Set status to show function is running
+    Set(AppStatus, "Processing"); 
+    Set(AppStatusText, "Updating " & FieldName & " to: " & NewValue);
     
+    Switch(
+        FieldName,
+        // Integer fields
+        "RVA_ReportID", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ReportID: Value(NewValue)})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_ReportID to " & NewValue),
+        "RVA_BranchNumber", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_BranchNumber: Value(NewValue)})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_BranchNumber to " & NewValue),
+        "RVA_PerfStartDate", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_PerfStartDate: Value(NewValue)})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_PerfStartDate to " & NewValue),
+        "RVA_PerfEndDate", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_PerfEndDate: Value(NewValue)})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_PerfEndDate to " & NewValue),
+        "RVA_CohortStores", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_CohortStores: Value(NewValue)})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_CohortStores to " & NewValue),
+        "RVA_DaysTrading", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_DaysTrading: Value(NewValue)})),
+        "RVA_BayRulesCount", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_BayRulesCount: Value(NewValue)})),
+        "RVA_CoreTablesCreated", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_CoreTablesCreated: Value(NewValue)})),
+        "RVA_Cluster_ID", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_Cluster_ID: Value(NewValue)})),
+        // Text fields
+        "RVA_ReportOwner", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ReportOwner: NewValue})),
+        "RVA_ReportName", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ReportName: NewValue})),
+        "RVA_MacroSpaceDate", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_MacroSpaceDate: NewValue})),
+        "RVA_Cohort", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_Cohort: NewValue})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_Cohort to " & NewValue),
+        "RVA_BranchName", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_BranchName: NewValue})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_BranchName to " & NewValue),
+        "RVA_UnitOfMeasure", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UnitOfMeasure: NewValue})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_UnitOfMeasure to " & NewValue),
+        "RVA_ViewbyStoreTempcatDept", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ViewbyStoreTempcatDept: NewValue})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_ViewbyStoreTempcatDept to " & NewValue),
+        "RVA_DensityMetric", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_DensityMetric: NewValue})); Set(AppStatus, "Success"); Set(AppStatusText, "Updated RVA_DensityMetric to " & NewValue),
+        "RVA_UMDID", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UMDID: NewValue})),
+        "RVA_PerfDateExclusions", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_PerfDateExclusions: NewValue})),
+        "RVA_ExcludeCategories", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ExcludeCategories: NewValue})),
+        "RVA_RefreshTypeNeeded", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_RefreshTypeNeeded: NewValue})),
+        "RVA_LastRefreshed", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_LastRefreshed: NewValue})),
+        "RVA_Status", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_Status: NewValue})),
+        // Character fields (Y/N flags)
+        "RVA_MinBaysforMaxRange", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_MinBaysforMaxRange: NewValue})),
+        "RVA_UseProductCube", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UseProductCube: NewValue})),
+        "RVA_UseTrend", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UseTrend: NewValue})),
+        "RVA_UseMinLMtr", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UseMinLMtr: NewValue})),
+        "RVA_UseMaxLMtr", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UseMaxLMtr: NewValue})),
+        "RVA_IncNumberofProducts", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_IncNumberofProducts: NewValue})),
+        // Decimal fields
+        "RVA_FullBaySize", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_FullBaySize: Value(NewValue)})),
+        "RVA_RoundBaySize", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_RoundBaySize: Value(NewValue)})),
+        "RVA_PotentialSalesAdjustment", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_PotentialSalesAdjustment: Value(NewValue)})),
+        "RVA_CubeFlex", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_CubeFlex: Value(NewValue)})),
+        "RVA_TopHighlight", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_TopHighlight: Value(NewValue)})),
+        "RVA_BottomHighlight", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_BottomHighlight: Value(NewValue)})),
+        "RVA_SpaceAdjustment", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_SpaceAdjustment: Value(NewValue)})),
+        "RVA_ElasticitySalesDiff", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ElasticitySalesDiff: Value(NewValue)})),
+        // Float fields
+        "RVA_UnitSalesMix_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_UnitSalesMix_UserSet: Value(NewValue)})),
+        "RVA_ValueSalesMix_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ValueSalesMix_UserSet: Value(NewValue)})),
+        "RVA_ProfitSalesMix_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_ProfitSalesMix_UserSet: Value(NewValue)})),
+        "RVA_SalesLessWaste_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_SalesLessWaste_UserSet: Value(NewValue)})),
+        "RVA_SalesProfitMix_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_SalesProfitMix_UserSet: Value(NewValue)})),
+        "RVA_SalesMixCube_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_SalesMixCube_UserSet: Value(NewValue)})),
+        "RVA_DOSCasePack_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_DOSCasePack_UserSet: Value(NewValue)})),
+        "RVA_FixtureDensity_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_FixtureDensity_UserSet: Value(NewValue)})),
+        "RVA_MixIncCohort_UserSet", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_MixIncCohort_UserSet: Value(NewValue)})),
+        "RVA_DoSDefault", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_DoSDefault: Value(NewValue)})),
+        "RVA_CasesDefault", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_CasesDefault: Value(NewValue)})),
+        "RVA_BayRoundingThreshold", Set(Updated_Report_Details, Patch(Updated_Report_Details, {RVA_BayRoundingThreshold: Value(NewValue)})),
+        // Default case for unknown fields
+        Set(AppStatus, "Warning"); Set(AppStatusText, "Unknown field: " & FieldName)
+    )
+};
+
+//Navigate between report settings tabs
+Func_NavigateReportTabs(Direction: Text): Void = 
+{
+    With(
+        {currentTab: First(Filter(ReportSettingsTabs, Selected = true))},
+        Switch(
+            Direction,
+            "Next",
+            If(
+                currentTab.ID < CountRows(ReportSettingsTabs),
+                UpdateIf(ReportSettingsTabs, Selected = true, {Selected: false});
+                UpdateIf(ReportSettingsTabs, ID = currentTab.ID + 1, {Selected: true});
+                Set(AppStatus, "Info"); Set(AppStatusText, "Moved to next tab"),
+                Set(AppStatus, "Warning"); Set(AppStatusText, "Already on last tab")
+            ),
+            "Back",
+            If(
+                currentTab.ID > 1,
+                UpdateIf(ReportSettingsTabs, Selected = true, {Selected: false});
+                UpdateIf(ReportSettingsTabs, ID = currentTab.ID - 1, {Selected: true});
+                Set(AppStatus, "Info"); Set(AppStatusText, "Moved to previous tab"),
+                Set(AppStatus, "Warning"); Set(AppStatusText, "Already on first tab")
+            ),
+            // Default case
+            Set(AppStatus, "Error"); Set(AppStatusText, "Invalid navigation direction: " & Direction)
+        )
     )
 };
