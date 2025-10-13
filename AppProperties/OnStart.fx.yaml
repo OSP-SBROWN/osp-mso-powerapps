@@ -10,6 +10,27 @@ ClearCollect(NavItems,
 ClearCollect(Reports_Col, ReportVersionAttributes);
 GetUserFromEmail();
 GetGoogleMaterialIcons();
+Func_InitializeReportFields();
+
+//Initialize Report Settings Tabs
+ClearCollect(ReportSettingsTabs, [
+    {ID: 1, Name: "Location & Cohort", Selected: true},
+    {ID: 2, Name: "Dates", Selected: false},
+    {ID: 3, Name: "Hierarchy", Selected: false}
+]);
+
+//Initialize Hierarchy Collections
+Clear(Col_HierarchyVersions);
+Clear(Col_Hier1);
+Clear(Col_Hier2);
+Clear(Col_Hier3);
+Clear(Col_HierarchyFull);
+
+
+
+//Initialize Report Details with default values
+Set(Selected_Report_Details, {RVA_UMDID: Blank(), RVA_HierarchyVersion_ID: Blank(), RVA_MacroSpaceDate: Blank()});
+Set(Updated_Report_Details, {RVA_UMDID: Blank(), RVA_HierarchyVersion_ID: Blank(), RVA_MacroSpaceDate: Blank()});
 
 
 //Set Granularity Options with Dictionary

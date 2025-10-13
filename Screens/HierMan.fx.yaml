@@ -1,7 +1,14 @@
 Screens:
   HierMan:
+    Properties:
+      OnVisible: |-
+        =// Initialize hierarchy management only if not already set
+        If(IsBlank(AppStatus) || AppStatus = "",
+            Set(AppStatus, "Ready");
+            Set(AppStatusText, "Hierarchy Management - Ready to test functions")
+        );
     Children:
-      - ScreenContainer1_1:
+      - cont_Screen_HierMan:
           Control: GroupContainer@1.3.0
           Variant: AutoLayout
           Properties:
@@ -16,7 +23,7 @@ Screens:
             PaddingTop: =8
             Width: =Parent.Width
           Children:
-            - HeaderContainer1_1:
+            - cont_Header_HierMan:
                 Control: GroupContainer@1.3.0
                 Variant: AutoLayout
                 Properties:
@@ -27,7 +34,7 @@ Screens:
                   LayoutDirection: =LayoutDirection.Horizontal
                   LayoutGap: =15
                 Children:
-                  - Image3_9:
+                  - img_Menu_HierMan:
                       Control: Image@2.2.3
                       Properties:
                         Height: =Parent.Height
@@ -39,10 +46,9 @@ Screens:
                         RadiusBottomRight: =8
                         RadiusTopLeft: =8
                         RadiusTopRight: =8
-                        Tooltip: ="Refresh Reports List"
+                        Tooltip: ="Open Navigation Menu"
                         Width: =Self.Height
-                        X: =808
-                  - TextCanvas1_1:
+                  - lbl_Title_HierMan:
                       Control: Text@0.0.51
                       Properties:
                         FillPortions: =1
@@ -50,35 +56,143 @@ Screens:
                         Size: =Self.Height*0.7
                         Text: ="Hierarchy Management"
                         VerticalAlign: =VerticalAlign.Middle
-            - MainContainer1_1:
+            - cont_Main_HierMan:
                 Control: GroupContainer@1.3.0
                 Variant: AutoLayout
                 Properties:
                   Fill: =RGBA(255, 255, 255, 1)
-                  LayoutDirection: =LayoutDirection.Horizontal
-            - FooterContainer1_1:
-                Control: GroupContainer@1.3.0
-                Variant: AutoLayout
-                Properties:
-                  Fill: =RGBA(255, 255, 255, 1)
-                  FillPortions: =0
-                  Height: =40
-                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
                 Children:
-                  - StatusBar_3:
-                      Control: CanvasComponent
-                      ComponentName: StatusBar
+                  - btn_TestGetVersions_HierMan:
+                      Control: Button@0.0.45
                       Properties:
-                        Fill: =App.Theme.Colors.Lighter30
-                        Height: =StatusBar_3.Ht
-                        Ht: =Parent.Height
-                        Wd: =Parent.Width
-                        Width: =StatusBar_3.Wd
-      - NavMenu_2:
+                        Height: =60
+                        Icon: ="DatabaseArrowRight"
+                        OnSelect: =Func_GetHierarchyVersions();
+                        Text: ="1. Test Get Hierarchy Versions"
+                        Width: =300
+                  - btn_TestAddVersion_HierMan:
+                      Control: Button@0.0.45
+                      Properties:
+                        Height: =60
+                        Icon: ="AddFriend"
+                        OnSelect: |-
+                          =Func_AddHierarchyVersion(
+                              "Test Version " & Text(Now(), "hhmmss"),
+                              "Draft",
+                              Blank(),
+                              User().Email
+                          );
+                        Text: ="2. Test Add New Version (Empty)"
+                        Width: =300
+                  - btn_TestDuplicateVersion_HierMan:
+                      Control: Button@0.0.45
+                      Properties:
+                        Height: =60
+                        Icon: ="Copy"
+                        OnSelect: |-
+                          =Func_AddHierarchyVersion(
+                              "Duplicate of " & First(Col_HierarchyVersions).Name & " " & Text(Now(), "hhmmss"),
+                              "Draft",
+                              First(Col_HierarchyVersions).ID,
+                              User().Email
+                          );
+                        Text: ="3. Test Duplicate First Version"
+                        Width: =300
+                  - btn_TestUpdateVersionName_HierMan:
+                      Control: Button@0.0.45
+                      Properties:
+                        Height: =60
+                        Icon: ="Edit"
+                        OnSelect: |-
+                          =Func_UpdateHierarchyVersion(
+                              First(Col_HierarchyVersions).ID,
+                              "Updated " & First(Col_HierarchyVersions).Name & " " & Text(Now(), "hhmmss"),
+                              Blank()
+                          );
+                        Text: ="4. Test Update Name (First Version)"
+                        Width: =300
+                  - btn_TestUpdateVersionStatus_HierMan:
+                      Control: Button@0.0.45
+                      Properties:
+                        Height: =60
+                        Icon: ="CompletedSolid"
+                        OnSelect: |-
+                          =Func_UpdateHierarchyVersion(
+                              First(Col_HierarchyVersions).ID,
+                              Blank(),
+                              If(First(Col_HierarchyVersions).Status = "Draft", "Active", "Draft")
+                          );
+                        Text: ="5. Test Toggle Status (First Version)"
+                        Width: =300
+                  - btn_TestDeleteVersion_HierMan:
+                      Control: Button@0.0.45
+                      Properties:
+                        Height: =60
+                        Icon: ="Delete"
+                        OnSelect: |-
+                          =If(
+                              CountRows(Col_HierarchyVersions) > 1,
+                              Func_DeleteHierarchyVersion(
+                                  Last(Col_HierarchyVersions).ID
+                              ),
+                              Set(AppStatusText, "Cannot delete - need at least 2 versions to safely test delete")
+                          );
+                        Text: ="6. Test Delete (Last Version)"
+                        Width: =300
+                  - btn_TestGetFullHierarchy_HierMan:
+                      Control: Button@0.0.45
+                      Properties:
+                        Height: =60
+                        Icon: ="DatabaseView"
+                        OnSelect: |-
+                          =If(
+                              !IsBlank(First(Col_HierarchyVersions)),
+                              Func_GetFullHierarchy(
+                                  First(Col_HierarchyVersions).ID
+                              ),
+                              Set(AppStatusText, "No version available - please run 'Get Versions' first")
+                          );
+                        Text: ="7. Test Get Full Hierarchy (First Version)"
+                        Width: =300
+                  - Table1:
+                      Control: Table@1.0.278
+                      Properties:
+                        Items: =Col_HierarchyVersions
+                      Children:
+                        - Name1:
+                            Control: TableDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Name"
+                              FieldName: ="Name"
+                              FieldType: ="s"
+                              Order: =1
+                        - Status1:
+                            Control: TableDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Status"
+                              FieldName: ="Status"
+                              FieldType: ="s"
+                              Order: =2
+            - cmp_NavMenu_HierMan1:
+                Control: CanvasComponent
+                ComponentName: StatusBar
+                Properties:
+                  Fill: =App.Theme.Colors.Lighter30
+                  Height: =cmp_NavMenu_HierMan1.Ht
+                  Ht: =50
+                  Wd: =App.DesignWidth-16
+                  Width: =cmp_NavMenu_HierMan1.Wd
+      - cmp_NavMenu_HierMan:
           Control: CanvasComponent
           ComponentName: NavMenu
           Properties:
-            Fill: =RGBA(0,0,0,0.5)
             Height: =App.DesignHeight
             Visible: =Vis_Nav
             Width: =App.DesignWidth
