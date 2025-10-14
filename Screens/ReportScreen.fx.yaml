@@ -1,0 +1,549 @@
+Screens:
+  ReportScreen:
+    Children:
+      - cont_Screen_RepScreen:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =App.Theme.Colors.Darker60
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =8
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Width: =Parent.Width
+          Children:
+            - cont_Header_RepScreen:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Primary
+                  FillPortions: =0
+                  Height: =75
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =15
+                Children:
+                  - img_Menu_RepScreen:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Menu",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Set(Vis_Nav,true)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Open Navigation Menu"
+                        Width: =Self.Height
+                        X: =808
+                  - lbl_ReportID_RepScreen:
+                      Control: Text@0.0.51
+                      Properties:
+                        FillPortions: =1
+                        Height: =Parent.Height*0.7
+                        Size: =Self.Height*0.7
+                        Text: =Report_Selected.ReportID
+                        VerticalAlign: =VerticalAlign.Middle
+                  - img_Save_RepScreen:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Save",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Func_SaveOverridesToDatabase(Report_Selected.ReportID)  // Replace 123 with your actual ReportID
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Save Override Changes"
+                        Width: =Self.Height
+                        X: =808
+                  - img_ToggleFilter_RepScreen:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg(Switch(Vis_FilterPane_RepScreen,true,"PanelRightClose","PanelRightOpen"),App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: |-
+                          =Switch(Vis_FilterPane_RepScreen,
+                          true,Set(Vis_FilterPane_RepScreen,false),
+                          false,Set(Vis_FilterPane_RepScreen,true),
+                          Set(Vis_FilterPane_RepScreen,true))
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Toggle Filter Panel"
+                        Width: =Self.Height
+                        X: =808
+                  - drp_Granularity_RepScreen:
+                      Control: DropDown@0.0.45
+                      Properties:
+                        Appearance: ='DropdownCanvas.Appearance'.FilledDarker
+                        DefaultSelectedItems: =LookUp(GranularityOptions,GranLong=GranularitySelected.Long)
+                        Items: =GranularityOptions
+                        OnChange: |-
+                          =Set(GranularitySelected, {Num:Self.Selected.GranNumber, Short: Self.Selected.GranShort, Long: Self.Selected.GranLong, Code:Switch(Self.Selected.GranNumber,0,"S",1,"T",2,"D","T")});
+
+                          Func_GetMainGrid(
+                              Report_Selected.ReportID,
+                              GranularitySelected.Code
+                          );
+                        Width: =200
+                      Children:
+                        - fld_GranLong_RepScreen:
+                            Control: DropDownDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="GranLong"
+                              FieldName: ="GranLong"
+                              FieldType: ="s"
+                              Order: =1
+                        - fld_GranNumber_RepScreen:
+                            Control: DropDownDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="GranNumber"
+                              FieldName: ="GranNumber"
+                              FieldType: ="n"
+                              Order: =2
+                  - img_Close_RepScreen:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Close",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Navigate(ReportNavigator,ScreenTransition.Fade);
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Close Report Screen"
+                        Width: =Self.Height
+                        X: =808
+            - cont_Main_RepScreen:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =8
+                Children:
+                  - cont_ReportGrid_RepScreen:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =App.Theme.Colors.Lighter50
+                        FillPortions: =3
+                        LayoutDirection: =LayoutDirection.Vertical
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - cont_GridHeader_RepScreen:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =App.Theme.Colors.Primary
+                              FillPortions: =0
+                              Height: =45
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =5
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lbl_HeaderLocationCode_RepScreen:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Location Code")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Location_Code",Visible)
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =90
+                              - hdr_ReportScreen_TempCat:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Gran1") & " Num"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Temp_Category_Number",Visible)
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =90
+                              - hdr_ReportScreen_DeptName_1:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Gran1") & " Name"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Temp_Category_Name",Visible)
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                              - hdr_ReportScreen_DeptNum:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Gran2") & " Num"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Dept_Number",Visible)
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =90
+                              - hdr_ReportScreen_DeptName:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Gran2") & " Name"
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Dept_Name",Visible)
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                              - hdr_ReportScreen_CatCode:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Cat Code")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Category_Code",Visible)
+                                    Weight: ='TextCanvas.Weight'.Bold
+                                    Width: =90
+                              - hdr_ReportScreen_CatName:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Category Name")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Category_Name",Visible)
+                                    Weight: ='TextCanvas.Weight'.Bold
+                              - hdr_ReportScreen_CurrentBays:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Current Bays")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Bays",Visible)
+                                    Weight: ='TextCanvas.Weight'.Bold
+                                    Width: =90
+                              - hdr_ReportScreen_BaysRecc:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Proposed Bays")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Bays_Recc",Visible)
+                                    Weight: ='TextCanvas.Weight'.Bold
+                                    Width: =90
+                              - hdr_ReportScreen_LockSpace:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =Dict("Exclude from Analysis")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =LookUp(ReportGrid_Columns,SQL_Name="Exclude_from_analysis",Visible)
+                                    Weight: ='TextCanvas.Weight'.Bold
+                                    Width: =90
+                        - gal_ReportGrid_RepScreen:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              Items: =ReportGridWithOverrides
+                              TemplateFill: =Color.WhiteSmoke
+                              TemplatePadding: =2
+                              TemplateSize: |+
+                                =40
+                              Width: =Parent.Width
+                            Children:
+                              - lbl_ReportScreen_LocationCode_1:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Location_Code
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =lbl_HeaderLocationCode_RepScreen.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =lbl_HeaderLocationCode_RepScreen.Width
+                                    X: =lbl_HeaderLocationCode_RepScreen.X
+                              - lbl_ReportScreen_CatCode:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Category_Code
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_CatCode.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_CatCode.Width
+                                    X: =hdr_ReportScreen_CatCode.X
+                              - lbl_ReportScreen_CatCode_1:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Category_Name
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_CatName.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_CatName.Width
+                                    X: =hdr_ReportScreen_CatName.X
+                              - lbl_ReportScreen_CatCode_2:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Bays
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_CurrentBays.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_CurrentBays.Width
+                                    X: =hdr_ReportScreen_CurrentBays.X
+                              - lbl_ReportScreen_CatCode_3:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FontColor: =If(IsBlank(ThisItem.BayOutputOverride),App.Theme.Colors.PrimaryForeground,Color.IndianRed)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =If(IsBlank(ThisItem.BayOutputOverride),ThisItem.Bays_Recc,ThisItem.BayOutputOverride)
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_BaysRecc.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_BaysRecc.Width
+                                    X: =hdr_ReportScreen_BaysRecc.X
+                              - btn_BayReccOverride:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                    Height: =Parent.TemplateHeight
+                                    OnSelect: |-
+                                      =Select(Parent);
+                                      Set(Vis_OutputOverrideModal,true);
+                                    Text: =
+                                    Width: =hdr_ReportScreen_BaysRecc.Width
+                                    X: =hdr_ReportScreen_BaysRecc.X
+                              - img_ReportScreen-LockSpaceToggle:
+                                  Control: Image@2.2.3
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    Image: |-
+                                      =With({
+                                          Icon: Switch(Coalesce(ThisItem.ExcludeFromAnalysis_Override,ThisItem.Exclude_from_analysis),1,"Lock",0,"LockOpenRight","LockOpenRight"),
+                                          Colour: Switch(Coalesce(ThisItem.ExcludeFromAnalysis_Override,ThisItem.Exclude_from_analysis),1,Color.IndianRed,0,Color.ForestGreen,Color.ForestGreen)},
+                                          Func_IconSvg(Icon,Colour)
+                                      )
+                                    OnSelect: |-
+                                      =Select(Parent);
+                                      Func_Toggle_ExcludeFromAnalysis_Override(gal_ReportGrid_RepScreen.Selected.Category_Code)
+                                    PaddingBottom: =5
+                                    PaddingTop: =5
+                                    Visible: =hdr_ReportScreen_LockSpace.Visible
+                                    Width: =hdr_ReportScreen_LockSpace.Width
+                                    X: =hdr_ReportScreen_LockSpace.X
+                              - lbl_ReportScreen_LocationCode_2:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Department_Number
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_DeptNum.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_DeptNum.Width
+                                    X: =hdr_ReportScreen_DeptNum.X
+                              - lbl_ReportScreen_LocationCode_3:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Department_Name
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_DeptName.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_DeptName.Width
+                                    X: =hdr_ReportScreen_DeptName.X
+                              - lbl_ReportScreen_LocationCode_4:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Temp_Category_Number
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_TempCat.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_TempCat.Width
+                                    X: =hdr_ReportScreen_TempCat.X
+                              - lbl_ReportScreen_LocationCode_5:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =15
+                                    Size: =16
+                                    Text: =ThisItem.Temp_Category_Name
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =hdr_ReportScreen_DeptName_1.Visible
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =hdr_ReportScreen_DeptName_1.Width
+                                    X: =hdr_ReportScreen_DeptName_1.X
+                  - cont_FilterPanel_RepScreen:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter70
+                        LayoutDirection: =LayoutDirection.Vertical
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Visible: =Vis_FilterPane_RepScreen
+                      Children:
+                        - cont_FilterHeader_RepScreen:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =App.Theme.Colors.Primary
+                              FillPortions: =0
+                              Height: =40
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lbl_FilterTitle_RepScreen:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =Self.Height*0.7
+                                    Text: ="Filter Settings"
+                                    VerticalAlign: =VerticalAlign.Middle
+                              - btn_CloseFilter_RepScreen:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    FontSize: =Self.Height*0.7
+                                    Height: =Parent.Height
+                                    Icon: ="Dismiss"
+                                    Layout: ='ButtonCanvas.Layout'.IconOnly
+                                    OnSelect: =Set(Vis_FilterPane_RepScreen,false)
+                                    Text: ="Close Filter Panel"
+                        - gal_FilterColumns_RepScreen:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              Items: =ReportGrid_Columns
+                              TemplateSize: =35
+                              Width: =Parent.Width
+                            Children:
+                              - Lbl_FilterPanel_ReporScreen_Gly:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.End
+                                    Height: =35
+                                    Text: =ThisItem.ColumnHeader
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Width: =(Parent.TemplateWidth/3)*2
+                              - Toggle1:
+                                  Control: Toggle@1.1.5
+                                  Properties:
+                                    Checked: =ThisItem.Visible
+                                    Label: =
+                                    OnCheck: |+
+                                      =    Patch(
+                                              ReportGrid_Columns,
+                                              ThisItem,
+                                              { Visible: true }
+                                          )
+                                    OnSelect: =Select(Parent)
+                                    OnUncheck: |+
+                                      =
+                                          Patch(
+                                              ReportGrid_Columns,
+                                              ThisItem,
+                                              { Visible: false }
+                                          )
+                                    Width: =Parent.TemplateWidth/3
+                                    X: =Lbl_FilterPanel_ReporScreen_Gly.Width
+            - cont_Footer_RepScreen:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =40
+                  LayoutDirection: =LayoutDirection.Horizontal
+                Children:
+                  - cmp_StatusBar_RepScreen:
+                      Control: CanvasComponent
+                      ComponentName: StatusBar
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter30
+                        Height: =cmp_StatusBar_RepScreen.Ht
+                        Ht: =Parent.Height
+                        Wd: =Parent.Width
+                        Width: =cmp_StatusBar_RepScreen.Wd
+      - cmp_NavMenu_RepScreen:
+          Control: CanvasComponent
+          ComponentName: NavMenu
+          Properties:
+            Fill: =RGBA(0,0,0,0.5)
+            Height: =App.DesignHeight
+            Visible: =Vis_Nav
+            Width: =App.DesignWidth
+      - cmp_OutputOverrideModal_RepScreen:
+          Control: CanvasComponent
+          ComponentName: OutputOverrideModal
+          Properties:
+            BaysOverride: =gal_ReportGrid_RepScreen.Selected.BayOutputOverride
+            CatCode: =gal_ReportGrid_RepScreen.Selected.Category_Code
+            CatName: =gal_ReportGrid_RepScreen.Selected.Category_Name
+            CurrentBays: =gal_ReportGrid_RepScreen.Selected.Bays
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =App.DesignHeight
+            ReccBays: =gal_ReportGrid_RepScreen.Selected.Bays_Recc
+            Visible: =Vis_OutputOverrideModal
+            Width: =App.DesignWidth
