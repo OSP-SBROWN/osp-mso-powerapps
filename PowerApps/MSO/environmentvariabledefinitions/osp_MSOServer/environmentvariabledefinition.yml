@@ -1,0 +1,14 @@
+environmentvariabledefinition:
+  '@schemaname': osp_MSOServer
+  apiid: /providers/microsoft.powerapps/apis/shared_sql
+  displayname:
+    '@default': MSO-Server
+    label:
+      '@description': MSO-Server
+      '@languagecode': 1033
+  introducedversion: 5.5
+  iscustomizable: 1
+  isrequired: 0
+  parameterkey: server
+  secretstore: 0
+  type: 100000004

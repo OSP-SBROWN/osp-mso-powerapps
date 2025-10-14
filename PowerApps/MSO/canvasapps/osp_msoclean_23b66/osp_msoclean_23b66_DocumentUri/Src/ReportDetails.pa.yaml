@@ -1,0 +1,516 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  ReportDetails:
+    Children:
+      - cont_Dates_ReportSettings:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =App.Theme.Colors.Darker60
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =8
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer1_3:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Primary
+                  FillPortions: =0
+                  Height: =75
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =15
+                Children:
+                  - Image3_13:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Menu",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Set(Vis_Nav,true)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Refresh Reports List"
+                        Width: =Self.Height
+                        X: =808
+                  - Image3_14:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Close",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Navigate(ReportNavigator,ScreenTransition.Fade)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Refresh Reports List"
+                        Width: =Self.Height
+                        X: =808
+                  - TextCanvas1_6:
+                      Control: Text@0.0.51
+                      Properties:
+                        FillPortions: =1
+                        Height: =Parent.Height*0.7
+                        Size: =Self.Height*0.7
+                        Text: =$"Report Settings ({Updated_Report_Details.RVA_ReportName})"
+                        VerticalAlign: =VerticalAlign.Middle
+            - TabBar:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =50
+                  LayoutDirection: =LayoutDirection.Horizontal
+                Children:
+                  - TabList1:
+                      Control: TabList@2.2.31
+                      Properties:
+                        DefaultSelectedItems: =LookUp(ReportSettingsTabs,Selected=true)
+                        FillPortions: =1
+                        Height: =Parent.Height
+                        Items: =ReportSettingsTabs
+                        OnChange: |-
+                          =UpdateIf(ReportSettingsTabs,Selected=true,{Selected:false});
+                          UpdateIf(ReportSettingsTabs,ID=Self.Selected.ID,{Selected:true});
+                        Size: ='TabList.Size'.Large
+                      Children:
+                        - Name1:
+                            Control: TabListDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Name"
+                              FieldName: ="Name"
+                              FieldType: ="s"
+                              Order: =1
+            - cont_Location_ReportSettings:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  PaddingBottom: =25
+                  PaddingLeft: =25
+                  PaddingRight: =25
+                  PaddingTop: =25
+                  Visible: =If(First(Filter(ReportSettingsTabs,Selected=true)).ID=1,true,false)
+                Children:
+                  - TextCanvas5:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"{Dict("Location")} Name"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - cmb_LocationName:
+                      Control: ComboBox@0.0.51
+                      Properties:
+                        DefaultSelectedItems: =If(IsBlank(UI_SelectedLocation), Filter(Locations, Location_Code = Value(Updated_Report_Details.RVA_BranchNumber)), [UI_SelectedLocation])
+                        Items: =Locations
+                        OnChange: |-
+                          =// Update UI variable first
+                          Set(UI_SelectedLocation, Self.Selected);
+                          // Then update global data
+                          Func_UpdateReportDetail("RVA_BranchNumber", Text(Self.Selected.Location_Code));
+                          Func_UpdateReportDetail("RVA_BranchName", Self.Selected.Location_Name);
+                          Func_UpdateReportDetail("RVA_Cohort", LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Cluster_Name));
+                          Func_UpdateReportDetail("RVA_CohortStores", Text(LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Stores_In_Cluster)));
+                      Children:
+                        - Location_Name3:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Name"
+                              FieldName: ="Location_Name"
+                              FieldType: ="s"
+                              Order: =1
+                        - Location_ClusterID1:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_ClusterID"
+                              FieldName: ="Location_ClusterID"
+                              FieldType: ="n"
+                              Order: =2
+                        - Location_Code1:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Code"
+                              FieldName: ="Location_Code"
+                              FieldType: ="n"
+                              Order: =3
+                  - Rectangle3:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =40
+                  - TextCanvas5_1:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"{Dict("Location Code")} "
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - cmb_LocationNumber:
+                      Control: ComboBox@0.0.51
+                      Properties:
+                        DefaultSelectedItems: =If(IsBlank(UI_SelectedLocation), Filter(Locations, Location_Code = Value(Updated_Report_Details.RVA_BranchNumber)), [UI_SelectedLocation])
+                        Items: =Locations
+                        OnChange: |-
+                          =// Update UI variable first
+                          Set(UI_SelectedLocation, Self.Selected);
+                          // Then update global data
+                          Func_UpdateReportDetail("RVA_BranchNumber", Text(Self.Selected.Location_Code));
+                          Func_UpdateReportDetail("RVA_BranchName", Self.Selected.Location_Name);
+                          Func_UpdateReportDetail("RVA_Cohort", LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Cluster_Name));
+                          Func_UpdateReportDetail("RVA_CohortStores", Text(LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Stores_In_Cluster)));
+                      Children:
+                        - Location_Name3_1:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Name"
+                              FieldName: ="Location_Name"
+                              FieldType: ="s"
+                              Order: =2
+                        - Location_ClusterID1_1:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_ClusterID"
+                              FieldName: ="Location_ClusterID"
+                              FieldType: ="n"
+                              Order: =3
+                        - Location_Code1_1:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Code"
+                              FieldName: ="Location_Code"
+                              FieldType: ="n"
+                              Order: =1
+                  - Rectangle3_1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =40
+                  - TextCanvas5_2:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"Cluster Name"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - TextCanvas5_3:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =LookUp(Cluster_Details,Cluster_ID=UI_SelectedLocation.Location_ClusterID,Cluster_Name)
+                        Weight: ='TextCanvas.Weight'.Regular
+                        Width: =300
+                  - Rectangle3_2:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =40
+                  - TextCanvas5_4:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"{Dict("Location")}s in Cluster"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - TextCanvas5_5:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =LookUp(Cluster_Details,Cluster_ID=UI_SelectedLocation.Location_ClusterID,Stores_In_Cluster)
+                        Weight: ='TextCanvas.Weight'.Regular
+                        Width: =300
+                  - Rectangle3_3:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =40
+            - cont_Location_ReportSettings_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  PaddingBottom: =25
+                  PaddingLeft: =25
+                  PaddingRight: =25
+                  PaddingTop: =25
+                  Visible: =If(First(Filter(ReportSettingsTabs,Selected=true)).ID=2,true,false)
+                Children:
+                  - TextCanvas5_6:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"'Current' Space Date"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - cmb_LocationName_1:
+                      Control: ComboBox@0.0.51
+                      Properties:
+                        DefaultSelectedItems: =If(IsBlank(UI_SelectedLocation), Filter(Locations, Location_Code = Value(Updated_Report_Details.RVA_BranchNumber)), [UI_SelectedLocation])
+                        Items: =Locations
+                        OnChange: |-
+                          =// Update UI variable first
+                          Set(UI_SelectedLocation, Self.Selected);
+                          // Then update global data
+                          Func_UpdateReportDetail("RVA_BranchNumber", Text(Self.Selected.Location_Code));
+                          Func_UpdateReportDetail("RVA_BranchName", Self.Selected.Location_Name);
+                          Func_UpdateReportDetail("RVA_Cohort", LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Cluster_Name));
+                          Func_UpdateReportDetail("RVA_CohortStores", Text(LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Stores_In_Cluster)));
+                      Children:
+                        - Location_Name3_2:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Name"
+                              FieldName: ="Location_Name"
+                              FieldType: ="s"
+                              Order: =1
+                        - Location_ClusterID1_2:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_ClusterID"
+                              FieldName: ="Location_ClusterID"
+                              FieldType: ="n"
+                              Order: =2
+                        - Location_Code1_2:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Code"
+                              FieldName: ="Location_Code"
+                              FieldType: ="n"
+                              Order: =3
+                  - Rectangle3_4:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =40
+                  - TextCanvas5_7:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"Performance Start Date"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - cmb_LocationName_2:
+                      Control: ComboBox@0.0.51
+                      Properties:
+                        DefaultSelectedItems: =If(IsBlank(UI_SelectedLocation), Filter(Locations, Location_Code = Value(Updated_Report_Details.RVA_BranchNumber)), [UI_SelectedLocation])
+                        Items: =Locations
+                        OnChange: |-
+                          =// Update UI variable first
+                          Set(UI_SelectedLocation, Self.Selected);
+                          // Then update global data
+                          Func_UpdateReportDetail("RVA_BranchNumber", Text(Self.Selected.Location_Code));
+                          Func_UpdateReportDetail("RVA_BranchName", Self.Selected.Location_Name);
+                          Func_UpdateReportDetail("RVA_Cohort", LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Cluster_Name));
+                          Func_UpdateReportDetail("RVA_CohortStores", Text(LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Stores_In_Cluster)));
+                      Children:
+                        - Location_Name3_3:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Name"
+                              FieldName: ="Location_Name"
+                              FieldType: ="s"
+                              Order: =1
+                        - Location_ClusterID1_3:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_ClusterID"
+                              FieldName: ="Location_ClusterID"
+                              FieldType: ="n"
+                              Order: =2
+                        - Location_Code1_3:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Code"
+                              FieldName: ="Location_Code"
+                              FieldType: ="n"
+                              Order: =3
+                  - Rectangle3_5:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =40
+                  - TextCanvas5_8:
+                      Control: Text@0.0.51
+                      Properties:
+                        FontColor: =App.Theme.Colors.PrimaryForeground
+                        Size: =18
+                        Text: =$"Performance End Date"
+                        Weight: ='TextCanvas.Weight'.Bold
+                        Width: =300
+                  - cmb_LocationName_3:
+                      Control: ComboBox@0.0.51
+                      Properties:
+                        DefaultSelectedItems: =If(IsBlank(UI_SelectedLocation), Filter(Locations, Location_Code = Value(Updated_Report_Details.RVA_BranchNumber)), [UI_SelectedLocation])
+                        Items: =Locations
+                        OnChange: |-
+                          =// Update UI variable first
+                          Set(UI_SelectedLocation, Self.Selected);
+                          // Then update global data
+                          Func_UpdateReportDetail("RVA_BranchNumber", Text(Self.Selected.Location_Code));
+                          Func_UpdateReportDetail("RVA_BranchName", Self.Selected.Location_Name);
+                          Func_UpdateReportDetail("RVA_Cohort", LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Cluster_Name));
+                          Func_UpdateReportDetail("RVA_CohortStores", Text(LookUp(Cluster_Details, Cluster_ID=Self.Selected.Location_ClusterID, Stores_In_Cluster)));
+                      Children:
+                        - Location_Name3_4:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Name"
+                              FieldName: ="Location_Name"
+                              FieldType: ="s"
+                              Order: =1
+                        - Location_ClusterID1_4:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_ClusterID"
+                              FieldName: ="Location_ClusterID"
+                              FieldType: ="n"
+                              Order: =2
+                        - Location_Code1_4:
+                            Control: ComboBoxDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Location_Code"
+                              FieldName: ="Location_Code"
+                              FieldType: ="n"
+                              Order: =3
+            - Container9:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =App.Theme.Colors.Lighter60
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =25
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - btn_Next_ReportSettings_1:
+                      Control: Button@0.0.45
+                      Properties:
+                        DisplayMode: =If(First(Filter(ReportSettingsTabs,Selected=true)).ID=1,DisplayMode.Disabled,DisplayMode.Edit)
+                        Icon: ="ArrowLeft"
+                        OnSelect: =Func_NavigateReportTabs("Back")
+                        Text: ="Back"
+                  - btn_Cancel_ReportSettings:
+                      Control: Button@0.0.45
+                      Properties:
+                        Icon: ="Dismiss"
+                        Text: ="Cancel"
+                  - btn_Reset_ReportSettings:
+                      Control: Button@0.0.45
+                      Properties:
+                        Icon: ="ArrowReset"
+                        OnSelect: =Func_ResetReportDetails();
+                        Text: ="Reset"
+                  - btn_Save_ReportSettings:
+                      Control: Button@0.0.45
+                      Properties:
+                        Icon: ="Save"
+                        Text: ="Save"
+                  - btn_Next_ReportSettings:
+                      Control: Button@0.0.45
+                      Properties:
+                        DisplayMode: |-
+                          =If(
+                              First(Filter(ReportSettingsTabs,Selected=true)).ID=CountRows(ReportSettingsTabs),DisplayMode.Disabled,DisplayMode.Edit)
+                        Icon: ="ArrowRight"
+                        Layout: ='ButtonCanvas.Layout'.IconAfter
+                        OnSelect: =Func_NavigateReportTabs("Next")
+                        Text: ="Next"
+            - FooterContainer1_3:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =40
+                  LayoutDirection: =LayoutDirection.Horizontal
+                Children:
+                  - StatusBar_4:
+                      Control: CanvasComponent
+                      ComponentName: StatusBar
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter30
+                        Height: =StatusBar_4.Ht
+                        Ht: =Parent.Height
+                        Wd: =Parent.Width
+                        Width: =StatusBar_4.Wd
+      - NavMenu_4:
+          Control: CanvasComponent
+          ComponentName: NavMenu
+          Properties:
+            Fill: =RGBA(0,0,0,0.5)
+            Height: =App.DesignHeight
+            Visible: =Vis_Nav
+            Width: =App.DesignWidth

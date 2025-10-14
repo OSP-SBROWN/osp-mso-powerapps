@@ -1,0 +1,338 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  ReportNavigator:
+    Children:
+      - ScreenContainer1:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =App.Theme.Colors.Darker60
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =8
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Primary
+                  FillPortions: =0
+                  Height: =75
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =15
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                Children:
+                  - Image3_8:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Menu",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Set(Vis_Nav,true)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Refresh Reports List"
+                        Width: =Self.Height
+                        X: =808
+                  - TextCanvas1:
+                      Control: Text@0.0.51
+                      Properties:
+                        FillPortions: =1
+                        Height: =Parent.Height*0.7
+                        Size: =Self.Height*0.7
+                        Text: ="Report Navigator"
+                        VerticalAlign: =VerticalAlign.Middle
+                  - Image3_4:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Refresh",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: |-
+                          =ClearCollect(Reports_Col,
+                          Switch(Tgl_RepNav_FilterOwnerReports.Checked, 
+                          true,Filter(ReportVersionAttributes,ReportOwner=UserLoggedIn.MyID),
+                          ReportVersionAttributes));
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Refresh Reports List"
+                        Width: =Self.Height
+                        X: =808
+                  - DropdownCanvas1:
+                      Control: DropDown@0.0.45
+                      Properties:
+                        Appearance: ='DropdownCanvas.Appearance'.FilledDarker
+                        DefaultSelectedItems: =LookUp(GranularityOptions,GranLong=GranularitySelected.Long)
+                        Items: =GranularityOptions
+                        OnChange: |-
+                          =Set(GranularitySelected, {Num:Self.Selected.GranNumber, Short: Self.Selected.GranShort, Long: Self.Selected.GranLong, Code:Switch(Self.Selected.GranNumber,0,"S",1,"T",2,"D","T")})
+                        Width: =200
+                      Children:
+                        - GranLong1:
+                            Control: DropDownDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="GranLong"
+                              FieldName: ="GranLong"
+                              FieldType: ="s"
+                              Order: =1
+                        - GranNumber1:
+                            Control: DropDownDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="GranNumber"
+                              FieldName: ="GranNumber"
+                              FieldType: ="n"
+                              Order: =2
+                  - Image3_5:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg(Switch(Vis_FilterPane_RepNav,true,"PanelRightClose","PanelRightOpen"),App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: |-
+                          =Switch(Vis_FilterPane_RepNav,
+                          true,Set(Vis_FilterPane_RepNav,false),
+                          false,Set(Vis_FilterPane_RepNav,true),
+                          Set(Vis_FilterPane_RepNav,true))
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Open Filter Panel"
+                        Width: =Self.Height
+                        X: =808
+            - MainContainer1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =8
+                Children:
+                  - Gallery1:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter70
+                        FillPortions: =2
+                        Items: =Reports_Col
+                        OnSelect: =Set(Report_Selected,ThisItem);
+                        TemplateSize: =70
+                      Children:
+                        - Rectangle1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              Height: =Parent.TemplateHeight
+                              OnSelect: =Select(Parent)
+                              Visible: =ThisItem.IsSelected
+                              Width: =8
+                        - TextCanvas3:
+                            Control: Text@0.0.51
+                            Properties:
+                              Height: =60
+                              Size: =18
+                              Text: =ThisItem.ReportName
+                              VerticalAlign: =VerticalAlign.Middle
+                              Width: =406
+                              X: =16
+                        - Image3_1:
+                            Control: Image@2.2.3
+                            Properties:
+                              Height: =Parent.TemplateHeight
+                              HoverFill: =App.Theme.Colors.Primary
+                              Image: =Func_IconSvg("PlayArrow",App.Theme.Colors.Darker60)
+                              ImagePosition: =ImagePosition.Fill
+                              OnSelect: |-
+                                =Select(Parent);
+                                Func_GenerateCore(Gallery1.Selected.ReportID,UserLoggedIn.MyID)
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Tooltip: ="Execute Report"
+                              Width: =Parent.TemplateHeight
+                              X: =738
+                        - Image3_2:
+                            Control: Image@2.2.3
+                            Properties:
+                              Height: =Parent.TemplateHeight
+                              HoverFill: =App.Theme.Colors.Primary
+                              Image: =Func_IconSvg("Refresh",App.Theme.Colors.Darker60)
+                              ImagePosition: =ImagePosition.Fill
+                              OnSelect: |-
+                                =Select(Parent);
+                                Func_GenerateStore(Gallery1.Selected.ReportID,UserLoggedIn.MyID)
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Tooltip: ="Refresh Report"
+                              Width: =Parent.TemplateHeight
+                              X: =808
+                        - Image3_3:
+                            Control: Image@2.2.3
+                            Properties:
+                              Height: =Parent.TemplateHeight
+                              HoverFill: =App.Theme.Colors.Primary
+                              Image: =Func_IconSvg("OpenInNew",App.Theme.Colors.Darker60)
+                              ImagePosition: =ImagePosition.Fill
+                              OnSelect: |
+                                =Select(Parent);
+                                Func_GetMainGrid(
+                                    ThisItem.ReportID,
+                                    ThisItem.ViewbyStoreTempcatDept
+                                );
+                                If(
+                                    AppStatus = "Success",
+                                    UpdateIf(
+                                        NavItems,
+                                        true,
+                                        {Selected: false}
+                                    );
+                                    UpdateIf(
+                                        NavItems,
+                                        ID = 3,
+                                        {Selected: true}
+                                    );
+                                    Navigate(
+                                        ReportScreen,
+                                        ScreenTransition.Fade
+                                    );
+                                    Set(
+                                        Vis_Nav,
+                                        false
+                                    )
+                                );
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Tooltip: ="Refresh Report"
+                              Width: =Parent.TemplateHeight
+                              X: =878
+                        - Image3_11:
+                            Control: Image@2.2.3
+                            Properties:
+                              Height: =Parent.TemplateHeight
+                              HoverFill: =App.Theme.Colors.Primary
+                              Image: =Func_IconSvg("Edit",App.Theme.Colors.Darker60)
+                              ImagePosition: =ImagePosition.Fill
+                              OnSelect: |-
+                                =Set(ReportDetailMode,"Edit");
+                                Func_GetReportDetails(ThisItem.ReportID);
+                                Navigate(ReportDetails,ScreenTransition.Fade);
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Tooltip: ="Refresh Report"
+                              Width: =Parent.TemplateHeight
+                              X: =960
+                  - RepNav-FilterPanel:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter70
+                        LayoutDirection: =LayoutDirection.Vertical
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Visible: =Vis_FilterPane_RepNav
+                      Children:
+                        - Container3:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =App.Theme.Colors.Primary
+                              FillPortions: =0
+                              Height: =40
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - TextCanvas1_2:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    PaddingLeft: =15
+                                    Size: =Self.Height*0.7
+                                    Text: ="Filter Settings"
+                                    VerticalAlign: =VerticalAlign.Middle
+                              - ButtonCanvas1_2:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    FontSize: =Self.Height*0.7
+                                    Height: =Parent.Height
+                                    Icon: ="Dismiss"
+                                    Layout: ='ButtonCanvas.Layout'.IconOnly
+                                    OnSelect: =Set(Vis_FilterPane_RepNav,false)
+                                    Text: ="Refresh Reports List"
+                        - TextCanvas2:
+                            Control: Text@0.0.51
+                            Properties:
+                              PaddingLeft: =15
+                              Size: =18
+                              Text: ="Show Only My Reports"
+                              Width: =Parent.Width
+                        - Tgl_RepNav_FilterOwnerReports:
+                            Control: Toggle@1.1.5
+                            Properties:
+                              Label: |-
+                                =Switch(Self.Checked,
+                                true, "Yes, show only my reports",
+                                false, "No, show all reports")
+                              Width: =Parent.Width
+            - FooterContainer1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =40
+                  LayoutDirection: =LayoutDirection.Horizontal
+                Children:
+                  - StatusBar_1:
+                      Control: CanvasComponent
+                      ComponentName: StatusBar
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter30
+                        Height: =StatusBar_1.Ht
+                        Ht: =Parent.Height
+                        Wd: =Parent.Width
+                        Width: =StatusBar_1.Wd
+      - NavMenu_1:
+          Control: CanvasComponent
+          ComponentName: NavMenu
+          Properties:
+            Fill: =RGBA(0,0,0,0.5)
+            Height: =App.DesignHeight
+            Visible: =Vis_Nav
+            Width: =App.DesignWidth

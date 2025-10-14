@@ -1,0 +1,92 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  HierMan:
+    Children:
+      - ScreenContainer1_1:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =App.Theme.Colors.Darker60
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =8
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer1_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Primary
+                  FillPortions: =0
+                  Height: =75
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =15
+                Children:
+                  - Image3_9:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =Parent.Height
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Menu",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Set(Vis_Nav,true)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Refresh Reports List"
+                        Width: =Self.Height
+                        X: =808
+                  - TextCanvas1_1:
+                      Control: Text@0.0.51
+                      Properties:
+                        FillPortions: =1
+                        Height: =Parent.Height*0.7
+                        Size: =Self.Height*0.7
+                        Text: ="Hierarchy Management"
+                        VerticalAlign: =VerticalAlign.Middle
+            - MainContainer1_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  LayoutDirection: =LayoutDirection.Horizontal
+            - FooterContainer1_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =40
+                  LayoutDirection: =LayoutDirection.Horizontal
+                Children:
+                  - StatusBar_3:
+                      Control: CanvasComponent
+                      ComponentName: StatusBar
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter30
+                        Height: =StatusBar_3.Ht
+                        Ht: =Parent.Height
+                        Wd: =Parent.Width
+                        Width: =StatusBar_3.Wd
+      - NavMenu_2:
+          Control: CanvasComponent
+          ComponentName: NavMenu
+          Properties:
+            Fill: =RGBA(0,0,0,0.5)
+            Height: =App.DesignHeight
+            Visible: =Vis_Nav
+            Width: =App.DesignWidth

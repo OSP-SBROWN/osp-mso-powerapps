@@ -1,0 +1,16 @@
+environmentvariabledefinition:
+  '@schemaname': osp_shared_sql_407376fc6abf4c01a4f9a11a53aa05d4
+  apiid: /providers/microsoft.powerapps/apis/shared_sql
+  displayname:
+    '@default': ReportVersionAttributes
+    label:
+      '@description': ReportVersionAttributes
+      '@languagecode': 1033
+  introducedversion: 5.5
+  iscustomizable: 1
+  isrequired: 0
+  parameterkey: table
+  parentdefinitionid:
+    schemaname: osp_MSODB
+  secretstore: 0
+  type: 100000004

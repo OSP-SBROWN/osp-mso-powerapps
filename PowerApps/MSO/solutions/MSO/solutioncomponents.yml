@@ -1,0 +1,11 @@
+SolutionComponents:
+  Component:
+  - '@path': /canvasapps/osp_msoclean_23b66
+  - '@path': /environmentvariabledefinitions/osp_MSODB
+  - '@path': /environmentvariabledefinitions/osp_MSODB/environmentvariablevalues
+  - '@path': /environmentvariabledefinitions/osp_MSOServer
+  - '@path': /environmentvariabledefinitions/osp_shared_sql_407376fc6abf4c01a4f9a11a53aa05d4
+  - '@path': /environmentvariabledefinitions/osp_shared_sql_407376fc6abf4c01a4f9a11a53aa05d4/environmentvariablevalues
+  - '@path': /environmentvariabledefinitions/osp_shared_sql_64d7865d83f641b8a6e12597c380c881
+  - '@path': /environmentvariabledefinitions/osp_shared_sql_64d7865d83f641b8a6e12597c380c881/environmentvariablevalues
+  - '@path': /publishers/DefaultPublisherorgbad94752

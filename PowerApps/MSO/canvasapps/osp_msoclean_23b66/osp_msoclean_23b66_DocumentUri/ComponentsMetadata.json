@@ -1,0 +1,32 @@
+{
+  "Components": [
+    {
+      "Name": "NavMenu",
+      "TemplateName": "81f5349857aa4b5a8606f5e2c0ae2d3e",
+      "Description": "",
+      "AllowCustomization": true,
+      "AllowAccessToGlobals": true
+    },
+    {
+      "Name": "StatusBar",
+      "TemplateName": "1194234c6a4a49278790651ab7220942",
+      "Description": "",
+      "AllowCustomization": true,
+      "AllowAccessToGlobals": true
+    },
+    {
+      "Name": "ButtonComp",
+      "TemplateName": "68925a8bd5c64f39bafb90916be48e50",
+      "Description": "",
+      "AllowCustomization": true,
+      "AllowAccessToGlobals": true
+    },
+    {
+      "Name": "OutputOverrideModal",
+      "TemplateName": "025951e41b5a4f44a88c93e057308e3a",
+      "Description": "",
+      "AllowCustomization": true,
+      "AllowAccessToGlobals": true
+    }
+  ]
+}

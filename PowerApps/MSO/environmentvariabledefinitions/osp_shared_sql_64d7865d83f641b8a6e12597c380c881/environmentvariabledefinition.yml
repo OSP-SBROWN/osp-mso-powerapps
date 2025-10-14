@@ -1,0 +1,16 @@
+environmentvariabledefinition:
+  '@schemaname': osp_shared_sql_64d7865d83f641b8a6e12597c380c881
+  apiid: /providers/microsoft.powerapps/apis/shared_sql
+  displayname:
+    '@default': Users
+    label:
+      '@description': Users
+      '@languagecode': 1033
+  introducedversion: 5.5
+  iscustomizable: 1
+  isrequired: 0
+  parameterkey: table
+  parentdefinitionid:
+    schemaname: osp_MSODB
+  secretstore: 0
+  type: 100000004

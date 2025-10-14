@@ -1,0 +1,63 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+ComponentDefinitions:
+  StatusBar:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      Ht:
+        PropertyKind: Input
+        DisplayName: Ht
+        Description: A custom property
+        DataType: Number
+        Default: =50
+      Wd:
+        PropertyKind: Input
+        DisplayName: Wd
+        Description: A custom property
+        DataType: Number
+        Default: =App.DesignWidth-16
+    Properties:
+      Fill: =App.Theme.Colors.Lighter30
+      Height: =StatusBar.Ht
+      Width: =StatusBar.Wd
+    Children:
+      - Container4:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Height: =Parent.Ht
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Horizontal
+            PaddingLeft: =Self.Height*0.15
+            Width: =Parent.Width
+          Children:
+            - Circle1:
+                Control: Circle@2.3.0
+                Properties:
+                  Fill: =Switch(AppStatus, "Success", Color.ForestGreen, "Warning", Color.DarkOrange,"Error", Color.IndianRed, Color.DarkGray)
+                  Height: =Parent.Height*0.7
+                  Visible: =If(AppStatus="Loading", false,true)
+                  Width: =Self.Height
+            - Spinner1:
+                Control: Spinner@1.4.6
+                Properties:
+                  Appearance: ='Spinner.Appearance'.Primary
+                  Height: =Parent.Height
+                  SpinnerColor: =App.Theme.Colors.Primary
+                  TrackColor: =Color.Black
+                  Visible: =If(AppStatus="Loading", true,false)
+                  Width: =Self.Height
+            - TextCanvas4:
+                Control: Text@0.0.51
+                Properties:
+                  FillPortions: =1
+                  PaddingLeft: =15
+                  Text: =AppStatusText
+                  VerticalAlign: =VerticalAlign.Middle
