@@ -73,8 +73,8 @@ BEGIN
         Category_Code INT,
         Product_Code INT,
         Trend FLOAT,
-        DOS_Target FLOAT,
-        COS_Target FLOAT,
+    DoS_Target FLOAT,
+    Cases_Target FLOAT,
         Sales_Quantity INT,
         Sales_Value DECIMAL(18, 2),
         Profit_Value DECIMAL(18, 2),
@@ -154,12 +154,12 @@ BEGIN
                 h.FlowNumber AS Flow_Number, 
                 h.Hierarchy1_Code AS Temp_Category_Number, 
                 h.Hierarchy1_Name AS Temp_Category_Name,
-                h.DOS AS DOS_Target, 
-                h.COS AS COS_Target, 
+                h.DOS AS DoS_Target, 
+                h.COS AS Cases_Target, 
                 h.MinBays AS Min_Bays, 
                 h.MaxBays AS Max_Bays, 
                 h.Trend, 
-                h.Exclude_from_analysis, 
+                h.Exclude_From_Analysis, 
                 m.Bays AS Bays
             FROM HierarchyDetail h
             JOIN macro m ON m.Category_Code = h.Hierarchy3_Code
@@ -181,8 +181,8 @@ BEGIN
                 m.Product_CasePackUnits,  
                 m.Position_FacingsWide, 
                 h.Trend, 
-                h.DOS_Target, 
-                h.COS_Target
+                h.DoS_Target, 
+                h.Cases_Target
             FROM micro m
             JOIN hier h ON m.Category_Code = h.Category_Code
         ),
@@ -198,8 +198,8 @@ BEGIN
             u.Category_Code,
             p.Product_Code,
             u.Trend,
-            u.DOS_Target,
-            u.COS_Target,
+            u.DoS_Target,
+            u.Cases_Target,
             (p.Sales_Quantity * t.pct_ptu) AS Sales_Quantity,
             (p.Sales_Value * t.pct_ptu) AS Sales_Value,
             (p.Profit_Value * t.pct_ptu) AS Profit_Value,

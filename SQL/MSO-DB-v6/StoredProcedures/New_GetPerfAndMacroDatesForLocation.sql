@@ -25,7 +25,7 @@ BEGIN
                     LEN(CAST(Date_ID AS VARCHAR(10))) - 4         -- Remainder = Week number
                 )
              ) AS PerfDateTxt
-        FROM dbo.PerfMax
+    FROM dbo.Perfmax
         WHERE Location_Code = @LocationCode
         ORDER BY CAST(Date_ID AS INT) DESC;
 

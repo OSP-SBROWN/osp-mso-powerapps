@@ -10,3 +10,5 @@ c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\ob
 c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.deps.json
 c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.dll
 c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.pdb
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\master.dacpac
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.sqlproj.Up2Date

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj": {}
+    "C:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj": {}
   },
   "projects": {
-    "c:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj": {
+    "C:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj",
+        "projectUniqueName": "C:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj",
         "projectName": "MSO-DB-v6",
-        "projectPath": "c:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj",
+        "projectPath": "C:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj",
         "packagesPath": "C:\\Users\\ShaunBrown\\.nuget\\packages\\",
-        "outputPath": "c:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\obj\\",
+        "outputPath": "C:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\obj\\",
         "projectStyle": "PackageReference",
         "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
@@ -51,6 +51,11 @@
               "target": "Package",
               "version": "[1.0.3, )",
               "autoReferenced": true
+            },
+            "Microsoft.SqlServer.Dacpacs.Azure.Master": {
+              "target": "Package",
+              "version": "[160.0.0, )",
+              "generatePathProperty": true
             }
           },
           "imports": [

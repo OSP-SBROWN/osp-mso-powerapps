@@ -13,6 +13,9 @@
         "build": {
           "build/Microsoft.NETFramework.ReferenceAssemblies.net20.targets": {}
         }
+      },
+      "Microsoft.SqlServer.Dacpacs.Azure.Master/160.0.0": {
+        "type": "package"
       }
     }
   },
@@ -92,11 +95,28 @@
         "microsoft.netframework.referenceassemblies.net20.1.0.3.nupkg.sha512",
         "microsoft.netframework.referenceassemblies.net20.nuspec"
       ]
+    },
+    "Microsoft.SqlServer.Dacpacs.Azure.Master/160.0.0": {
+      "sha512": "nxuwTIkMsynX/Sia4rCSFEVtePNRG105Y8XBt/fwhfWEA91t8FHum9mg7QH+nbR9shs5pLPCCHLbcyY4meMCCg==",
+      "type": "package",
+      "path": "microsoft.sqlserver.dacpacs.azure.master/160.0.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "license.txt",
+        "microsoft.sqlserver.dacpacs.azure.master.160.0.0.nupkg.sha512",
+        "microsoft.sqlserver.dacpacs.azure.master.nuspec",
+        "nuspecicon.png",
+        "tools/master.dacpac"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.1": [
-      "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.3"
+      "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.3",
+      "Microsoft.SqlServer.Dacpacs.Azure.Master >= 160.0.0"
     ]
   },
   "packageFolders": {
@@ -149,6 +169,11 @@
             "target": "Package",
             "version": "[1.0.3, )",
             "autoReferenced": true
+          },
+          "Microsoft.SqlServer.Dacpacs.Azure.Master": {
+            "target": "Package",
+            "version": "[160.0.0, )",
+            "generatePathProperty": true
           }
         },
         "imports": [

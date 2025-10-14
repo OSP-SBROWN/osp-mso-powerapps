@@ -240,7 +240,7 @@ END;
             h.MaxBays AS Max_Bays,
             ISNULL(h.BayRoundingThreshold, @BayRoundingThreshold) AS BayRoundingThreshold,
             h.Trend, 
-            CASE WHEN h.Exclude_from_analysis = 'Y' THEN 1 ELSE 0 END AS Exclude_from_analysis,
+            CASE WHEN h.Exclude_From_Analysis = 'Y' THEN 1 ELSE 0 END AS Exclude_From_Analysis,
             m.Bays
         INTO #MacroHier
         FROM dbo.HierarchyDetail h
@@ -403,7 +403,7 @@ END;
             mh.BayRoundingThreshold,
             mh.DoS_Target,
             mh.Cases_Target,
-            mh.Exclude_from_analysis,
+            mh.Exclude_From_Analysis,
             ps.Sales_Quantity,
             ps.Sales_Value,
             ps.Profit_Value,
@@ -602,7 +602,7 @@ END;
             GROUP BY Category_Code
         )
         UPDATE cc
-           SET cc.Dos_Target = ts.AvgDosTarget,
+           SET cc.DoS_Target = ts.AvgDosTarget,
                cc.Cases_Target = ts.AvgCasesTarget
         FROM #Category cc
         JOIN TargetSums ts ON cc.Category_Code = ts.Category_Code;
@@ -667,7 +667,7 @@ END;
             Bays,
             Min_Bays,
             Max_Bays,
-            Exclude_from_analysis,
+            Exclude_From_Analysis AS Exclude_from_analysis,
             DoS_Target,
             Cases_Target,
             Org_Bays,

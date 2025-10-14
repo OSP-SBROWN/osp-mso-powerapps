@@ -122,10 +122,21 @@ BEGIN
     WHERE Create_Date = @MacroSpaceDate AND Location_Code = @SourceBranchNumber AND Category_Code = @NewCategoryCode;
 
     -- Populate #MacroHier
-    SELECT m.Location_Code, m.Category_Code, h.Hierarchy3_Name AS Category_Name, h.Hierarchy2_Code AS Department_Number,
-        h.Hierarchy2_Name AS Department_Name, h.FlowNumber AS Flow_Number, h.Hierarchy1_Code AS Temp_Category_Number, 
-        h.Hierarchy1_Name AS Temp_Category_Name,
-        h.DOS AS Dos_Target, h.COS AS Cases_Target, h.MinBays AS Min_Bays, h.MaxBays as Max_Bays, h.Trend, h.Exclude_from_analysis, m.Bays AS Bays
+    SELECT m.Location_Code,
+           m.Category_Code,
+           h.Hierarchy3_Name AS Category_Name,
+           h.Hierarchy2_Code AS Department_Number,
+           h.Hierarchy2_Name AS Department_Name,
+           h.FlowNumber AS Flow_Number,
+           h.Hierarchy1_Code AS Temp_Category_Number,
+           h.Hierarchy1_Name AS Temp_Category_Name,
+           h.DOS AS DoS_Target,
+           h.COS AS Cases_Target,
+           h.MinBays AS Min_Bays,
+           h.MaxBays AS Max_Bays,
+           h.Trend,
+           h.Exclude_From_Analysis,
+           m.Bays AS Bays
     INTO #MacroHier
     FROM HierarchyDetail h
     JOIN #Macro m 
@@ -152,7 +163,7 @@ BEGIN
         mh.Temp_Category_Number,
         mh.Temp_Category_Name,
         mh.Trend, 
-        mh.Dos_Target, 
+        mh.DoS_Target, 
         mh.Cases_Target
         FROM #Micro ms
         JOIN #MacroHier mh ON ms.Category_Code = mh.Category_Code
@@ -171,7 +182,7 @@ BEGIN
     g.Temp_Category_Number,
     g.Temp_Category_Name,
     g.Trend, 
-    g.Dos_Target, 
+    g.DoS_Target, 
     g.Cases_Target, 
     (CAST(g.Position_TotalUnits AS FLOAT) / CAST(t.TotalUnits AS FLOAT)) AS pct_ptu
     INTO #MacroHierMicro
@@ -188,7 +199,7 @@ BEGIN
         u.Temp_Category_Number,
         u.Temp_Category_Name,
         u.Trend,
-        u.Dos_Target,
+        u.DoS_Target,
         u.Cases_Target,
         (p.Sales_Quantity * u.pct_ptu) AS Sales_Quantity,
         (p.Sales_Value * u.pct_ptu) AS Sales_Value,
@@ -212,10 +223,10 @@ BEGIN
     ALTER TABLE #Products
     ADD 
         DOS FLOAT, 
-        Dos_Target_Units FLOAT, 
+        DoS_Target_Units FLOAT, 
         Cases_Target_Units FLOAT, 
         Units_Required INT,
-        Dos_Units_Required INT,
+        DoS_Units_Required INT,
         Facings_Required FLOAT;
 
     UPDATE #Products
@@ -224,8 +235,8 @@ BEGIN
         THEN 0 ELSE Position_TotalUnits / (CAST(Sales_Quantity AS FLOAT) / @DaysTrading) END;
 
     UPDATE #Products
-    SET Dos_Target_Units = CASE WHEN Sales_Quantity = 0 THEN 0 
-    ELSE (Sales_Quantity / @DaysTrading) * Dos_Target END;
+    SET DoS_Target_Units = CASE WHEN Sales_Quantity = 0 THEN 0 
+    ELSE (Sales_Quantity / @DaysTrading) * DoS_Target END;
 
 
     UPDATE #Products 
@@ -273,8 +284,8 @@ BEGIN
         0.001 AS Bays,
         mh.Min_Bays,
         mh.Max_Bays,
-        'N' AS Exclude_from_analysis,
-        mh.Dos_Target,
+        'N' AS Exclude_From_Analysis,
+        mh.DoS_Target,
         mh.Cases_Target,
         0.001 AS Org_Bays
     INTO #Category
@@ -286,14 +297,14 @@ BEGIN
     WITH TargetSums AS (
         SELECT 
             Category_Code, 
-            ROUND(AVG(Dos_Target), 2) AS AvgDosTarget, 
+            ROUND(AVG(DoS_Target), 2) AS AvgDoSTarget, 
             ROUND(AVG(Cases_Target), 2) AS AvgCasesTarget 
         FROM #Products 
         GROUP BY Category_Code
     )
     UPDATE sc
     SET
-        sc.Dos_Target = ts.AvgDosTarget,
+        sc.DoS_Target = ts.AvgDoSTarget,
         sc.Cases_Target = ts.AvgCasesTarget
     FROM #Category sc
     JOIN TargetSums ts ON sc.Category_Code = ts.Category_Code;
@@ -473,12 +484,12 @@ BEGIN
     Temp_Projected_Org_Sales_Less_Waste = 0;
 
 
-    UPDATE #category
+    UPDATE #Category
     SET 
-        Exclude_from_analysis = 
+        Exclude_From_Analysis = 
         CASE 
-            WHEN Exclude_from_analysis = 'Y' THEN 1
-            WHEN Exclude_from_analysis = 'N' THEN 0
+            WHEN Exclude_From_Analysis = 'Y' THEN 1
+            WHEN Exclude_From_Analysis = 'N' THEN 0
             ELSE 0 -- Optional: Handle unexpected values if necessary
         END;
 

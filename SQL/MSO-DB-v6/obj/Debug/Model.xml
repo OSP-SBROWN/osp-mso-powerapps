@@ -10,9 +10,14 @@
 		<CustomData Category="CompatibilityMode">
 			<Metadata Name="CompatibilityMode" Value="160" />
 		</CustomData>
+		<CustomData Category="Reference" Type="SqlSchema">
+			<Metadata Name="FileName" Value="C:\Users\ShaunBrown\.nuget\packages\microsoft.sqlserver.dacpacs.azure.master\160.0.0\tools\master.dacpac" />
+			<Metadata Name="LogicalName" Value="master.dacpac" />
+			<Metadata Name="ExternalParts" Value="[master]" />
+		</CustomData>
 		<CustomData Category="Reference" Type="Assembly">
 			<Metadata Name="LogicalName" Value="MSO-DB-v6.dll" />
-			<Metadata Name="FileName" Value="c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.dll" />
+			<Metadata Name="FileName" Value="C:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.dll" />
 			<Metadata Name="AssemblyName" Value="MSO-DB-v6" />
 			<Metadata Name="PermissionSet" Value="SAFE" />
 			<Metadata Name="Owner" Value="" />
@@ -20,106 +25,26 @@
 			<Metadata Name="IsVisible" Value="True" />
 			<Metadata Name="IsModelAware" Value="True" />
 			<Metadata Name="SkipCreationIfEmpty" Value="True" />
-			<Metadata Name="AssemblySymbolsName" Value="c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.pdb" />
+			<Metadata Name="AssemblySymbolsName" Value="C:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.pdb" />
 		</CustomData>
 		<CustomData Category="SqlCmdVariables" Type="SqlCmdVariable" />
 	</Header>
 	<Model>
 		<Element Type="SqlCheckConstraint">
 			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver2]>=(0) AND [Driver2]<=(100)]]></Value>
+				<Value><![CDATA[[Metric3]>=(0) AND [Metric3]<=(100)]]></Value>
 			</Property>
 			<Relationship Name="CheckExpressionDependencies">
 				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Driver2]" />
+					<References Name="[dbo].[Hierarchy1].[Metric3]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
+					<References Name="[dbo].[Hierarchy1]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver4]>=(0) AND [Driver4]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Driver4]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric2]>=(0) AND [Metric2]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Metric2]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric1]>=(0) AND [Metric1]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Metric1]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric2]>=(0) AND [Metric2]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Metric2]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver1]>=(0) AND [Driver1]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Driver1]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
 		</Element>
 		<Element Type="SqlCheckConstraint">
 			<Property Name="CheckExpressionScript">
@@ -135,247 +60,7 @@
 					<References Name="[dbo].[Hierarchy2]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric1]>=(0) AND [Metric1]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Metric1]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="15" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric2]>=(0) AND [Metric2]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Metric2]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric3]>=(0) AND [Metric3]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Metric3]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="17" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric1]>=(0) AND [Metric1]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Metric1]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="18" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver3]>=(0) AND [Driver3]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Driver3]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="19" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver4]>=(0) AND [Driver4]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Driver4]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="20" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric3]>=(0) AND [Metric3]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Metric3]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="21" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver4]>=(0) AND [Driver4]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Driver4]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="22" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver2]>=(0) AND [Driver2]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Driver2]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="23" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver1]>=(0) AND [Driver1]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Driver1]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="24" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver1]>=(0) AND [Driver1]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Driver1]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="25" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric4]>=(0) AND [Metric4]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Metric4]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="26" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Metric4]>=(0) AND [Metric4]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Metric4]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="27" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver2]>=(0) AND [Driver2]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1].[Driver2]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy1]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="28" />
-		</Element>
-		<Element Type="SqlCheckConstraint">
-			<Property Name="CheckExpressionScript">
-				<Value><![CDATA[[Driver3]>=(0) AND [Driver3]<=(100)]]></Value>
-			</Property>
-			<Relationship Name="CheckExpressionDependencies">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[Driver3]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="29" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
 		</Element>
 		<Element Type="SqlCheckConstraint">
 			<Property Name="CheckExpressionScript">
@@ -391,7 +76,167 @@
 					<References Name="[dbo].[Hierarchy1]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="30" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver1]>=(0) AND [Driver1]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Driver1]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver1]>=(0) AND [Driver1]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Driver1]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric4]>=(0) AND [Metric4]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1].[Metric4]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver2]>=(0) AND [Driver2]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Driver2]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="14" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver3]>=(0) AND [Driver3]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Driver3]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="15" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver4]>=(0) AND [Driver4]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Driver4]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="16" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver2]>=(0) AND [Driver2]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Driver2]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="17" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric1]>=(0) AND [Metric1]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Metric1]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="18" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver4]>=(0) AND [Driver4]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1].[Driver4]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="19" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric2]>=(0) AND [Metric2]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Metric2]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="20" />
 		</Element>
 		<Element Type="SqlCheckConstraint">
 			<Property Name="CheckExpressionScript">
@@ -407,9 +252,169 @@
 					<References Name="[dbo].[Hierarchy3]" />
 				</Entry>
 			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="21" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver3]>=(0) AND [Driver3]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Driver3]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="22" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric4]>=(0) AND [Metric4]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[Metric4]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="23" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver4]>=(0) AND [Driver4]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Driver4]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="24" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric1]>=(0) AND [Metric1]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1].[Metric1]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="25" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric1]>=(0) AND [Metric1]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Metric1]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="26" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver1]>=(0) AND [Driver1]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1].[Driver1]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="27" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric2]>=(0) AND [Metric2]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1].[Metric2]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="28" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric2]>=(0) AND [Metric2]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Metric2]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="29" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Driver2]>=(0) AND [Driver2]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1].[Driver2]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy1]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="30" />
+		</Element>
+		<Element Type="SqlCheckConstraint">
+			<Property Name="CheckExpressionScript">
+				<Value><![CDATA[[Metric3]>=(0) AND [Metric3]<=(100)]]></Value>
+			</Property>
+			<Relationship Name="CheckExpressionDependencies">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Metric3]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="31" />
 		</Element>
-		<Element Type="SqlDatabaseOptions" Disambiguator="1">
+		<Element Type="SqlDatabaseOptions">
 			<Property Name="Collation" Value="SQL_Latin1_General_CP1_CI_AS" />
 			<Property Name="IsAnsiNullDefaultOn" Value="True" />
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -425,29 +430,6 @@
 			<Property Name="QueryStoreStaleQueryThreshold" Value="367" />
 			<Property Name="MaxDop" Value="0" />
 			<Property Name="TemporalHistoryRetentionEnabled" Value="False" />
-		</Element>
-		<Element Type="SqlForeignKeyConstraint">
-			<Relationship Name="Columns">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3].[ParentHierarchy_ID]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignColumns">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2].[Hierarchy2_ID]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy2]" />
-				</Entry>
-			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="32" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint">
 			<Relationship Name="Columns">
@@ -470,6 +452,29 @@
 					<References Name="[dbo].[Hierarchy1]" />
 				</Entry>
 			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="32" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3].[ParentHierarchy_ID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy3]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2].[Hierarchy2_ID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Hierarchy2]" />
+				</Entry>
+			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="33" />
 		</Element>
 		<Element Type="SqlMasterKey">
@@ -481,7 +486,7 @@
 					<Element Type="SqlIndexedColumnSpecification">
 						<Relationship Name="Column">
 							<Entry>
-								<References Name="[dbo].[DepartmentColours].[DepartmentNumber]" />
+								<References Name="[dbo].[Hierarchy3].[Hierarchy3_ID]" />
 							</Entry>
 						</Relationship>
 					</Element>
@@ -489,7 +494,7 @@
 			</Relationship>
 			<Relationship Name="DefiningTable">
 				<Entry>
-					<References Name="[dbo].[DepartmentColours]" />
+					<References Name="[dbo].[Hierarchy3]" />
 				</Entry>
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="34" />
@@ -538,6 +543,25 @@
 					<Element Type="SqlIndexedColumnSpecification">
 						<Relationship Name="Column">
 							<Entry>
+								<References Name="[dbo].[DepartmentColours].[DepartmentNumber]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[DepartmentColours]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="37" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
 								<References Name="[dbo].[Hierarchy2].[Hierarchy2_ID]" />
 							</Entry>
 						</Relationship>
@@ -549,38 +573,7 @@
 					<References Name="[dbo].[Hierarchy2]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="37" />
-		</Element>
-		<Element Type="SqlPrimaryKeyConstraint">
-			<Relationship Name="ColumnSpecifications">
-				<Entry>
-					<Element Type="SqlIndexedColumnSpecification">
-						<Relationship Name="Column">
-							<Entry>
-								<References Name="[dbo].[Hierarchy3].[Hierarchy3_ID]" />
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[Hierarchy3]" />
-				</Entry>
-			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="38" />
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[MSO API Authentication]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
-				</Entry>
-			</Relationship>
 		</Element>
 		<Element Type="SqlRoleMembership">
 			<Relationship Name="Member">
@@ -597,12 +590,12 @@
 		<Element Type="SqlRoleMembership">
 			<Relationship Name="Member">
 				<Entry>
-					<References Name="[mso-api-sb]" />
+					<References Name="[mso-backend-api]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Role">
 				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
+					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -614,7 +607,43 @@
 			</Relationship>
 			<Relationship Name="Role">
 				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_ddladmin]" />
+					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[tristan.kemp@osp-retail.co.uk]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_owner]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[jomin.john@osp-retail.co.uk]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_owner]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[tristan.kemp@osp-retail.co.uk]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -633,12 +662,72 @@
 		<Element Type="SqlRoleMembership">
 			<Relationship Name="Member">
 				<Entry>
-					<References Name="[tristan.kemp@osp-retail.co.uk]" />
+					<References Name="[MSO API Authentication]" />
 				</Entry>
 			</Relationship>
 			<Relationship Name="Role">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[mso-backend-api]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[andrew.higgs@osp-retail.co.uk]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_owner]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[mso-api-sb]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[geoff.carr@osp-retail.co.uk]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_owner]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlRoleMembership">
+			<Relationship Name="Member">
+				<Entry>
+					<References Name="[MSO API Authentication]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Role">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -674,91 +763,7 @@
 			</Relationship>
 			<Relationship Name="Role">
 				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[jomin.john@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_owner]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[mso-backend-api]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[tristan.kemp@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_owner]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[andrew.higgs@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_owner]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[geoff.carr@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_owner]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[mso-backend-api]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datawriter]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlRoleMembership">
-			<Relationship Name="Member">
-				<Entry>
-					<References Name="[MSO API Authentication]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="Role">
-				<Entry>
-					<References ExternalSource="BuiltIns" Name="[db_datareader]" />
+					<References ExternalSource="BuiltIns" Name="[db_ddladmin]" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -2684,7 +2689,7 @@ GROUP BY
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="34" />
+			<AttachedAnnotation Disambiguator="37" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Dictionary]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3888,14 +3893,14 @@ GROUP BY
 				</Entry>
 			</Relationship>
 			<AttachedAnnotation Disambiguator="36" />
-			<AttachedAnnotation Disambiguator="24" />
-			<AttachedAnnotation Disambiguator="28" />
+			<AttachedAnnotation Disambiguator="27" />
 			<AttachedAnnotation Disambiguator="30" />
-			<AttachedAnnotation Disambiguator="9" />
-			<AttachedAnnotation Disambiguator="11" />
-			<AttachedAnnotation Disambiguator="12" />
-			<AttachedAnnotation Disambiguator="21" />
-			<AttachedAnnotation Disambiguator="26" />
+			<AttachedAnnotation Disambiguator="10" />
+			<AttachedAnnotation Disambiguator="19" />
+			<AttachedAnnotation Disambiguator="25" />
+			<AttachedAnnotation Disambiguator="28" />
+			<AttachedAnnotation Disambiguator="8" />
+			<AttachedAnnotation Disambiguator="13" />
 			<AttachedAnnotation Disambiguator="40" />
 			<AttachedAnnotation Disambiguator="41" />
 		</Element>
@@ -4335,18 +4340,18 @@ GROUP BY h1.Hierarchy1_ID, h1.Hierarchy1_Code, h1.Hierarchy1_Name, h1.HierarchyV
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="37" />
-			<AttachedAnnotation Disambiguator="25" />
-			<AttachedAnnotation Disambiguator="23" />
-			<AttachedAnnotation Disambiguator="19" />
-			<AttachedAnnotation Disambiguator="20" />
-			<AttachedAnnotation Disambiguator="18" />
-			<AttachedAnnotation Disambiguator="16" />
+			<AttachedAnnotation Disambiguator="38" />
+			<AttachedAnnotation Disambiguator="11" />
 			<AttachedAnnotation Disambiguator="17" />
-			<AttachedAnnotation Disambiguator="14" />
+			<AttachedAnnotation Disambiguator="22" />
+			<AttachedAnnotation Disambiguator="24" />
+			<AttachedAnnotation Disambiguator="26" />
+			<AttachedAnnotation Disambiguator="29" />
+			<AttachedAnnotation Disambiguator="31" />
+			<AttachedAnnotation Disambiguator="9" />
 			<AttachedAnnotation Disambiguator="42" />
 			<AttachedAnnotation Disambiguator="43" />
-			<AttachedAnnotation Disambiguator="33" />
+			<AttachedAnnotation Disambiguator="32" />
 		</Element>
 		<Element Type="SqlView" Name="[dbo].[Hierarchy2_Child]">
 			<Property Name="QueryScript">
@@ -4795,18 +4800,18 @@ GROUP BY h2.Hierarchy2_ID, h2.Hierarchy2_Code, h2.Hierarchy2_Name, h2.ParentHier
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="38" />
-			<AttachedAnnotation Disambiguator="13" />
-			<AttachedAnnotation Disambiguator="8" />
-			<AttachedAnnotation Disambiguator="29" />
-			<AttachedAnnotation Disambiguator="22" />
+			<AttachedAnnotation Disambiguator="34" />
+			<AttachedAnnotation Disambiguator="12" />
+			<AttachedAnnotation Disambiguator="14" />
 			<AttachedAnnotation Disambiguator="15" />
-			<AttachedAnnotation Disambiguator="10" />
-			<AttachedAnnotation Disambiguator="31" />
-			<AttachedAnnotation Disambiguator="27" />
+			<AttachedAnnotation Disambiguator="16" />
+			<AttachedAnnotation Disambiguator="18" />
+			<AttachedAnnotation Disambiguator="20" />
+			<AttachedAnnotation Disambiguator="21" />
+			<AttachedAnnotation Disambiguator="23" />
 			<AttachedAnnotation Disambiguator="44" />
 			<AttachedAnnotation Disambiguator="45" />
-			<AttachedAnnotation Disambiguator="32" />
+			<AttachedAnnotation Disambiguator="33" />
 		</Element>
 		<Element Type="SqlView" Name="[dbo].[HierarchyDetail]">
 			<Property Name="QueryScript">
@@ -19498,7 +19503,9 @@ END;]]></Value>
 				<Entry>
 					<References Name="[dbo].[BayRules].[Group_Key]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 				<Entry />
 				<Entry />
 				<Entry />
@@ -19847,7 +19854,9 @@ END;]]></Value>
 				<Entry>
 					<References Name="[dbo].[StoreRounding].[@Rounding_Success]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 				<Entry />
 				<Entry>
 					<References Name="[dbo].[StoreRounding].[@UserID]" />
@@ -31717,6 +31726,258 @@ FROM
 				<Property Name="FooterContents" Value=";" />
 			</Annotation>
 		</Element>
+		<Element Type="SqlView" Name="[dbo].[vw_Calendar]">
+			<Property Name="QueryScript">
+				<Value><![CDATA[
+WITH
+-- Step 1: Create a "numbers" (tally) CTE big enough for ~5 years of days (~1,825 days)
+-- We'll generate 2,000 rows by cross joining system objects.
+Tally AS
+(
+    SELECT TOP (2000)
+           ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1 AS n
+    FROM   sys.all_objects AS o1
+           CROSS JOIN sys.all_objects AS o2
+),
+
+-- Step 2: Determine your start/end boundaries
+-- We’ll set the END date to 31-Dec of the current year,
+-- and the START date to that same date minus 5 years.
+Boundaries AS
+(
+    SELECT
+       EndDate   = CONVERT(date, CONCAT(YEAR(GETDATE()), '-12-31')),
+       StartDate = DATEADD(YEAR, -5, CONVERT(date, CONCAT(YEAR(GETDATE()), '-12-31')))
+)
+
+-- Step 3: Generate a row per day, then compute columns
+SELECT
+    /* 
+       The "main" date in proper SQL date format 
+       (from StartDate + n days, up to EndDate). 
+    */
+    CalendarDate = DATEADD(DAY, t.n, b.StartDate),
+
+    /* Integer in YYYYMMDD form (e.g. 20250125) */
+    SQL_Date_YYYYMMDD = CAST(
+        CONVERT(VARCHAR(8), DATEADD(DAY, t.n, b.StartDate), 112) 
+        AS INT
+    ),
+
+    /* 
+       Long date text with ordinal suffix (“st”, “nd”, “rd”, “th”). 
+       Example: "25th January 2025" 
+    */
+    DateTxtLong =
+        CAST(DAY(DATEADD(DAY, t.n, b.StartDate)) AS VARCHAR(2))
+        + CASE
+            WHEN DAY(DATEADD(DAY, t.n, b.StartDate)) IN (11, 12, 13)
+                THEN 'th '
+            WHEN DAY(DATEADD(DAY, t.n, b.StartDate)) % 10 = 1
+                THEN 'st '
+            WHEN DAY(DATEADD(DAY, t.n, b.StartDate)) % 10 = 2
+                THEN 'nd '
+            WHEN DAY(DATEADD(DAY, t.n, b.StartDate)) % 10 = 3
+                THEN 'rd '
+            ELSE 'th '
+          END
+        + DATENAME(MONTH, DATEADD(DAY, t.n, b.StartDate)) + ' '
+        + CAST(YEAR(DATEADD(DAY, t.n, b.StartDate)) AS VARCHAR(4)),
+
+    /* Medium date text: "25 Jan 2025" */
+    DateTxtMed =
+          CAST(DAY(DATEADD(DAY, t.n, b.StartDate)) AS VARCHAR(2)) + ' '
+        + LEFT(DATENAME(MONTH, DATEADD(DAY, t.n, b.StartDate)), 3) + ' '
+        + CAST(YEAR(DATEADD(DAY, t.n, b.StartDate)) AS VARCHAR(4)),
+
+    /* Short date text: "25/01/25" */
+    DateTxtShort =
+        CONVERT(VARCHAR(8), DATEADD(DAY, t.n, b.StartDate), 3), -- dd/MM/yy
+
+    /* Month name & short version */
+    MonthName = DATENAME(MONTH, DATEADD(DAY, t.n, b.StartDate)),
+    MonthNameShort = LEFT(DATENAME(MONTH, DATEADD(DAY, t.n, b.StartDate)), 3),
+    /* Numeric month (1-12) */
+    MonthNumber = MONTH(DATEADD(DAY, t.n, b.StartDate)),
+
+    /* Calendar year (YYYY) */
+    CalendarYear = YEAR(DATEADD(DAY, t.n, b.StartDate)),
+
+    /*-------------------------------------------------------------------
+      Example: Simple "Financial Year" logic
+      - Assume the fiscal year starts in April:
+         If Month >= 4 → next fiscal year is CurrentYear+1.
+         Otherwise → CurrentYear.
+      -------------------------------------------------------------------*/
+    FinancialYear = CASE
+        WHEN MONTH(DATEADD(DAY, t.n, b.StartDate)) >= 4 
+             THEN YEAR(DATEADD(DAY, t.n, b.StartDate)) + 1
+        ELSE YEAR(DATEADD(DAY, t.n, b.StartDate))
+    END,
+
+    /* Example of a simple "Week Number" for the financial year. 
+       Real-world scenarios might shift week counting or define
+       "first Monday after date X" etc.  */
+    FinancialWeekNumber = DATEPART(WEEK, DATEADD(DAY, t.n, b.StartDate)),
+
+    /* Text version: e.g. "Wk 12" */
+    FinancialWeekText = CONCAT('Wk ', DATEPART(WEEK, DATEADD(DAY, t.n, b.StartDate))),
+
+    /* Combined example: "FY2024, Wk 23" */
+    CombinedFinYearWeek = CONCAT(
+        'FY',
+        CASE
+            WHEN MONTH(DATEADD(DAY, t.n, b.StartDate)) >= 4 
+                THEN YEAR(DATEADD(DAY, t.n, b.StartDate)) + 1
+            ELSE YEAR(DATEADD(DAY, t.n, b.StartDate))
+        END,
+        ', Wk ',
+        DATEPART(WEEK, DATEADD(DAY, t.n, b.StartDate))
+    )
+
+FROM 
+    Tally      AS t
+    CROSS JOIN Boundaries AS b
+WHERE DATEADD(DAY, t.n, b.StartDate) <= b.EndDate
+]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[CalendarDate]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[SQL_Date_YYYYMMDD]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[DateTxtLong]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[DateTxtMed]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[DateTxtShort]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[MonthName]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[MonthNameShort]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[MonthNumber]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[CalendarYear]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[FinancialYear]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[FinancialWeekNumber]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[FinancialWeekText]" />
+				</Entry>
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[CombinedFinYearWeek]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DynamicObjects">
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[dbo].[vw_Calendar].[CTE1].[Tally]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[CTE1].[Tally].[n]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[dbo].[vw_Calendar].[CTE1].[Boundaries]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[CTE1].[Boundaries].[EndDate]" />
+							</Entry>
+							<Entry>
+								<Element Type="SqlComputedColumn" Name="[dbo].[vw_Calendar].[CTE1].[Boundaries].[StartDate]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="QueryDependencies">
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[all_objects]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[date]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[varchar]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="4133" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE   VIEW dbo.vw_Calendar&#xD;&#xA;AS" />
+				<Property Name="FooterContents" Value=";" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlView" Name="[dbo].[Vw_RVAColumns]">
+			<Property Name="QueryScript">
+				<Value><![CDATA[
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'ReportVersionAttributes' AND TABLE_SCHEMA = 'dbo']]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlComputedColumn" Name="[dbo].[Vw_RVAColumns].[COLUMN_NAME]">
+						<Relationship Name="ExpressionDependencies">
+							<Entry>
+								<References ExternalSource="master.dacpac" Name="[master]|[INFORMATION_SCHEMA].[COLUMNS].[COLUMN_NAME]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="QueryDependencies">
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[INFORMATION_SCHEMA].[COLUMNS]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[INFORMATION_SCHEMA].[COLUMNS].[COLUMN_NAME]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[INFORMATION_SCHEMA].[COLUMNS].[TABLE_NAME]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[INFORMATION_SCHEMA].[COLUMNS].[TABLE_SCHEMA]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="152" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE VIEW Vw_RVAColumns AS" />
+			</Annotation>
+		</Element>
 		<Element Type="SqlView" Name="[dbo].[vw_UserManagedData_Staging]">
 			<Property Name="QueryScript">
 				<Value><![CDATA[
@@ -33034,149 +33295,6 @@ INNER JOIN LatestVersions lv
 		<Element Type="SqlUser" Name="[geoff.carr@osp-retail.co.uk]">
 			<Property Name="AuthenticationType" Value="4" />
 		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[andrew.higgs@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[andrew.higgs@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[geoff.carr@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[geoff.carr@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[jomin.john@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[jomin.john@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[MSO API Authentication].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[MSO API Authentication]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[mso-api-sb].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[mso-api-sb]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[mso-backend-api].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[mso-backend-api]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[MSO-Developers].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[MSO-Developers]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[nayaa.owusu@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[nayaa.owusu@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[sean.armstrong@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[sean.armstrong@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[shaun.brown@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[shaun.brown@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Connect.Database].[tristan.kemp@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1035" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[tristan.kemp@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
 		<Element Type="SqlPermissionStatement" Name="[Grant.Delete.Schema].[andrew.higgs@osp-retail.co.uk].[dbo].[dbo]">
 			<Property Name="Permission" Value="4" />
 			<Relationship Name="Grantee">
@@ -33434,58 +33552,6 @@ INNER JOIN LatestVersions lv
 			<Relationship Name="SecuredObject">
 				<Entry>
 					<References Name="[Ver_001]" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Execute.Database].[MSO API Authentication].[dbo]">
-			<Property Name="Permission" Value="1070" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[MSO API Authentication]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Execute.Database].[mso-api-sb].[dbo]">
-			<Property Name="Permission" Value="1070" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[mso-api-sb]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Execute.Database].[mso-backend-api].[dbo]">
-			<Property Name="Permission" Value="1070" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[mso-backend-api]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
-				</Entry>
-			</Relationship>
-		</Element>
-		<Element Type="SqlPermissionStatement" Name="[Grant.Execute.Database].[tristan.kemp@osp-retail.co.uk].[dbo]">
-			<Property Name="Permission" Value="1070" />
-			<Relationship Name="Grantee">
-				<Entry>
-					<References Name="[tristan.kemp@osp-retail.co.uk]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="SecuredObject">
-				<Entry>
-					<References Disambiguator="1" />
 				</Entry>
 			</Relationship>
 		</Element>
@@ -35353,7 +35419,9 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[AddCatGetNewCategoryData].[@CategoryDataResults].[Sales_Less_Waste]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 				<Entry />
 				<Entry />
 				<Entry>
@@ -35710,8 +35778,8 @@ BEGIN
         Category_Code INT,
         Product_Code INT,
         Trend FLOAT,
-        DOS_Target FLOAT,
-        COS_Target FLOAT,
+    DoS_Target FLOAT,
+    Cases_Target FLOAT,
         Sales_Quantity INT,
         Sales_Value DECIMAL(18, 2),
         Profit_Value DECIMAL(18, 2),
@@ -35791,12 +35859,12 @@ BEGIN
                 h.FlowNumber AS Flow_Number, 
                 h.Hierarchy1_Code AS Temp_Category_Number, 
                 h.Hierarchy1_Name AS Temp_Category_Name,
-                h.DOS AS DOS_Target, 
-                h.COS AS COS_Target, 
+                h.DOS AS DoS_Target, 
+                h.COS AS Cases_Target, 
                 h.MinBays AS Min_Bays, 
                 h.MaxBays AS Max_Bays, 
                 h.Trend, 
-                h.Exclude_from_analysis, 
+                h.Exclude_From_Analysis, 
                 m.Bays AS Bays
             FROM HierarchyDetail h
             JOIN macro m ON m.Category_Code = h.Hierarchy3_Code
@@ -35818,8 +35886,8 @@ BEGIN
                 m.Product_CasePackUnits,  
                 m.Position_FacingsWide, 
                 h.Trend, 
-                h.DOS_Target, 
-                h.COS_Target
+                h.DoS_Target, 
+                h.Cases_Target
             FROM micro m
             JOIN hier h ON m.Category_Code = h.Category_Code
         ),
@@ -35835,8 +35903,8 @@ BEGIN
             u.Category_Code,
             p.Product_Code,
             u.Trend,
-            u.DOS_Target,
-            u.COS_Target,
+            u.DoS_Target,
+            u.Cases_Target,
             (p.Sales_Quantity * t.pct_ptu) AS Sales_Quantity,
             (p.Sales_Value * t.pct_ptu) AS Sales_Value,
             (p.Profit_Value * t.pct_ptu) AS Profit_Value,
@@ -36381,7 +36449,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlSimpleColumn" Name="[ui].[AddCatGetProductData].[@ProductDataResults].[DOS_Target]">
+								<Element Type="SqlSimpleColumn" Name="[ui].[AddCatGetProductData].[@ProductDataResults].[DoS_Target]">
 									<Relationship Name="TypeSpecifier">
 										<Entry>
 											<Element Type="SqlTypeSpecifier">
@@ -36397,7 +36465,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlSimpleColumn" Name="[ui].[AddCatGetProductData].[@ProductDataResults].[COS_Target]">
+								<Element Type="SqlSimpleColumn" Name="[ui].[AddCatGetProductData].[@ProductDataResults].[Cases_Target]">
 									<Relationship Name="TypeSpecifier">
 										<Entry>
 											<Element Type="SqlTypeSpecifier">
@@ -36849,7 +36917,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[hier].[DOS_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[hier].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[DOS]" />
@@ -36858,7 +36926,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[hier].[COS_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[hier].[Cases_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[COS]" />
@@ -36894,7 +36962,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[hier].[Exclude_from_analysis]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[hier].[Exclude_From_Analysis]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[Exclude_From_Analysis]" />
@@ -36993,7 +37061,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[gtin].[DOS_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[gtin].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[DOS]" />
@@ -37002,7 +37070,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[gtin].[COS_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatGetProductData].[CTE1].[gtin].[Cases_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[COS]" />
@@ -37579,10 +37647,21 @@ BEGIN
     WHERE Create_Date = @MacroSpaceDate AND Location_Code = @SourceBranchNumber AND Category_Code = @NewCategoryCode;
 
     -- Populate #MacroHier
-    SELECT m.Location_Code, m.Category_Code, h.Hierarchy3_Name AS Category_Name, h.Hierarchy2_Code AS Department_Number,
-        h.Hierarchy2_Name AS Department_Name, h.FlowNumber AS Flow_Number, h.Hierarchy1_Code AS Temp_Category_Number, 
-        h.Hierarchy1_Name AS Temp_Category_Name,
-        h.DOS AS Dos_Target, h.COS AS Cases_Target, h.MinBays AS Min_Bays, h.MaxBays as Max_Bays, h.Trend, h.Exclude_from_analysis, m.Bays AS Bays
+    SELECT m.Location_Code,
+           m.Category_Code,
+           h.Hierarchy3_Name AS Category_Name,
+           h.Hierarchy2_Code AS Department_Number,
+           h.Hierarchy2_Name AS Department_Name,
+           h.FlowNumber AS Flow_Number,
+           h.Hierarchy1_Code AS Temp_Category_Number,
+           h.Hierarchy1_Name AS Temp_Category_Name,
+           h.DOS AS DoS_Target,
+           h.COS AS Cases_Target,
+           h.MinBays AS Min_Bays,
+           h.MaxBays AS Max_Bays,
+           h.Trend,
+           h.Exclude_From_Analysis,
+           m.Bays AS Bays
     INTO #MacroHier
     FROM HierarchyDetail h
     JOIN #Macro m 
@@ -37609,7 +37688,7 @@ BEGIN
         mh.Temp_Category_Number,
         mh.Temp_Category_Name,
         mh.Trend, 
-        mh.Dos_Target, 
+        mh.DoS_Target, 
         mh.Cases_Target
         FROM #Micro ms
         JOIN #MacroHier mh ON ms.Category_Code = mh.Category_Code
@@ -37628,7 +37707,7 @@ BEGIN
     g.Temp_Category_Number,
     g.Temp_Category_Name,
     g.Trend, 
-    g.Dos_Target, 
+    g.DoS_Target, 
     g.Cases_Target, 
     (CAST(g.Position_TotalUnits AS FLOAT) / CAST(t.TotalUnits AS FLOAT)) AS pct_ptu
     INTO #MacroHierMicro
@@ -37645,7 +37724,7 @@ BEGIN
         u.Temp_Category_Number,
         u.Temp_Category_Name,
         u.Trend,
-        u.Dos_Target,
+        u.DoS_Target,
         u.Cases_Target,
         (p.Sales_Quantity * u.pct_ptu) AS Sales_Quantity,
         (p.Sales_Value * u.pct_ptu) AS Sales_Value,
@@ -37669,10 +37748,10 @@ BEGIN
     ALTER TABLE #Products
     ADD 
         DOS FLOAT, 
-        Dos_Target_Units FLOAT, 
+        DoS_Target_Units FLOAT, 
         Cases_Target_Units FLOAT, 
         Units_Required INT,
-        Dos_Units_Required INT,
+        DoS_Units_Required INT,
         Facings_Required FLOAT;
 
     UPDATE #Products
@@ -37681,8 +37760,8 @@ BEGIN
         THEN 0 ELSE Position_TotalUnits / (CAST(Sales_Quantity AS FLOAT) / @DaysTrading) END;
 
     UPDATE #Products
-    SET Dos_Target_Units = CASE WHEN Sales_Quantity = 0 THEN 0 
-    ELSE (Sales_Quantity / @DaysTrading) * Dos_Target END;
+    SET DoS_Target_Units = CASE WHEN Sales_Quantity = 0 THEN 0 
+    ELSE (Sales_Quantity / @DaysTrading) * DoS_Target END;
 
 
     UPDATE #Products 
@@ -37730,8 +37809,8 @@ BEGIN
         0.001 AS Bays,
         mh.Min_Bays,
         mh.Max_Bays,
-        'N' AS Exclude_from_analysis,
-        mh.Dos_Target,
+        'N' AS Exclude_From_Analysis,
+        mh.DoS_Target,
         mh.Cases_Target,
         0.001 AS Org_Bays
     INTO #Category
@@ -37743,14 +37822,14 @@ BEGIN
     WITH TargetSums AS (
         SELECT 
             Category_Code, 
-            ROUND(AVG(Dos_Target), 2) AS AvgDosTarget, 
+            ROUND(AVG(DoS_Target), 2) AS AvgDoSTarget, 
             ROUND(AVG(Cases_Target), 2) AS AvgCasesTarget 
         FROM #Products 
         GROUP BY Category_Code
     )
     UPDATE sc
     SET
-        sc.Dos_Target = ts.AvgDosTarget,
+        sc.DoS_Target = ts.AvgDoSTarget,
         sc.Cases_Target = ts.AvgCasesTarget
     FROM #Category sc
     JOIN TargetSums ts ON sc.Category_Code = ts.Category_Code;
@@ -37930,12 +38009,12 @@ BEGIN
     Temp_Projected_Org_Sales_Less_Waste = 0;
 
 
-    UPDATE #category
+    UPDATE #Category
     SET 
-        Exclude_from_analysis = 
+        Exclude_From_Analysis = 
         CASE 
-            WHEN Exclude_from_analysis = 'Y' THEN 1
-            WHEN Exclude_from_analysis = 'N' THEN 0
+            WHEN Exclude_From_Analysis = 'Y' THEN 1
+            WHEN Exclude_From_Analysis = 'N' THEN 0
             ELSE 0 -- Optional: Handle unexpected values if necessary
         END;
 
@@ -38281,7 +38360,7 @@ END;]]></Value>
 					<References Name="[ui].[AddCatToCore].[#MacroHier].[Trend]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]" />
+					<References Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[AddCatToCore].[#MacroHier].[Cases_Target]" />
@@ -38326,7 +38405,7 @@ END;]]></Value>
 					<References Name="[ui].[AddCatToCore].[#MacroHier].[Trend]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]" />
+					<References Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[AddCatToCore].[#MacroHier].[Cases_Target]" />
@@ -38374,7 +38453,7 @@ END;]]></Value>
 					<References Name="[ui].[AddCatToCore].[#MacroHierMicro].[Trend]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#MacroHierMicro].[Dos_Target]" />
+					<References Name="[ui].[AddCatToCore].[#MacroHierMicro].[DoS_Target]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[AddCatToCore].[#MacroHierMicro].[Cases_Target]" />
@@ -38448,7 +38527,7 @@ END;]]></Value>
 				</Entry>
 				<Entry />
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#Products].[Dos_Target]" />
+					<References Name="[ui].[AddCatToCore].[#Products].[DoS_Target]" />
 				</Entry>
 				<Entry />
 				<Entry>
@@ -38545,7 +38624,7 @@ END;]]></Value>
 					<References Name="[ui].[AddCatToCore].[#MacroHier].[Max_Bays]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]" />
+					<References Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[AddCatToCore].[#MacroHier].[Cases_Target]" />
@@ -38563,7 +38642,7 @@ END;]]></Value>
 					<References Name="[ui].[AddCatToCore].[#Products].[Category_Code]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#Category].[Dos_Target]" />
+					<References Name="[ui].[AddCatToCore].[#Category].[DoS_Target]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[AddCatToCore].[#Category].[Cases_Target]" />
@@ -38989,7 +39068,7 @@ END;]]></Value>
 				<Entry />
 				<Entry />
 				<Entry>
-					<References Name="[ui].[AddCatToCore].[#Category].[Exclude_from_analysis]" />
+					<References Name="[ui].[AddCatToCore].[#Category].[Exclude_From_Analysis]" />
 				</Entry>
 				<Entry>
 					<References Name="[dbo].[MSO_Reports]" />
@@ -39470,7 +39549,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[DOS]" />
@@ -39515,7 +39594,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHier].[Exclude_from_analysis]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHier].[Exclude_From_Analysis]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
 											<References Name="[dbo].[HierarchyDetail].[Exclude_From_Analysis]" />
@@ -39665,10 +39744,10 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[CTE1].[CTE_Gtin].[Dos_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[CTE1].[CTE_Gtin].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]" />
+											<References Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -39800,10 +39879,10 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHierMicro].[Dos_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHierMicro].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]" />
+											<References Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -39908,10 +39987,10 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHierMicroPerfAvg].[Dos_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#MacroHierMicroPerfAvg].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[AddCatToCore].[#MacroHierMicro].[Dos_Target]" />
+											<References Name="[ui].[AddCatToCore].[#MacroHierMicro].[DoS_Target]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -40061,10 +40140,10 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#Products].[Dos_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#Products].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[AddCatToCore].[#MacroHierMicroPerfAvg].[Dos_Target]" />
+											<References Name="[ui].[AddCatToCore].[#MacroHierMicroPerfAvg].[DoS_Target]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -40337,13 +40416,13 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#Category].[Exclude_from_analysis]" />
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#Category].[Exclude_From_Analysis]" />
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#Category].[Dos_Target]">
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[#Category].[DoS_Target]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[AddCatToCore].[#MacroHier].[Dos_Target]" />
+											<References Name="[ui].[AddCatToCore].[#MacroHier].[DoS_Target]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -40376,7 +40455,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[CTE2].[TargetSums].[AvgDosTarget]" />
+								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[CTE2].[TargetSums].[AvgDoSTarget]" />
 							</Entry>
 							<Entry>
 								<Element Type="SqlComputedColumn" Name="[ui].[AddCatToCore].[CTE2].[TargetSums].[AvgCasesTarget]" />
@@ -40509,7 +40588,7 @@ END;]]></Value>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
 				<Property Name="CreateOffset" Value="2" />
-				<Property Name="Length" Value="16787" />
+				<Property Name="Length" Value="16927" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE PROCEDURE [ui].[AddCatToCore]&#xD;&#xA;    @UserID INT = NULL,&#xD;&#xA;    @ReportID INT = NULL,&#xD;&#xA;    @NewCategoryCode INT,&#xD;&#xA;    @SourceBranchNumber INT,&#xD;&#xA;    @ResultCode INT OUTPUT,&#xD;&#xA;    @SQL_Success BIT OUTPUT,&#xD;&#xA;    @SQL_Message NVARCHAR(255) OUTPUT&#xD;&#xA;&#xD;&#xA;AS" />
@@ -40600,12 +40679,18 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[AddDatabaseUser].[@SQL_Message]" />
 				</Entry>
-				<Entry />
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[database_principals]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[database_principals].[name]" />
+				</Entry>
 				<Entry>
 					<References Name="[ui].[AddDatabaseUser].[@UserName]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
@@ -46089,8 +46174,12 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[HierMan2_GetActiveVersions].[@SQL_Message]" />
 				</Entry>
-				<Entry />
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[tables]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[tables].[name]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[HierarchyVersion]" />
 				</Entry>
@@ -46252,8 +46341,12 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[HierMan2_GetAllVersions].[@SQL_Message]" />
 				</Entry>
-				<Entry />
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[tables]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[tables].[name]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[HierarchyVersion]" />
 				</Entry>
@@ -53905,15 +53998,21 @@ END;]]></Value>
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
 				</Entry>
-				<Entry />
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[tables]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[tables].[name]" />
+				</Entry>
 				<Entry>
 					<References Name="[ui].[New_BaysReccDiff].[@BayReccDiff]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[New_BaysReccDiff].[@Granularity]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 			</Relationship>
 			<Relationship Name="Parameters">
 				<Entry>
@@ -54279,7 +54378,7 @@ BEGIN
                     LEN(CAST(Date_ID AS VARCHAR(10))) - 4         -- Remainder = Week number
                 )
              ) AS PerfDateTxt
-        FROM dbo.PerfMax
+    FROM dbo.Perfmax
         WHERE Location_Code = @LocationCode
         ORDER BY CAST(Date_ID AS INT) DESC;
 
@@ -54364,16 +54463,24 @@ END;]]></Value>
 				<Entry>
 					<References Name="[dbo].[MacroSnapShot]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References Name="[dbo].[vw_Calendar]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[MacroSnapShot].[Create_Date]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References Name="[dbo].[vw_Calendar].[CalendarDate]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[MacroSnapShot].[Create_Date]" />
 				</Entry>
-				<Entry />
-				<Entry />
+				<Entry>
+					<References Name="[dbo].[vw_Calendar].[SQL_Date_YYYYMMDD]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[vw_Calendar].[DateTxtMed]" />
+				</Entry>
 				<Entry>
 					<References Name="[dbo].[MacroSnapShot].[Location_Code]" />
 				</Entry>
@@ -54456,7 +54563,7 @@ END;]]></Value>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
 				<Property Name="CreateOffset" Value="2" />
-				<Property Name="Length" Value="3098" />
+				<Property Name="Length" Value="3094" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE   PROCEDURE [ui].[New_GetPerfAndMacroDatesForLocation]&#xD;&#xA;(&#xD;&#xA;    @LocationCode INT,&#xD;&#xA;    @SQL_Success  BIT           OUTPUT,&#xD;&#xA;    @SQL_Message  VARCHAR(200)  OUTPUT&#xD;&#xA;)&#xD;&#xA;AS" />
@@ -56014,7 +56121,9 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[RefreshScopeCheckNEW].[@ReportID]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 				<Entry>
 					<References Name="[ui].[RefreshScopeCheckNEW].[@CoreTables]" />
 				</Entry>
@@ -56271,7 +56380,9 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[ReportsGetDetails].[@Filter_LocName]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[nvarchar]" />
 				</Entry>
@@ -59390,7 +59501,7 @@ END;
             h.MaxBays AS Max_Bays,
             ISNULL(h.BayRoundingThreshold, @BayRoundingThreshold) AS BayRoundingThreshold,
             h.Trend, 
-            CASE WHEN h.Exclude_from_analysis = 'Y' THEN 1 ELSE 0 END AS Exclude_from_analysis,
+            CASE WHEN h.Exclude_From_Analysis = 'Y' THEN 1 ELSE 0 END AS Exclude_From_Analysis,
             m.Bays
         INTO #MacroHier
         FROM dbo.HierarchyDetail h
@@ -59553,7 +59664,7 @@ END;
             mh.BayRoundingThreshold,
             mh.DoS_Target,
             mh.Cases_Target,
-            mh.Exclude_from_analysis,
+            mh.Exclude_From_Analysis,
             ps.Sales_Quantity,
             ps.Sales_Value,
             ps.Profit_Value,
@@ -59752,7 +59863,7 @@ END;
             GROUP BY Category_Code
         )
         UPDATE cc
-           SET cc.Dos_Target = ts.AvgDosTarget,
+           SET cc.DoS_Target = ts.AvgDosTarget,
                cc.Cases_Target = ts.AvgCasesTarget
         FROM #Category cc
         JOIN TargetSums ts ON cc.Category_Code = ts.Category_Code;
@@ -59817,7 +59928,7 @@ END;
             Bays,
             Min_Bays,
             Max_Bays,
-            Exclude_from_analysis,
+            Exclude_From_Analysis AS Exclude_from_analysis,
             DoS_Target,
             Cases_Target,
             Org_Bays,
@@ -60584,7 +60695,7 @@ END;]]></Value>
 					<References Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Cases_Target]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Exclude_from_analysis]" />
+					<References Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Exclude_From_Analysis]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[StoreGenerateCore-NHV1].[#MacroHierMicroPerfAvgSumGrp].[Sales_Quantity]" />
@@ -61476,7 +61587,7 @@ END;]]></Value>
 					<References Name="[ui].[StoreGenerateCore-NHV1].[#Category_final].[Max_Bays]" />
 				</Entry>
 				<Entry>
-					<References Name="[ui].[StoreGenerateCore-NHV1].[#Category_final].[Exclude_from_analysis]" />
+					<References Name="[ui].[StoreGenerateCore-NHV1].[#Category_final].[Exclude_From_Analysis]" />
 				</Entry>
 				<Entry>
 					<References Name="[ui].[StoreGenerateCore-NHV1].[#Category_final].[DoS_Target]" />
@@ -62081,7 +62192,7 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Exclude_from_analysis]" />
+								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Exclude_From_Analysis]" />
 							</Entry>
 							<Entry>
 								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Bays]">
@@ -62768,10 +62879,10 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#Category].[Exclude_from_analysis]">
+								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#Category].[Exclude_From_Analysis]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Exclude_from_analysis]" />
+											<References Name="[ui].[StoreGenerateCore-NHV1].[#MacroHier].[Exclude_From_Analysis]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -63038,10 +63149,10 @@ END;]]></Value>
 								</Element>
 							</Entry>
 							<Entry>
-								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#Category_final].[Exclude_from_analysis]">
+								<Element Type="SqlComputedColumn" Name="[ui].[StoreGenerateCore-NHV1].[#Category_final].[Exclude_From_Analysis]">
 									<Relationship Name="ExpressionDependencies">
 										<Entry>
-											<References Name="[ui].[StoreGenerateCore-NHV1].[#Category].[Exclude_from_analysis]" />
+											<References Name="[ui].[StoreGenerateCore-NHV1].[#Category].[Exclude_From_Analysis]" />
 										</Entry>
 									</Relationship>
 								</Element>
@@ -63225,7 +63336,7 @@ END;]]></Value>
 				</Entry>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
-				<Property Name="Length" Value="32584" />
+				<Property Name="Length" Value="32609" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="CREATE PROCEDURE [ui].[StoreGenerateCore-NHV1]&#xD;&#xA;    @UserID INT = NULL,&#xD;&#xA;    @ReportID INT = NULL,&#xD;&#xA;    @SQL_Success BIT OUTPUT,&#xD;&#xA;    @SQL_Message VARCHAR(255) OUTPUT,&#xD;&#xA;    @Output_Report NVARCHAR(MAX) OUTPUT&#xD;&#xA;AS" />
@@ -63847,7 +63958,9 @@ END]]></Value>
 				<Entry>
 					<References Name="[ui].[StoreGenerateStore-NHV1].[@OverrideRules].[ValueToSet]" />
 				</Entry>
-				<Entry />
+				<Entry>
+					<References ExternalSource="master.dacpac" Name="[master]|[sys].[sp_executesql]" />
+				</Entry>
 				<Entry />
 				<Entry />
 				<Entry>
@@ -64661,10 +64774,10 @@ BEGIN
     DECLARE @InsertedUsers TABLE (MyID INT); -- Table variable to capture inserted MyID
 
     -- Insert a new user and capture the new MyID into the table variable
-    INSERT INTO Users (MyID, DisplayName, Email, IsOSPAdmin, Status, FunctionalUser, AdminUser, BlockAccess, O365Email, MFA_Mobile, ColourMode, HierarchyMaintenance)
+    INSERT INTO dbo.Users (MyID, DisplayName, Email, IsOSPAdmin, Status, FunctionalUser, AdminUser, BlockAccess, O365Email, MFA_Mobile, ColourMode, HierarchyMaintenance)
     OUTPUT INSERTED.MyID INTO @InsertedUsers(MyID) -- Capture the newly inserted MyID into the table variable
     VALUES (
-        (SELECT MAX(CAST(MyID AS INT)) + 1 FROM Users),  -- Auto-generate MyID by incrementing the current maximum
+    (SELECT MAX(CAST(MyID AS INT)) + 1 FROM dbo.Users),  -- Auto-generate MyID by incrementing the current maximum
         @DisplayName,
         @Email,
         @IsOSPAdmin,
@@ -64734,9 +64847,6 @@ END;]]></Value>
 					<References Name="[dbo].[Users].[HierarchyMaintenance]" />
 				</Entry>
 				<Entry>
-					<References Name="[dbo].[Users]" />
-				</Entry>
-				<Entry>
 					<References ExternalSource="BuiltIns" Name="[int]" />
 				</Entry>
 				<Entry>
@@ -64775,7 +64885,6 @@ END;]]></Value>
 				<Entry>
 					<References Name="[ui].[UserManAddUser].[@HierarchyMaintenance]" />
 				</Entry>
-				<Entry />
 				<Entry>
 					<References Name="[ui].[UserManAddUser].[@UserID]" />
 				</Entry>
@@ -65071,7 +65180,7 @@ END;]]></Value>
 			</Relationship>
 			<Annotation Type="SysCommentsObjectAnnotation">
 				<Property Name="CreateOffset" Value="2" />
-				<Property Name="Length" Value="1877" />
+				<Property Name="Length" Value="1881" />
 				<Property Name="StartLine" Value="1" />
 				<Property Name="StartColumn" Value="1" />
 				<Property Name="HeaderContents" Value="&#xD;&#xA;CREATE PROCEDURE [ui].[UserManAddUser]&#xD;&#xA;    @FunctionalUserStatus INT = NULL,&#xD;&#xA;    @DisplayName VARCHAR(255) = NULL,&#xD;&#xA;    @Email VARCHAR(255) = NULL,&#xD;&#xA;    @IsOSPAdmin BIT = NULL,&#xD;&#xA;    @Status VARCHAR(24) = NULL,&#xD;&#xA;    @AdminUser INT = NULL,&#xD;&#xA;    @BlockAccess INT = NULL,&#xD;&#xA;    @O365Email NVARCHAR(MAX) = NULL,&#xD;&#xA;    @MFA_Mobile VARCHAR(24) = NULL,&#xD;&#xA;    @ColourMode CHAR(1) = 'L',&#xD;&#xA;    @HierarchyMaintenance BIT = NULL,&#xD;&#xA;    @UserID INT OUTPUT,  -- Output parameter for new UserID&#xD;&#xA;    @SQL_Success BIT OUTPUT,&#xD;&#xA;    @SQL_Message NVARCHAR(100) OUTPUT&#xD;&#xA;AS" />

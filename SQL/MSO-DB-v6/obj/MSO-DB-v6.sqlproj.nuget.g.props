@@ -12,4 +12,7 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\ShaunBrown\.nuget\packages\" />
   </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgMicrosoft_SqlServer_Dacpacs_Azure_Master Condition=" '$(PkgMicrosoft_SqlServer_Dacpacs_Azure_Master)' == '' ">C:\Users\ShaunBrown\.nuget\packages\microsoft.sqlserver.dacpacs.azure.master\160.0.0</PkgMicrosoft_SqlServer_Dacpacs_Azure_Master>
+  </PropertyGroup>
 </Project>

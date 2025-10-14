@@ -25,10 +25,10 @@ BEGIN
     DECLARE @InsertedUsers TABLE (MyID INT); -- Table variable to capture inserted MyID
 
     -- Insert a new user and capture the new MyID into the table variable
-    INSERT INTO Users (MyID, DisplayName, Email, IsOSPAdmin, Status, FunctionalUser, AdminUser, BlockAccess, O365Email, MFA_Mobile, ColourMode, HierarchyMaintenance)
+    INSERT INTO dbo.Users (MyID, DisplayName, Email, IsOSPAdmin, Status, FunctionalUser, AdminUser, BlockAccess, O365Email, MFA_Mobile, ColourMode, HierarchyMaintenance)
     OUTPUT INSERTED.MyID INTO @InsertedUsers(MyID) -- Capture the newly inserted MyID into the table variable
     VALUES (
-        (SELECT MAX(CAST(MyID AS INT)) + 1 FROM Users),  -- Auto-generate MyID by incrementing the current maximum
+    (SELECT MAX(CAST(MyID AS INT)) + 1 FROM dbo.Users),  -- Auto-generate MyID by incrementing the current maximum
         @DisplayName,
         @Email,
         @IsOSPAdmin,
