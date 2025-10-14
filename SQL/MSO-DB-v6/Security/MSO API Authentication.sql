@@ -1,0 +1,5 @@
+CREATE USER [MSO API Authentication] FOR EXTERNAL PROVIDER;
+
+
+GO
+

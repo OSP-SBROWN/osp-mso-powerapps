@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="1.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- === CONNECTION INFO === -->
+    <!-- Replace these values with your actual details -->
+<TargetConnectionString>
+  Data Source=tcp:sql-mso-dev-uksouth-001.database.windows.net,1433;
+  Initial Catalog=your-db;
+  Authentication=Active Directory Default;
+  Encrypt=True;
+  TrustServerCertificate=False;
+</TargetConnectionString>
+
+    <!-- === DEPLOYMENT OPTIONS === -->
+    <TargetDatabaseName>mso-apidev-001</TargetDatabaseName>
+    <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
+    <DropObjectsNotInSource>False</DropObjectsNotInSource>
+    <DeployDatabaseInSingleUserMode>False</DeployDatabaseInSingleUserMode>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <CreateNewDatabase>False</CreateNewDatabase>
+
+    <!-- === SCRIPT OUTPUT === -->
+    <!-- When you deploy, a script will be generated here -->
+    <DeployScriptFileName>$(MSBuildProjectDirectory)\PublishOutput\Azure-Publish.sql</DeployScriptFileName>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+  </PropertyGroup>
+</Project>

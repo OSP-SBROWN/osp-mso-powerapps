@@ -1,0 +1,5 @@
+CREATE USER [mso-backend-api] FOR EXTERNAL PROVIDER;
+
+
+GO
+

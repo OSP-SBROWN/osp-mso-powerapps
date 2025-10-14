@@ -1,0 +1,5 @@
+CREATE USER [MSO-Developers] FOR EXTERNAL PROVIDER;
+
+
+GO
+

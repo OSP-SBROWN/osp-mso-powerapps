@@ -1,0 +1,6 @@
+CREATE SCHEMA [Ver_001]
+    AUTHORIZATION [dbo];
+
+
+GO
+

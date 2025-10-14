@@ -1,0 +1,5 @@
+{
+    "dataworkspace.excludedProjects": [
+        "SQL/PowerAppsV6/PowerAppsV6.sqlproj"
+    ]
+}

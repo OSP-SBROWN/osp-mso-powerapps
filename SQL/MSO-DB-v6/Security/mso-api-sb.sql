@@ -1,0 +1,5 @@
+CREATE USER [mso-api-sb] FOR EXTERNAL PROVIDER;
+
+
+GO
+

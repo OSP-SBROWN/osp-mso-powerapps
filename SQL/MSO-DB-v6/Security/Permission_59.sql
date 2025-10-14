@@ -1,0 +1,6 @@
+GRANT INSERT
+    ON SCHEMA::[dbo] TO [nayaa.owusu@osp-retail.co.uk];
+
+
+GO
+

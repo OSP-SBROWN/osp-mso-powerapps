@@ -1,0 +1,12 @@
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.dacpac
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.GeneratedMSBuildEditorConfig.editorconfig
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.sourcelink.json
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\Model.xml
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\refactor.xml
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\postdeploy.sql
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\predeploy.sql
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.dll
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\obj\Debug\MSO-DB-v6.pdb
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.deps.json
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.dll
+c:\VS-Code\OSP\MSO - October Power Apps Refresh\MSO-October2025\SQL\MSO-DB-v6\bin\Debug\MSO-DB-v6.pdb

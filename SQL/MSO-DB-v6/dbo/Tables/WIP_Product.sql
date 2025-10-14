@@ -1,0 +1,32 @@
+CREATE TABLE [dbo].[WIP_Product] (
+    [ProductVersionNumber] INT            NOT NULL,
+    [ProductVersionDate]   INT            NOT NULL,
+    [Product_Code]         INT            NOT NULL,
+    [Primary_H3_Code]      INT            NOT NULL,
+    [Product_Name]         NVARCHAR (510) NULL,
+    [Unit_Height]          FLOAT (53)     NULL,
+    [Unit_Width]           FLOAT (53)     NULL,
+    [Unit_Depth]           FLOAT (53)     NULL,
+    [Tray_Height]          FLOAT (53)     NULL,
+    [Tray_Width]           FLOAT (53)     NULL,
+    [Tray_Dept]            FLOAT (53)     NULL,
+    [Tray_Units_H]         INT            NULL,
+    [Tray_Units_W]         INT            NULL,
+    [Tray_Units_D]         INT            NULL,
+    [Tray_Units_Total]     INT            NOT NULL,
+    [Case_Height]          FLOAT (53)     NULL,
+    [Case_Width]           FLOAT (53)     NULL,
+    [Case_Dept]            FLOAT (53)     NULL,
+    [Case_Units_H]         INT            NULL,
+    [Case_Units_W]         INT            NULL,
+    [Case_Units_D]         INT            NULL,
+    [Case_Units_Total]     INT            NOT NULL,
+    [Unit_CostPrice]       FLOAT (53)     NULL,
+    [Unit_SellPrice]       FLOAT (53)     NULL,
+    [Tray_CostPrice]       FLOAT (53)     NULL,
+    [Tray_SellPrice]       FLOAT (53)     NULL,
+    [Case_CostPrice]       FLOAT (53)     NULL,
+    [Case_SellPrice]       FLOAT (53)     NULL
+);
+GO
+
