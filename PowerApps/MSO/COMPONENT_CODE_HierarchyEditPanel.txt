@@ -1,0 +1,334 @@
+===========================================
+HIERARCHY EDIT PANEL COMPONENT - MANUAL CREATION INSTRUCTIONS
+===========================================
+
+IMPORTANT: Power Apps components cannot be created directly from YAML files outside the Power Apps Studio environment.
+You must create this component manually in Power Apps Studio.
+
+===========================================
+STEP 1: CREATE COMPONENT IN POWER APPS STUDIO
+===========================================
+
+1. Open your Power App in Power Apps Studio
+2. In the left navigation, click on the "Components" icon (looks like puzzle pieces)
+3. Click "+ New component"
+4. Rename it to "HierarchyEditPanel"
+5. Set Width = 400, Height = 720
+
+===========================================
+STEP 2: ADD CUSTOM INPUT PROPERTIES
+===========================================
+
+In the component properties panel (right side), add these Custom Input Properties:
+
+1. HierarchyLevel (Text)
+   - Default: "H3"
+   - Description: "H1, H2, or H3"
+
+2. SelectedItem (Record)
+   - Default: Blank()
+   - Description: "The record being edited"
+
+3. ParentItem (Record)
+   - Default: Blank()
+   - Description: "Parent hierarchy record"
+
+4. GrandparentItem (Record)
+   - Default: Blank()
+   - Description: "Grandparent record (H3 only)"
+
+5. VersionID (Number)
+   - Default: 0
+   - Description: "Version ID"
+
+6. IsVisible (Boolean)
+   - Default: false
+   - Description: "Component visibility"
+
+7. PanelTitle (Text)
+   - Default: "Edit Item"
+   - Description: "Panel header title"
+
+===========================================
+STEP 3: ADD CUSTOM OUTPUT PROPERTIES
+===========================================
+
+Add these Custom Output Properties:
+
+1. OnSaveOutput (Boolean)
+   - Default: false
+   - Description: "Save button clicked"
+
+2. OnCancelOutput (Boolean)
+   - Default: false
+   - Description: "Cancel button clicked"
+
+===========================================
+STEP 4: BUILD THE COMPONENT UI
+===========================================
+
+Add these controls to your component:
+
+A) CONTAINER (Vertical Auto-Layout Container)
+   Name: cont_Panel
+   - Fill: White
+   - DropShadow: Light
+   - Padding: 16 all sides
+   - LayoutGap: 16
+   - Visible: HierarchyEditPanel.IsVisible
+
+B) TITLE LABEL
+   Name: lbl_Title
+   - Text: HierarchyEditPanel.PanelTitle
+   - FontWeight: Semibold
+   - Size: 16
+   - Align: Center
+
+C) CODE TEXT INPUT
+   Name: txt_Code
+   - HintText: "Code"
+   - Default: 
+     If(IsBlank(HierarchyEditPanel.SelectedItem), "", 
+         Switch(HierarchyEditPanel.HierarchyLevel,
+             "H1", HierarchyEditPanel.SelectedItem.Hierarchy1_Code,
+             "H2", HierarchyEditPanel.SelectedItem.Hierarchy2_Code,
+             "H3", HierarchyEditPanel.SelectedItem.Hierarchy3_Code,
+             ""
+         ))
+   - DisplayMode: If(IsBlank(HierarchyEditPanel.SelectedItem), DisplayMode.Edit, DisplayMode.View)
+
+D) NAME TEXT INPUT
+   Name: txt_Name
+   - HintText: "Name"
+   - Default:
+     If(IsBlank(HierarchyEditPanel.SelectedItem), "", 
+         Switch(HierarchyEditPanel.HierarchyLevel,
+             "H1", HierarchyEditPanel.SelectedItem.Hierarchy1_Name,
+             "H2", HierarchyEditPanel.SelectedItem.Hierarchy2_Name,
+             "H3", HierarchyEditPanel.SelectedItem.Hierarchy3_Name,
+             ""
+         ))
+
+E) FLOW NUMBER TEXT INPUT (H3 only)
+   Name: txt_FlowNumber
+   - HintText: "Flow Number"
+   - Visible: HierarchyEditPanel.HierarchyLevel = "H3"
+   - Default: 
+     If(HierarchyEditPanel.HierarchyLevel = "H3" && !IsBlank(HierarchyEditPanel.SelectedItem), 
+         Text(HierarchyEditPanel.SelectedItem.FlowNumber), "")
+
+F) SECTION HEADER
+   Name: lbl_CascadingSection
+   - Text: "Cascading Settings (leave blank to inherit)"
+   - FontWeight: Semibold
+   - Size: 14
+
+===========================================
+STEP 5: ADD CASCADING FIELDS (6 NUMBER INPUTS)
+===========================================
+
+For each field, create a Horizontal Container with NumberInput + Clear Button:
+
+1. MIN BAYS
+   Container: cont_MinBays
+   NumberInput: txt_MinBays
+   - HintText: "Min Bays"
+   - DecimalPlaces: 1
+   - Min: 0, Max: 999
+   - Width: 320
+   - Value:
+     If(!IsBlank(HierarchyEditPanel.SelectedItem),
+         Coalesce(
+             Switch(HierarchyEditPanel.HierarchyLevel,
+                 "H1", HierarchyEditPanel.SelectedItem.MinBays,
+                 "H2", HierarchyEditPanel.SelectedItem.MinBays,
+                 "H3", HierarchyEditPanel.SelectedItem.MinBays
+             ),
+             If(HierarchyEditPanel.HierarchyLevel = "H3", 
+                 Coalesce(HierarchyEditPanel.ParentItem.MinBays, HierarchyEditPanel.GrandparentItem.MinBays, 0),
+                 If(HierarchyEditPanel.HierarchyLevel = "H2",
+                     Coalesce(HierarchyEditPanel.ParentItem.MinBays, 0),
+                     0
+                 )
+             )
+         ), Blank())
+   
+   - BorderColor:
+     If(IsBlank(txt_MinBays.Value) || txt_MinBays.Value = 
+         If(HierarchyEditPanel.HierarchyLevel = "H3", 
+             Coalesce(HierarchyEditPanel.ParentItem.MinBays, HierarchyEditPanel.GrandparentItem.MinBays, 0),
+             If(HierarchyEditPanel.HierarchyLevel = "H2",
+                 Coalesce(HierarchyEditPanel.ParentItem.MinBays, 0),
+                 0
+             )),
+         RGBA(0, 128, 0, 1), 
+         RGBA(0, 0, 0, 0.2))
+   
+   Button: btn_ClearMinBays
+   - Icon: Icon.Trash
+   - OnSelect: Reset(txt_MinBays)
+   - Width: 40
+
+2. MAX BAYS (same pattern, change defaults to 999)
+3. DAYS ON SITE (default 365)
+4. CAPACITY ON SITE (default 85, Max: 100)
+5. BAY ROUNDING THRESHOLD (default 0.5, Max: 1)
+6. TREND (DecimalPlaces: 3, default 0, Min: -99.999, Max: 99.999)
+
+===========================================
+STEP 6: ADD EXCLUDE TOGGLE
+===========================================
+
+Container: cont_Exclude (Horizontal)
+
+Toggle: tog_Exclude
+- Checked:
+  If(!IsBlank(HierarchyEditPanel.SelectedItem),
+      Coalesce(
+          Switch(HierarchyEditPanel.HierarchyLevel,
+              "H1", HierarchyEditPanel.SelectedItem.Exclude = "Y",
+              "H2", HierarchyEditPanel.SelectedItem.Exclude = "Y",
+              "H3", HierarchyEditPanel.SelectedItem.Exclude = "Y"
+          ),
+          If(HierarchyEditPanel.HierarchyLevel = "H3", 
+              Coalesce(HierarchyEditPanel.ParentItem.Exclude = "Y", HierarchyEditPanel.GrandparentItem.Exclude = "Y", false),
+              If(HierarchyEditPanel.HierarchyLevel = "H2",
+                  Coalesce(HierarchyEditPanel.ParentItem.Exclude = "Y", false),
+                  false
+              )
+          )
+      ), false)
+
+Label: lbl_Exclude
+- Text: "Exclude from Analysis" & If(lbl_Exclude.isInherited, " (Inherited)", "")
+- isInherited (Custom Property):
+  !tog_Exclude.Checked && 
+  If(HierarchyEditPanel.HierarchyLevel = "H3",
+      Coalesce(HierarchyEditPanel.ParentItem.Exclude = "Y", HierarchyEditPanel.GrandparentItem.Exclude = "Y", false),
+      If(HierarchyEditPanel.HierarchyLevel = "H2",
+          HierarchyEditPanel.ParentItem.Exclude = "Y",
+          false
+      )
+  )
+
+===========================================
+STEP 7: ADD METRICS SLIDERS (4 sliders)
+===========================================
+
+Section Header:
+- Text: "Metrics (must sum to 100% or leave all blank)"
+
+For each metric (1-4):
+
+Label: lbl_Metric1
+- Text: "Metric 1: " & Round(sld_Metric1.Value, 0) & "%"
+
+Slider: sld_Metric1
+- Min: 0, Max: 100
+- Value:
+  If(!IsBlank(HierarchyEditPanel.SelectedItem),
+      Coalesce(
+          Switch(HierarchyEditPanel.HierarchyLevel,
+              "H1", HierarchyEditPanel.SelectedItem.Metric1_Pct,
+              "H2", HierarchyEditPanel.SelectedItem.Metric1_Pct,
+              "H3", HierarchyEditPanel.SelectedItem.Metric1_Pct
+          ),
+          If(HierarchyEditPanel.HierarchyLevel = "H3", 
+              Coalesce(HierarchyEditPanel.ParentItem.Metric1_Pct, HierarchyEditPanel.GrandparentItem.Metric1_Pct, 25),
+              If(HierarchyEditPanel.HierarchyLevel = "H2",
+                  Coalesce(HierarchyEditPanel.ParentItem.Metric1_Pct, 25),
+                  25
+              )
+          )
+      ), 25)
+
+- OnChange (Proportional Adjustment):
+  With({
+      delta: sld_Metric1.Value - sld_Metric1.Default,
+      sumOthers: sld_Metric2.Value + sld_Metric3.Value + sld_Metric4.Value
+  },
+      If(sumOthers > 0 && delta <> 0,
+          UpdateContext({ratio: (100 - sld_Metric1.Value) / sumOthers});
+          sld_Metric2.Value := sld_Metric2.Value * ratio;
+          sld_Metric3.Value := sld_Metric3.Value * ratio;
+          sld_Metric4.Value := sld_Metric4.Value * ratio
+      )
+  )
+
+Repeat for Metric2, Metric3, Metric4 (adjust the OnChange to redistribute from the changed slider)
+
+===========================================
+STEP 8: ADD DRIVERS SLIDERS (4 sliders)
+===========================================
+
+Same pattern as Metrics, but use Driver1_Pct through Driver4_Pct fields.
+
+===========================================
+STEP 9: ADD ACTION BUTTONS
+===========================================
+
+Container: cont_Actions (Horizontal)
+
+Button: btn_Save
+- Text: "Save"
+- OnSelect: Set(HierarchyEditPanel.OnSaveOutput, true)
+
+Button: btn_Cancel
+- Text: "Cancel"
+- OnSelect: Set(HierarchyEditPanel.OnCancelOutput, true)
+
+Button: btn_ClearAll
+- Text: "Clear All"
+- Icon: Icon.Clear
+- OnSelect:
+  Reset(txt_MinBays); Reset(txt_MaxBays); Reset(txt_DOS); 
+  Reset(txt_COS); Reset(txt_BRT); Reset(txt_Trend);
+  Reset(sld_Metric1); Reset(sld_Metric2); Reset(sld_Metric3); Reset(sld_Metric4);
+  Reset(sld_Driver1); Reset(sld_Driver2); Reset(sld_Driver3); Reset(sld_Driver4)
+
+===========================================
+STEP 10: USE THE COMPONENT IN YOUR SCREENS
+===========================================
+
+Once created, insert the component into HierMan screen three times:
+
+For H1:
+HierarchyEditPanel_H1.HierarchyLevel = "H1"
+HierarchyEditPanel_H1.SelectedItem = SelectedH1
+HierarchyEditPanel_H1.ParentItem = Blank()
+HierarchyEditPanel_H1.GrandparentItem = Blank()
+HierarchyEditPanel_H1.IsVisible = varShowH1Edit
+HierarchyEditPanel_H1.PanelTitle = "Edit H1: " & SelectedH1.Hierarchy1_Name
+
+For H2:
+HierarchyEditPanel_H2.HierarchyLevel = "H2"
+HierarchyEditPanel_H2.SelectedItem = SelectedH2
+HierarchyEditPanel_H2.ParentItem = SelectedH1
+HierarchyEditPanel_H2.GrandparentItem = Blank()
+HierarchyEditPanel_H2.IsVisible = varShowH2Edit
+HierarchyEditPanel_H2.PanelTitle = "Edit H2: " & SelectedH2.Hierarchy2_Name
+
+For H3:
+HierarchyEditPanel_H3.HierarchyLevel = "H3"
+HierarchyEditPanel_H3.SelectedItem = SelectedH3
+HierarchyEditPanel_H3.ParentItem = SelectedH2
+HierarchyEditPanel_H3.GrandparentItem = SelectedH1
+HierarchyEditPanel_H3.IsVisible = varShowH3Edit
+HierarchyEditPanel_H3.PanelTitle = "Edit H3: " & SelectedH3.Hierarchy3_Name
+
+Monitor OnSaveOutput and OnCancelOutput to handle save/cancel actions in your screen.
+
+===========================================
+BENEFITS OF THIS COMPONENT APPROACH
+===========================================
+
+✅ Single component handles all 3 hierarchy levels
+✅ No code duplication - maintain in one place
+✅ Automatic cascading from parent/grandparent
+✅ Visual feedback (green borders when inherited)
+✅ Clear All button to reset to inherited values
+✅ Individual trash icons to clear specific fields
+✅ Proportional slider adjustment maintains 100% sum
+✅ Exclude toggle with "(Inherited)" indicator
+
+===========================================

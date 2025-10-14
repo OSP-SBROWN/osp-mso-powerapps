@@ -1,0 +1,604 @@
+ComponentDefinitions:
+  HierarchyEditPanel:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      GrandparentItem:
+        PropertyKind: Input
+        DisplayName: GrandparentItem
+        Description: Grandparent record (H3 only)
+        DataType: Record
+        Default: |-
+          ={Hierarchy1_ID: 0, Hierarchy1_Code: 0, Hierarchy1_Name: "", MinBays: 0, MaxBays: 0, DaysOnSite: 0, CapacityOnSite: 0, BayRoundingThreshold: 0, Trend: 0, Exclude: "", Metric1_Pct: 0, Metric2_Pct: 0, Metric3_Pct: 0, Metric4_Pct: 0, Driver1_Pct: 0, Driver2_Pct: 0, Driver3_Pct: 0, Driver4_Pct: 0}
+      HierarchyLevel:
+        PropertyKind: Input
+        DisplayName: HierarchyLevel
+        Description: H1, H2, or H3
+        DataType: Text
+        Default: ="H3"
+      Ht:
+        PropertyKind: Input
+        DisplayName: Ht
+        Description: Component height
+        DataType: Number
+        Default: =600
+      IsVisible:
+        PropertyKind: Input
+        DisplayName: IsVisible
+        Description: Component visibility
+        DataType: Boolean
+        Default: =true
+      OnCancelOutput:
+        PropertyKind: Output
+        DisplayName: OnCancelOutput
+        Description: Cancel button clicked
+        DataType: Boolean
+      OnSaveOutput:
+        PropertyKind: Output
+        DisplayName: OnSaveOutput
+        Description: Save button clicked
+        DataType: Boolean
+      PanelTitle:
+        PropertyKind: Input
+        DisplayName: PanelTitle
+        Description: Panel header title
+        DataType: Text
+        Default: ="Edit Item"
+      ParentItem:
+        PropertyKind: Input
+        DisplayName: ParentItem
+        Description: Parent hierarchy record
+        DataType: Record
+        Default: |-
+          ={Hierarchy2_ID: 0, Hierarchy2_Code: 0, Hierarchy2_Name: "", ParentHierarchy_ID: 0, MinBays: 0, MaxBays: 0, DaysOnSite: 0, CapacityOnSite: 0, BayRoundingThreshold: 0, Trend: 0, Exclude: "", Metric1_Pct: 0, Metric2_Pct: 0, Metric3_Pct: 0, Metric4_Pct: 0, Driver1_Pct: 0, Driver2_Pct: 0, Driver3_Pct: 0, Driver4_Pct: 0}
+      SelectedItem:
+        PropertyKind: Input
+        DisplayName: SelectedItem
+        Description: The record being edited
+        DataType: Record
+        Default: |-
+          ={Hierarchy3_ID: 0, Hierarchy3_Code: 0, Hierarchy3_Name: "", ParentHierarchy_ID: 0, FlowNumber: 0, MinBays: 0, MaxBays: 0, DaysOnSite: 0, CapacityOnSite: 0, BayRoundingThreshold: 0, Trend: 0, Exclude: "", Metric1_Pct: 0, Metric2_Pct: 0, Metric3_Pct: 0, Metric4_Pct: 0, Driver1_Pct: 0, Driver2_Pct: 0, Driver3_Pct: 0, Driver4_Pct: 0}
+      VersionID:
+        PropertyKind: Input
+        DisplayName: VersionID
+        Description: Version ID
+        DataType: Number
+        Default: =100
+      Wd:
+        PropertyKind: Input
+        DisplayName: Wd
+        Description: Component width
+        DataType: Number
+        Default: =1200
+    Properties:
+      Height: =HierarchyEditPanel.Ht
+      OnCancelOutput: =false
+      OnSaveOutput: =false
+      Width: =HierarchyEditPanel.Wd
+    Children:
+    - cont_Panel:
+        Control: GroupContainer@1.3.0
+        Variant: AutoLayout
+        Properties:
+          DropShadow: =DropShadow.Light
+          Fill: =RGBA(255, 255, 255, 1)
+          Height: =Parent.Height
+          LayoutAlignItems: =LayoutAlignItems.Stretch
+          LayoutDirection: =LayoutDirection.Vertical
+          LayoutGap: =12
+          LayoutOverflowX: =LayoutOverflow.Hide
+          LayoutOverflowY: =LayoutOverflow.Scroll
+          PaddingBottom: =20
+          PaddingLeft: =20
+          PaddingRight: =20
+          PaddingTop: =20
+          Visible: =HierarchyEditPanel.IsVisible
+          Width: =Parent.Width
+        Children:
+        - lbl_Title:
+            Control: Label@2.5.1
+            Properties:
+              Align: =Align.Center
+              FontWeight: =FontWeight.Semibold
+              Height: =40
+              Size: =18
+              Text: =HierarchyEditPanel.PanelTitle
+              Width: =Parent.Width
+        - txt_Code:
+            Control: TextInput@0.0.54
+            Properties:
+              DisplayMode: =If(IsBlank(HierarchyEditPanel.SelectedItem), DisplayMode.Edit, DisplayMode.View)
+              Height: =50
+              Placeholder: ="Code"
+              Value: |-
+                =If(IsBlank(HierarchyEditPanel.SelectedItem), "", 
+                    Switch(HierarchyEditPanel.HierarchyLevel,
+                        "H1", Text(HierarchyEditPanel.SelectedItem.Hierarchy1_Code),
+                        "H2", Text(HierarchyEditPanel.SelectedItem.Hierarchy2_Code),
+                        "H3", Text(HierarchyEditPanel.SelectedItem.Hierarchy3_Code),
+                        ""
+                    ))
+              Width: =Parent.Width
+        - txt_Name:
+            Control: TextInput@0.0.54
+            Properties:
+              Height: =50
+              Placeholder: ="Name"
+              Value: |-
+                =If(IsBlank(HierarchyEditPanel.SelectedItem), "", 
+                    Switch(HierarchyEditPanel.HierarchyLevel,
+                        "H1", HierarchyEditPanel.SelectedItem.Hierarchy1_Name,
+                        "H2", HierarchyEditPanel.SelectedItem.Hierarchy2_Name,
+                        "H3", HierarchyEditPanel.SelectedItem.Hierarchy3_Name,
+                        ""
+                    ))
+              Width: =Parent.Width
+        - txt_FlowNumber:
+            Control: TextInput@0.0.54
+            Properties:
+              Height: =50
+              Placeholder: ="Flow Number"
+              Value: |-
+                =If(HierarchyEditPanel.HierarchyLevel = "H3" && !IsBlank(HierarchyEditPanel.SelectedItem), 
+                    Text(HierarchyEditPanel.SelectedItem.FlowNumber), "")
+              Visible: =HierarchyEditPanel.HierarchyLevel = "H3"
+              Width: =Parent.Width
+        - lbl_CascadingSection:
+            Control: Label@2.5.1
+            Properties:
+              FontWeight: =FontWeight.Semibold
+              Height: =30
+              Size: =14
+              Text: ="Cascading Settings (leave blank to inherit)"
+              Width: =Parent.Width
+        - cont_Row1:
+            Control: GroupContainer@1.3.0
+            Variant: AutoLayout
+            Properties:
+              Fill: =RGBA(0,0,0,0)
+              Height: =80
+              LayoutDirection: =LayoutDirection.Horizontal
+              LayoutGap: =15
+              Width: =Parent.Width
+            Children:
+            - cont_MinBays:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =220
+                Children:
+                - lbl_MinBays:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: ="Min Bays"
+                      Width: =Parent.Width
+                - txt_MinBays:
+                    Control: TextInput@0.0.54
+                    Properties:
+                      Height: =50
+                      Value: |-
+                        =Text(Coalesce(HierarchyEditPanel.SelectedItem.MinBays, HierarchyEditPanel.ParentItem.MinBays, HierarchyEditPanel.GrandparentItem.MinBays))
+                      Width: =Parent.Width
+            - cont_MaxBays:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =220
+                Children:
+                - lbl_MaxBays:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: ="Max Bays"
+                      Width: =Parent.Width
+                - txt_MaxBays:
+                    Control: TextInput@0.0.54
+                    Properties:
+                      Height: =50
+                      Value: |-
+                        =Text(Coalesce(HierarchyEditPanel.SelectedItem.MaxBays, HierarchyEditPanel.ParentItem.MaxBays, HierarchyEditPanel.GrandparentItem.MaxBays))
+                      Width: =Parent.Width
+            - cont_DaysOnSite:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =220
+                Children:
+                - lbl_DaysOnSite:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: ="Days on Site"
+                      Width: =Parent.Width
+                - txt_DaysOnSite:
+                    Control: TextInput@0.0.54
+                    Properties:
+                      Height: =50
+                      Value: |-
+                        =Text(Coalesce(HierarchyEditPanel.SelectedItem.DaysOnSite, HierarchyEditPanel.ParentItem.DaysOnSite, HierarchyEditPanel.GrandparentItem.DaysOnSite))
+                      Width: =Parent.Width
+        - cont_Row2:
+            Control: GroupContainer@1.3.0
+            Variant: AutoLayout
+            Properties:
+              Fill: =RGBA(0,0,0,0)
+              Height: =80
+              LayoutDirection: =LayoutDirection.Horizontal
+              LayoutGap: =15
+              Width: =Parent.Width
+            Children:
+            - cont_CapacityOnSite:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =220
+                Children:
+                - lbl_CapacityOnSite:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: ="Capacity on Site (%)"
+                      Width: =Parent.Width
+                - txt_CapacityOnSite:
+                    Control: TextInput@0.0.54
+                    Properties:
+                      Height: =50
+                      Value: |-
+                        =Text(Coalesce(HierarchyEditPanel.SelectedItem.CapacityOnSite, HierarchyEditPanel.ParentItem.CapacityOnSite, HierarchyEditPanel.GrandparentItem.CapacityOnSite))
+                      Width: =Parent.Width
+            - cont_BayRoundingThreshold:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =220
+                Children:
+                - lbl_BayRoundingThreshold:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: ="Bay Rounding Threshold"
+                      Width: =Parent.Width
+                - txt_BayRoundingThreshold:
+                    Control: TextInput@0.0.54
+                    Properties:
+                      Height: =50
+                      Value: |-
+                        =Text(Coalesce(HierarchyEditPanel.SelectedItem.BayRoundingThreshold, HierarchyEditPanel.ParentItem.BayRoundingThreshold, HierarchyEditPanel.GrandparentItem.BayRoundingThreshold))
+                      Width: =Parent.Width
+            - cont_Trend:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =220
+                Children:
+                - lbl_Trend:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: ="Trend"
+                      Width: =Parent.Width
+                - txt_Trend:
+                    Control: TextInput@0.0.54
+                    Properties:
+                      Height: =50
+                      Value: |-
+                        =Text(Coalesce(HierarchyEditPanel.SelectedItem.Trend, HierarchyEditPanel.ParentItem.Trend, HierarchyEditPanel.GrandparentItem.Trend))
+                      Width: =Parent.Width
+        - cont_ExcludeRow:
+            Control: GroupContainer@1.3.0
+            Variant: AutoLayout
+            Properties:
+              Fill: =RGBA(0,0,0,0)
+              Height: =70
+              LayoutDirection: =LayoutDirection.Vertical
+              LayoutGap: =5
+              Width: =Parent.Width
+            Children:
+            - lbl_Exclude:
+                Control: Label@2.5.1
+                Properties:
+                  Height: =25
+                  Size: =12
+                  Text: ="Exclude"
+                  Width: =Parent.Width
+            - tog_Exclude:
+                Control: Toggle@1.1.5
+                Properties:
+                  Checked: |-
+                    =(Coalesce(HierarchyEditPanel.SelectedItem.Exclude, HierarchyEditPanel.ParentItem.Exclude, HierarchyEditPanel.GrandparentItem.Exclude) = "Y")
+                  Height: =40
+                  Label: |-
+                    =If(IsBlank(HierarchyEditPanel.SelectedItem.Exclude), "(Inherited)", "")
+                  Width: =220
+        - lbl_MetricsSection:
+            Control: Label@2.5.1
+            Properties:
+              FontWeight: =FontWeight.Semibold
+              Height: =30
+              Size: =14
+              Text: ="Metrics Distribution (%)"
+              Width: =Parent.Width
+        - cont_MetricsRow:
+            Control: GroupContainer@1.3.0
+            Variant: AutoLayout
+            Properties:
+              Fill: =RGBA(0,0,0,0)
+              Height: =80
+              LayoutDirection: =LayoutDirection.Horizontal
+              LayoutGap: =15
+              Width: =Parent.Width
+            Children:
+            - cont_Metric1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Metric1:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Metric 1: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Metric1_Pct, HierarchyEditPanel.ParentItem.Metric1_Pct, HierarchyEditPanel.GrandparentItem.Metric1_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Metric1:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Metric1_Pct, HierarchyEditPanel.ParentItem.Metric1_Pct, HierarchyEditPanel.GrandparentItem.Metric1_Pct, 25)
+                      Width: =Parent.Width
+            - cont_Metric2:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Metric2:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Metric 2: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Metric2_Pct, HierarchyEditPanel.ParentItem.Metric2_Pct, HierarchyEditPanel.GrandparentItem.Metric2_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Metric2:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Metric2_Pct, HierarchyEditPanel.ParentItem.Metric2_Pct, HierarchyEditPanel.GrandparentItem.Metric2_Pct, 25)
+                      Width: =Parent.Width
+            - cont_Metric3:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Metric3:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Metric 3: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Metric3_Pct, HierarchyEditPanel.ParentItem.Metric3_Pct, HierarchyEditPanel.GrandparentItem.Metric3_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Metric3:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Metric3_Pct, HierarchyEditPanel.ParentItem.Metric3_Pct, HierarchyEditPanel.GrandparentItem.Metric3_Pct, 25)
+                      Width: =Parent.Width
+            - cont_Metric4:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Metric4:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Metric 4: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Metric4_Pct, HierarchyEditPanel.ParentItem.Metric4_Pct, HierarchyEditPanel.GrandparentItem.Metric4_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Metric4:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Metric4_Pct, HierarchyEditPanel.ParentItem.Metric4_Pct, HierarchyEditPanel.GrandparentItem.Metric4_Pct, 25)
+                      Width: =Parent.Width
+        - lbl_DriversSection:
+            Control: Label@2.5.1
+            Properties:
+              FontWeight: =FontWeight.Semibold
+              Height: =30
+              Size: =14
+              Text: ="Drivers Distribution (%)"
+              Width: =Parent.Width
+        - cont_DriversRow:
+            Control: GroupContainer@1.3.0
+            Variant: AutoLayout
+            Properties:
+              Fill: =RGBA(0,0,0,0)
+              Height: =80
+              LayoutDirection: =LayoutDirection.Horizontal
+              LayoutGap: =15
+              Width: =Parent.Width
+            Children:
+            - cont_Driver1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Driver1:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Driver 1: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Driver1_Pct, HierarchyEditPanel.ParentItem.Driver1_Pct, HierarchyEditPanel.GrandparentItem.Driver1_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Driver1:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Driver1_Pct, HierarchyEditPanel.ParentItem.Driver1_Pct, HierarchyEditPanel.GrandparentItem.Driver1_Pct, 25)
+                      Width: =Parent.Width
+            - cont_Driver2:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Driver2:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Driver 2: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Driver2_Pct, HierarchyEditPanel.ParentItem.Driver2_Pct, HierarchyEditPanel.GrandparentItem.Driver2_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Driver2:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Driver2_Pct, HierarchyEditPanel.ParentItem.Driver2_Pct, HierarchyEditPanel.GrandparentItem.Driver2_Pct, 25)
+                      Width: =Parent.Width
+            - cont_Driver3:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Driver3:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Driver 3: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Driver3_Pct, HierarchyEditPanel.ParentItem.Driver3_Pct, HierarchyEditPanel.GrandparentItem.Driver3_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Driver3:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Driver3_Pct, HierarchyEditPanel.ParentItem.Driver3_Pct, HierarchyEditPanel.GrandparentItem.Driver3_Pct, 25)
+                      Width: =Parent.Width
+            - cont_Driver4:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  Width: =270
+                Children:
+                - lbl_Driver4:
+                    Control: Label@2.5.1
+                    Properties:
+                      Height: =25
+                      Size: =12
+                      Text: |-
+                        ="Driver 4: " & Text(Coalesce(HierarchyEditPanel.SelectedItem.Driver4_Pct, HierarchyEditPanel.ParentItem.Driver4_Pct, HierarchyEditPanel.GrandparentItem.Driver4_Pct), "0") & "%"
+                      Width: =Parent.Width
+                - sld_Driver4:
+                    Control: Slider@0.0.54
+                    Properties:
+                      Height: =40
+                      Max: =100
+                      Min: =0
+                      Value: |-
+                        =Coalesce(HierarchyEditPanel.SelectedItem.Driver4_Pct, HierarchyEditPanel.ParentItem.Driver4_Pct, HierarchyEditPanel.GrandparentItem.Driver4_Pct, 25)
+                      Width: =Parent.Width
+        - cont_Actions:
+            Control: GroupContainer
+            Variant: AutoLayout
+            Properties:
+              Height: =60
+              LayoutDirection: =LayoutDirection.Horizontal
+              LayoutGap: =10
+              Width: =Parent.Width
+            Children:
+            - btn_Save:
+                Control: Button
+                Properties:
+                  Height: =50
+                  OnSelect: =Set(HierarchyEditPanel.OnSaveOutput, true)
+                  Text: ="Save"
+                  Width: =180
+            - btn_Cancel:
+                Control: Button
+                Properties:
+                  Height: =50
+                  OnSelect: =Set(HierarchyEditPanel.OnCancelOutput, true)
+                  Text: ="Cancel"
+                  Width: =180

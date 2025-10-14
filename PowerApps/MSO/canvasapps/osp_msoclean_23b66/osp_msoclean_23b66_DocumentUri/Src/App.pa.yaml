@@ -13,67 +13,6 @@ App:
       =//Populate nav menu
       ClearCollect(NavItems, 
 
-// Hierarchy management
-Func_HierMan_LoadVersions(): Void = {
-  Set(AppStatus,"Loading"); Set(AppStatusText,"Loading hierarchy versions, please wait...");
-  With(
-    {sql: sp.uiHierMan2_GetAllVersions({})},
-    If(
-      Coalesce(sql.OutputParameters.SQL_Success, 0) = 0,
-      Set(AppStatus,"Error"); Set(AppStatusText, Coalesce(sql.OutputParameters.SQL_Message, "Unable to load hierarchy versions."));
-      Clear(HierMan_Versions);
-      Set(HierMan_SelectedVersion, Blank());
-      Clear(HierMan_Detail);
-      Clear(HierMan_H1);
-      Clear(HierMan_H2);
-      Clear(HierMan_H3),
-      Set(AppStatus,"Success"); Set(AppStatusText, sql.OutputParameters.SQL_Message);
-      ClearCollect(HierMan_Versions, sql.ResultSets.Table1);
-      If(
-        CountRows(HierMan_Versions) > 0,
-        If(
-          IsBlank(HierMan_SelectedVersion) || IsBlank(LookUp(HierMan_Versions, ID = HierMan_SelectedVersion.ID)),
-          Func_HierMan_SelectVersion(First(HierMan_Versions).ID)
-        )
-      )
-    )
-  )
-};
-
-Func_HierMan_SelectVersion(VersionId: Number): Void = {
-  Set(HierMan_SelectedVersion, LookUp(HierMan_Versions, ID = VersionId));
-  If(
-    IsBlank(HierMan_SelectedVersion),
-    Set(AppStatus,"Warning"); Set(AppStatusText,"Selected hierarchy version not found.");
-    Clear(HierMan_Detail);
-    Clear(HierMan_H1);
-    Clear(HierMan_H2);
-    Clear(HierMan_H3),
-    Func_HierMan_LoadVersionDetails(VersionId)
-  )
-};
-
-Func_HierMan_LoadVersionDetails(VersionId: Number): Void = {
-  Set(AppStatus,"Loading"); Set(AppStatusText,"Loading hierarchy structure, please wait...");
-  With(
-    {sql: sp.uiHierMan2_GetFullHierarchy({Hier_Version: VersionId})},
-    If(
-      Coalesce(sql.OutputParameters.SQL_Success, false) = false,
-      Set(AppStatus,"Error"); Set(AppStatusText, Coalesce(sql.OutputParameters.SQL_Message, "Unable to load hierarchy detail."));
-      Clear(HierMan_Detail);
-      Clear(HierMan_H1);
-      Clear(HierMan_H2);
-      Clear(HierMan_H3),
-      Set(AppStatus,"Success"); Set(AppStatusText, sql.OutputParameters.SQL_Message);
-      ClearCollect(HierMan_Detail, sql.ResultSets.Table1);
-      ClearCollect(HierMan_H1, sql.ResultSets.Table2);
-      ClearCollect(HierMan_H2, sql.ResultSets.Table3);
-      ClearCollect(HierMan_H3, sql.ResultSets.Table4)
-    )
-  )
-};
-
-//Navigate between report settings tabs
       {ID: 2, Selected:false, Name: "Hierarchy Admin", Screen: HierMan, Icon:"Filter"}, 
       {ID: 3, Selected:false, Name: "Report Detail", Screen: ReportScreen, Icon:"DocumentBulletList"},
       {ID: 4, Selected:false, Name:"Report Settings", Screen: ReportDetails, Icon: "Settings"},

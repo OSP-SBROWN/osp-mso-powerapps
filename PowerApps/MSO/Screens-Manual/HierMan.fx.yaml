@@ -1,0 +1,1056 @@
+Screens:
+  HierMan:
+    Properties:
+      Fill: =
+      OnVisible: |-
+        =// Initialize hierarchy management variables
+        Set(AppStatus, "Ready");
+        Set(AppStatusText, "Hierarchy Management - Select a version to begin");
+
+        // Initialize selection variables to empty records with proper schema
+        Set(SelectedH1, {Hierarchy1_ID: 0, Hierarchy1_Code: 0, Hierarchy1_Name: "", MinBays: 0, MaxBays: 0, DaysOnSite: 0, CapacityOnSite: 0, BayRoundingThreshold: 0, Trend: 0, Exclude: "", Metric1_Pct: 0, Metric2_Pct: 0, Metric3_Pct: 0, Metric4_Pct: 0, Driver1_Pct: 0, Driver2_Pct: 0, Driver3_Pct: 0, Driver4_Pct: 0});
+        Set(SelectedH2, {Hierarchy2_ID: 0, Hierarchy2_Code: 0, Hierarchy2_Name: "", ParentHierarchy_ID: 0, MinBays: 0, MaxBays: 0, DaysOnSite: 0, CapacityOnSite: 0, BayRoundingThreshold: 0, Trend: 0, Exclude: "", Metric1_Pct: 0, Metric2_Pct: 0, Metric3_Pct: 0, Metric4_Pct: 0, Driver1_Pct: 0, Driver2_Pct: 0, Driver3_Pct: 0, Driver4_Pct: 0});
+        Set(SelectedH3, {Hierarchy3_ID: 0, Hierarchy3_Code: 0, Hierarchy3_Name: "", ParentHierarchy_ID: 0, FlowNumber: 0, MinBays: 0, MaxBays: 0, DaysOnSite: 0, CapacityOnSite: 0, BayRoundingThreshold: 0, Trend: 0, Exclude: "", Metric1_Pct: 0, Metric2_Pct: 0, Metric3_Pct: 0, Metric4_Pct: 0, Driver1_Pct: 0, Driver2_Pct: 0, Driver3_Pct: 0, Driver4_Pct: 0});
+        Set(SelectedVersion, {ID: 0, Name: "", Status: ""});
+
+        // Initialize UI state flags
+        Set(ShowVersionPanel, false);
+        Set(ShowH1EditPanel, false);
+        Set(ShowH2EditPanel, false);
+        Set(ShowH3EditPanel, false);
+
+        // Load versions on screen load
+        Func_GetHierarchyVersions();
+    Children:
+      - cont_Screen_HierMan:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =App.Theme.Colors.Darker70
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =8
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Width: =Parent.Width
+          Children:
+            - cont_Header_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Primary
+                  FillPortions: =0
+                  Height: =75
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =15
+                  PaddingLeft: =15
+                  PaddingRight: =15
+                Children:
+                  - img_Menu_HierMan:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =55
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Menu",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Set(Vis_Nav,true)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Open Navigation Menu"
+                        Width: =55
+                  - lbl_Title_HierMan:
+                      Control: Text@0.0.51
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        FillPortions: =1
+                        Height: =Parent.Height*0.7
+                        Size: =24
+                        Text: ="Hierarchy Management"
+                        VerticalAlign: =VerticalAlign.Middle
+                  - drp_Version_HierMan:
+                      Control: DropDown@0.0.45
+                      Properties:
+                        Appearance: ='DropdownCanvas.Appearance'.FilledDarker
+                        DefaultSelectedItems: =SelectedVersion
+                        Items: =Col_HierarchyVersions
+                        OnChange: |-
+                          =Set(SelectedVersion, Self.Selected);
+                          If(!IsBlankOrError(SelectedVersion),
+                              Func_GetFullHierarchy(SelectedVersion.ID);
+                              Set(SelectedH1, Blank());
+                              Set(SelectedH2, Blank());
+                              Set(SelectedH3, Blank());
+                          );
+                        Width: =250
+                      Children:
+                        - fld_VersionName_HierMan:
+                            Control: DropDownDataField@1.5.0
+                            Variant: textualColumn
+                            IsLocked: true
+                            Properties:
+                              FieldDisplayName: ="Version"
+                              FieldName: ="Name"
+                              FieldType: ="s"
+                              Order: =1
+                  - img_Refresh_HierMan:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =55
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Refresh",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: |-
+                          =Func_GetHierarchyVersions();
+                          If(!IsBlankOrError(SelectedVersion),
+                              Func_GetFullHierarchy(SelectedVersion.ID)
+                          );
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Refresh Data"
+                        Width: =55
+                  - img_Versions_HierMan:
+                      Control: Image@2.2.3
+                      Properties:
+                        Height: =55
+                        HoverFill: =App.Theme.Colors.Primary
+                        Image: =Func_IconSvg("Settings",App.Theme.Colors.Darker60)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Set(ShowVersionPanel, !ShowVersionPanel)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Tooltip: ="Manage Versions"
+                        Width: =55
+            - cont_VersionPanel_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Lighter50
+                  FillPortions: =0
+                  Height: =If(ShowVersionPanel, 180, 0)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =10
+                  PaddingBottom: =If(ShowVersionPanel, 15, 0)
+                  PaddingLeft: =If(ShowVersionPanel, 15, 0)
+                  PaddingRight: =If(ShowVersionPanel, 15, 0)
+                  PaddingTop: =If(ShowVersionPanel, 15, 0)
+                  Visible: =ShowVersionPanel
+                Children:
+                  - lbl_CreateVersionTitle_HierMan:
+                      Control: Text@0.0.51
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        Height: =30
+                        Text: ="Create New Hierarchy Version"
+                        VerticalAlign: =VerticalAlign.Middle
+                        Weight: =FontWeight.Semibold
+                  - cont_VersionInputs_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        FillPortions: =0
+                        Height: =50
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                      Children:
+                        - txt_NewVersionName_HierMan:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Height: =40
+                              Width: =250
+                        - drp_NewVersionStatus_HierMan:
+                            Control: DropDown@0.0.45
+                            Properties:
+                              DefaultSelectedItems: =["Draft"]
+                              Height: =40
+                              Items: =["Draft", "Active", "Archived"]
+                              Width: =120
+                        - tog_CopyFromExisting_HierMan:
+                            Control: Toggle@1.1.5
+                            Properties:
+                              Height: =40
+                              Label: ="Copy from existing?"
+                              Width: =180
+                  - cont_VersionSource_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        FillPortions: =0
+                        Height: =50
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        Visible: =tog_CopyFromExisting_HierMan.Checked
+                      Children:
+                        - drp_SourceVersion_HierMan:
+                            Control: DropDown@0.0.45
+                            Properties:
+                              Height: =40
+                              Items: =Col_HierarchyVersions
+                              Width: =250
+                            Children:
+                              - fld_SourceVersionName_HierMan:
+                                  Control: DropDownDataField@1.5.0
+                                  Variant: textualColumn
+                                  IsLocked: true
+                                  Properties:
+                                    FieldDisplayName: ="Copy From Version"
+                                    FieldName: ="Name"
+                                    FieldType: ="s"
+                                    Order: =1
+                        - btn_CreateVersion_HierMan:
+                            Control: Button@0.0.45
+                            Properties:
+                              Height: =40
+                              Icon: ="Add"
+                              OnSelect: |-
+                                =If(
+                                    !IsBlank(txt_NewVersionName_HierMan.Value) && !IsBlank(drp_NewVersionStatus_HierMan.Selected.Value),
+                                    Func_AddHierarchyVersion(
+                                        txt_NewVersionName_HierMan.Value,
+                                        drp_NewVersionStatus_HierMan.Selected.Value,
+                                        If(
+                                            tog_CopyFromExisting_HierMan.Checked && !IsBlankOrError(drp_SourceVersion_HierMan.Selected),
+                                            drp_SourceVersion_HierMan.Selected.ID,
+                                            0
+                                        ),
+                                        User().Email
+                                    );
+                                    If(
+                                        AppStatus = "Success",
+                                        Reset(txt_NewVersionName_HierMan);
+                                        Reset(drp_NewVersionStatus_HierMan);
+                                        Reset(tog_CopyFromExisting_HierMan);
+                                        Reset(drp_SourceVersion_HierMan)
+                                    )
+                                );
+                              Text: ="Create Version"
+                              Width: =150
+                  - cont_VersionCreateBlank_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        FillPortions: =0
+                        Height: =50
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        Visible: =!tog_CopyFromExisting_HierMan.Checked
+                      Children:
+                        - btn_CreateBlankVersion_HierMan:
+                            Control: Button@0.0.45
+                            Properties:
+                              Height: =40
+                              Icon: ="Add"
+                              OnSelect: |-
+                                =If(
+                                    !IsBlank(txt_NewVersionName_HierMan.Value) && !IsBlank(drp_NewVersionStatus_HierMan.Selected.Value),
+                                    Func_AddHierarchyVersion(
+                                        txt_NewVersionName_HierMan.Value,
+                                        drp_NewVersionStatus_HierMan.Selected.Value,
+                                        0,
+                                        User().Email
+                                    );
+                                    If(
+                                        AppStatus = "Success",
+                                        Reset(txt_NewVersionName_HierMan);
+                                        Reset(drp_NewVersionStatus_HierMan);
+                                        Reset(tog_CopyFromExisting_HierMan);
+                                        Reset(drp_SourceVersion_HierMan)
+                                    )
+                                );
+                              Text: ="Create Blank Version"
+                              Width: =180
+            - cont_HierarchyBrowser_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(0,0,0,0)
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =8
+                  Visible: =!IsBlankOrError(SelectedVersion) && SelectedVersion.ID > 0 && !ShowH3EditPanel
+                Children:
+                  - cont_H1Column_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter50
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =8
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                      Children:
+                        - cont_H1Header_HierMan:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =0
+                              Height: =45
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lbl_H1Title_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    Size: =16
+                                    Text: =Dict("Granularity1")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: ='TextCanvas.Weight'.Bold
+                              - btn_AddH1_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =35
+                                    Icon: ="Add"
+                                    OnSelect: =Set(ShowH1EditPanel, true); Set(SelectedH1, Blank());
+                                    Text: ="Add"
+                                    Width: =80
+                        - gal_H1_HierMan:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              Items: =Col_Hierarchy1
+                              OnSelect: |-
+                                =Set(SelectedH1, ThisItem);
+                                Set(SelectedH2, Blank());
+                                Set(SelectedH3, Blank());
+                              TemplateFill: =If(ThisItem.Hierarchy1_ID = SelectedH1.Hierarchy1_ID, App.Theme.Colors.Primary, RGBA(0,0,0,0))
+                              TemplateSize: =50
+                            Children:
+                              - lbl_H1Code_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =8
+                                    Text: =Text(ThisItem.Hierarchy1_Code)
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                                    Width: =50
+                              - lbl_H1Name_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =5
+                                    Text: =ThisItem.Hierarchy1_Name
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                                    Width: =180
+                                    X: =lbl_H1Code_HierMan.X + lbl_H1Code_HierMan.Width
+                              - btn_EditH1_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =30
+                                    Icon: ="Edit"
+                                    OnSelect: =Set(SelectedH1, ThisItem); Set(ShowH1EditPanel, true);
+                                    Text: =""
+                                    Visible: =If(ThisItem.IsSelected=true,true,false)
+                                    Width: =30
+                                    X: =lbl_H1Name_HierMan.X + lbl_H1Name_HierMan.Width + 5
+                                    Y: =(Parent.TemplateHeight - Self.Height) / 2
+                              - btn_DeleteH1_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =30
+                                    Icon: ="Delete"
+                                    OnSelect: |-
+                                      =If(
+                                          CountRows(Filter(Col_Hierarchy2, ParentHierarchy_ID = ThisItem.Hierarchy1_ID)) > 0,
+                                          Notify("Cannot delete: This Level 1 item has child items in Level 2", NotificationType.Warning),
+                                          If(
+                                              Func_DeleteH1(ThisItem.Hierarchy1_ID, SelectedVersion.ID),
+                                              Func_GetFullHierarchy(SelectedVersion.ID)
+                                          )
+                                      );
+                                    Text: =""
+                                    Visible: =If(ThisItem.IsSelected=true,true,false)
+                                    Width: =30
+                                    X: =btn_EditH1_HierMan.X + btn_EditH1_HierMan.Width + 5
+                                    Y: =(Parent.TemplateHeight - Self.Height) / 2
+                  - cont_H2Column_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter50
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =8
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                      Children:
+                        - cont_H2Header_HierMan:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =0
+                              Height: =45
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lbl_H2Title_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    Size: =16
+                                    Text: =Dict("Granularity2")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: ='TextCanvas.Weight'.Bold
+                              - btn_AddH2_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    DisplayMode: =If(IsBlankOrError(SelectedH1) || SelectedH1.Hierarchy1_ID = 0, DisplayMode.Disabled, DisplayMode.Edit)
+                                    Height: =35
+                                    Icon: ="Add"
+                                    OnSelect: =Set(ShowH2EditPanel, true); Set(SelectedH2, Blank());
+                                    Text: ="Add"
+                                    Width: =80
+                        - gal_H2_HierMan:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              Items: =Filter(Col_Hierarchy2, ParentHierarchy_ID = SelectedH1.Hierarchy1_ID)
+                              OnSelect: |-
+                                =Set(SelectedH2, ThisItem);
+                                Set(SelectedH3, Blank());
+                              TemplateFill: =If(ThisItem.Hierarchy2_ID = SelectedH2.Hierarchy2_ID, App.Theme.Colors.Primary, App.Theme.Colors.Lighter30)
+                              TemplateSize: =50
+                            Children:
+                              - lbl_H2Code_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =8
+                                    Text: =Text(ThisItem.Hierarchy2_Code)
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                                    Width: =50
+                              - lbl_H2Name_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =5
+                                    Text: =ThisItem.Hierarchy2_Name
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                                    Width: =180
+                                    X: =lbl_H2Code_HierMan.X + lbl_H2Code_HierMan.Width
+                              - btn_EditH2_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =30
+                                    Icon: ="Edit"
+                                    OnSelect: =Set(SelectedH2, ThisItem); Set(ShowH2EditPanel, true);
+                                    Text: =""
+                                    Visible: =If(ThisItem.IsSelected=true,true,false)
+                                    Width: =30
+                                    X: =lbl_H2Name_HierMan.X + lbl_H2Name_HierMan.Width + 5
+                                    Y: =(Parent.TemplateHeight - Self.Height) / 2
+                              - btn_DeleteH2_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =30
+                                    Icon: ="Delete"
+                                    OnSelect: |-
+                                      =If(
+                                          CountRows(Filter(Col_Hierarchy3, ParentHierarchy_ID = ThisItem.Hierarchy2_ID)) > 0,
+                                          Notify("Cannot delete: This Level 2 item has child items in Level 3", NotificationType.Warning),
+                                          If(
+                                              Func_DeleteH2(ThisItem.Hierarchy2_ID, SelectedVersion.ID),
+                                              Func_GetFullHierarchy(SelectedVersion.ID)
+                                          )
+                                      );
+                                    Text: =""
+                                    Visible: =If(ThisItem.IsSelected=true,true,false)
+                                    Width: =30
+                                    X: =btn_EditH2_HierMan.X + btn_EditH2_HierMan.Width + 5
+                                    Y: =(Parent.TemplateHeight - Self.Height) / 2
+                  - cont_H3Column_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter50
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =8
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                      Children:
+                        - cont_H3Header_HierMan:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =0
+                              Height: =45
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - lbl_H3Title_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    Size: =16
+                                    Text: =Dict("Category")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: ='TextCanvas.Weight'.Bold
+                              - btn_AddH3_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    DisplayMode: =If(IsBlankOrError(SelectedH2) || SelectedH2.Hierarchy2_ID = 0, DisplayMode.Disabled, DisplayMode.Edit)
+                                    Height: =35
+                                    Icon: ="Add"
+                                    OnSelect: |-
+                                        =Set(ShowH3EditPanel, true); 
+                                        Set(SelectedH3, Blank());
+                                        // Calculate cascaded values from H2 and H1
+                                        Set(cascadedMinBays, Coalesce(SelectedH2.MinBays, SelectedH1.MinBays));
+                                        Set(cascadedMaxBays, Coalesce(SelectedH2.MaxBays, SelectedH1.MaxBays));
+                                        Set(cascadedDOS, Coalesce(SelectedH2.DaysOnSite, SelectedH1.DaysOnSite));
+                                        Set(cascadedCOS, Coalesce(SelectedH2.CapacityOnSite, SelectedH1.CapacityOnSite));
+                                        Set(cascadedBRT, Coalesce(SelectedH2.BayRoundingThreshold, SelectedH1.BayRoundingThreshold));
+                                        Set(cascadedTrend, Coalesce(SelectedH2.Trend, SelectedH1.Trend));
+                                        Set(cascadedExclude, Coalesce(SelectedH2.Exclude, SelectedH1.Exclude));
+                                        Set(cascadedMetric1, Coalesce(SelectedH2.Metric1_Pct, SelectedH1.Metric1_Pct));
+                                        Set(cascadedMetric2, Coalesce(SelectedH2.Metric2_Pct, SelectedH1.Metric2_Pct));
+                                        Set(cascadedMetric3, Coalesce(SelectedH2.Metric3_Pct, SelectedH1.Metric3_Pct));
+                                        Set(cascadedMetric4, Coalesce(SelectedH2.Metric4_Pct, SelectedH1.Metric4_Pct));
+                                        Set(cascadedDriver1, Coalesce(SelectedH2.Driver1_Pct, SelectedH1.Driver1_Pct));
+                                        Set(cascadedDriver2, Coalesce(SelectedH2.Driver2_Pct, SelectedH1.Driver2_Pct));
+                                        Set(cascadedDriver3, Coalesce(SelectedH2.Driver3_Pct, SelectedH1.Driver3_Pct));
+                                        Set(cascadedDriver4, Coalesce(SelectedH2.Driver4_Pct, SelectedH1.Driver4_Pct));
+                                    Text: ="Add"
+                                    Width: =80
+                        - gal_H3_HierMan:
+                            Control: Gallery@2.15.0
+                            Variant: Vertical
+                            Properties:
+                              Items: =Filter(Col_Hierarchy3, ParentHierarchy_ID = SelectedH2.Hierarchy2_ID)
+                              OnSelect: =Set(SelectedH3, ThisItem);
+                              TemplateFill: =If(ThisItem.Hierarchy3_ID = SelectedH3.Hierarchy3_ID, App.Theme.Colors.Primary, App.Theme.Colors.Lighter30)
+                              TemplateSize: =50
+                            Children:
+                              - lbl_H3Code_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =8
+                                    Text: =Text(ThisItem.Hierarchy3_Code)
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                                    Width: =50
+                              - lbl_H3Name_HierMan:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Fill: =RGBA(0,0,0,0)
+                                    Height: =Parent.TemplateHeight
+                                    PaddingLeft: =5
+                                    Text: =ThisItem.Hierarchy3_Name
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                                    Width: =180
+                                    X: =lbl_H3Code_HierMan.X + lbl_H3Code_HierMan.Width
+                              - btn_EditH3_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =30
+                                    Icon: ="Edit"
+                                    OnSelect: |-
+                                        =Set(SelectedH3, ThisItem); 
+                                        Set(ShowH3EditPanel, true);
+                                        // Calculate cascaded values from H2 and H1
+                                        Set(cascadedMinBays, Coalesce(SelectedH2.MinBays, SelectedH1.MinBays));
+                                        Set(cascadedMaxBays, Coalesce(SelectedH2.MaxBays, SelectedH1.MaxBays));
+                                        Set(cascadedDOS, Coalesce(SelectedH2.DaysOnSite, SelectedH1.DaysOnSite));
+                                        Set(cascadedCOS, Coalesce(SelectedH2.CapacityOnSite, SelectedH1.CapacityOnSite));
+                                        Set(cascadedBRT, Coalesce(SelectedH2.BayRoundingThreshold, SelectedH1.BayRoundingThreshold));
+                                        Set(cascadedTrend, Coalesce(SelectedH2.Trend, SelectedH1.Trend));
+                                        Set(cascadedExclude, Coalesce(SelectedH2.Exclude, SelectedH1.Exclude));
+                                        Set(cascadedMetric1, Coalesce(SelectedH2.Metric1_Pct, SelectedH1.Metric1_Pct));
+                                        Set(cascadedMetric2, Coalesce(SelectedH2.Metric2_Pct, SelectedH1.Metric2_Pct));
+                                        Set(cascadedMetric3, Coalesce(SelectedH2.Metric3_Pct, SelectedH1.Metric3_Pct));
+                                        Set(cascadedMetric4, Coalesce(SelectedH2.Metric4_Pct, SelectedH1.Metric4_Pct));
+                                        Set(cascadedDriver1, Coalesce(SelectedH2.Driver1_Pct, SelectedH1.Driver1_Pct));
+                                        Set(cascadedDriver2, Coalesce(SelectedH2.Driver2_Pct, SelectedH1.Driver2_Pct));
+                                        Set(cascadedDriver3, Coalesce(SelectedH2.Driver3_Pct, SelectedH1.Driver3_Pct));
+                                        Set(cascadedDriver4, Coalesce(SelectedH2.Driver4_Pct, SelectedH1.Driver4_Pct));
+                                    Text: =""
+                                    Visible: =If(ThisItem.IsSelected=true,true,false)
+                                    Width: =30
+                                    X: =lbl_H3Name_HierMan.X + lbl_H3Name_HierMan.Width + 5
+                                    Y: =(Parent.TemplateHeight - Self.Height) / 2
+                              - btn_DeleteH3_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =30
+                                    Icon: ="Delete"
+                                    OnSelect: |-
+                                      =If(
+                                          Func_DeleteH3(ThisItem.Hierarchy3_ID, SelectedVersion.ID),
+                                          Func_GetFullHierarchy(SelectedVersion.ID)
+                                      );
+                                    Text: =""
+                                    Visible: =If(ThisItem.IsSelected=true,true,false)
+                                    Width: =30
+                                    X: =btn_EditH3_HierMan.X + btn_EditH3_HierMan.Width + 5
+                                    Y: =(Parent.TemplateHeight - Self.Height) / 2
+            - cont_EditPanel_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Lighter50
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  PaddingBottom: =20
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  PaddingTop: =20
+                  Visible: =!IsBlankOrError(SelectedVersion) && SelectedVersion.ID > 0 && (ShowH1EditPanel || ShowH2EditPanel || ShowH3EditPanel)
+                Children:
+                  - HierarchyEditPanel_2:
+                      Control: CanvasComponent
+                      ComponentName: HierarchyEditPanel
+                      Properties:
+                        GrandparentItem: =If(ShowH3EditPanel, SelectedH1, Blank())
+                        Height: =HierarchyEditPanel_2.Ht
+                        HierarchyLevel: =If(ShowH1EditPanel, "H1", If(ShowH2EditPanel, "H2", "H3"))
+                        Ht: =Parent.Height - 40
+                        IsVisible: =true
+                        PanelTitle: |-
+                          =Switch(true,
+                              ShowH1EditPanel, If(IsBlank(SelectedH1) || SelectedH1.Hierarchy1_ID = 0, "Add " & Dict("Granularity1"), "Edit " & Dict("Granularity1")),
+                              ShowH2EditPanel, If(IsBlank(SelectedH2) || SelectedH2.Hierarchy2_ID = 0, "Add " & Dict("Granularity2"), "Edit " & Dict("Granularity2")),
+                              ShowH3EditPanel, If(IsBlank(SelectedH3) || SelectedH3.Hierarchy3_ID = 0, "Add " & Dict("Category"), "Edit " & Dict("Category")),
+                              "Edit Item")
+                        ParentItem: =If(ShowH1EditPanel, Blank(), If(ShowH2EditPanel, SelectedH1, SelectedH2))
+                        SelectedItem: =If(ShowH1EditPanel, SelectedH1, If(ShowH2EditPanel, SelectedH2, SelectedH3))
+                        VersionID: =SelectedVersion.ID
+                        Wd: =Parent.Width - 40
+                        Width: =HierarchyEditPanel_2.Wd
+            - cont_Status_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =
+                  FillPortions: =0
+                  Height: =40
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =10
+                Children:
+                  - StatusBar_1:
+                      Control: CanvasComponent
+                      ComponentName: StatusBar
+                      Properties:
+                        Fill: =App.Theme.Colors.Lighter30
+                        Height: =StatusBar_1.Ht
+                        Ht: =Parent.Height
+                        Wd: =Parent.Width
+                        Width: =StatusBar_1.Wd
+      - cont_H1EditPanel_HierMan:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            PaddingBottom: =100
+            PaddingLeft: =100
+            PaddingRight: =100
+            PaddingTop: =100
+            Visible: =ShowH1EditPanel
+            Width: =Parent.Width
+          Children:
+            - cont_H1EditContent_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Lighter80
+                  Height: =Parent.Height*0.7
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMinWidth: =10
+                  Width: =Parent.Width*0.7
+                Children:
+                  - cont_H1EditHeader_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Primary
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =15
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                      Children:
+                        - lbl_H1EditTitle_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =1
+                              Height: =Parent.Height
+                              Size: =22
+                              Text: =If(IsBlank(SelectedH1) || SelectedH1.Hierarchy1_ID = 0, "Add Level 1 Item", "Edit Level 1 Item")
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: =FontWeight.Bold
+                        - img_CloseH1Edit_HierMan:
+                            Control: Image@2.2.3
+                            Properties:
+                              Height: =40
+                              HoverFill: =App.Theme.Colors.Primary
+                              Image: =Func_IconSvg("Close",App.Theme.Colors.Darker60)
+                              ImagePosition: =ImagePosition.Fill
+                              OnSelect: =Set(ShowH1EditPanel, false); Set(SelectedH1, Blank());
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Tooltip: ="Close"
+                              Width: =40
+                  - cont_H1EditBody_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =15
+                        PaddingBottom: =20
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                        PaddingTop: =20
+                      Children:
+                        - lbl_H1Code_Label_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              Height: =25
+                              Text: ="Code"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: =FontWeight.Semibold
+                        - txt_H1Code_HierMan:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Height: =40
+                              Value: =If(IsBlank(SelectedH1), "", Text(SelectedH1.Hierarchy1_Code))
+                        - lbl_H1Name_Label_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              Height: =25
+                              Text: ="Name"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: =FontWeight.Semibold
+                        - txt_H1Name_HierMan:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Height: =40
+                              Value: =If(IsBlank(SelectedH1), "", SelectedH1.Hierarchy1_Name)
+                        - cont_H1EditActions_HierMan:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =0
+                              Height: =50
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutJustifyContent: =LayoutJustifyContent.End
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - btn_CancelH1_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =40
+                                    OnSelect: =Set(ShowH1EditPanel, false); Set(SelectedH1, Blank());
+                                    Text: ="Cancel"
+                                    Width: =100
+                              - btn_SaveH1_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =40
+                                    OnSelect: |-
+                                      =If(
+                                          IsBlank(txt_H1Code_HierMan.Value) || IsBlank(txt_H1Name_HierMan.Value),
+                                          Notify("Code and Name are required", NotificationType.Error),
+                                          If(
+                                                    IsBlank(SelectedH1) || SelectedH1.Hierarchy1_ID = 0,
+                                              // INSERT
+                                              With(
+                                                  {newID: Func_InsertH1(
+                                                      SelectedVersion.ID,
+                                                      Value(txt_H1Code_HierMan.Value),
+                                                      txt_H1Name_HierMan.Value,
+                                                      0, 0, 0, 0, 0, "N", 0,
+                                                      0, 0, 0, 0,
+                                                      0, 0, 0, 0
+                                                  )},
+                                                  If(
+                                                      newID > 0,
+                                                      Func_GetFullHierarchy(SelectedVersion.ID);
+                                                      Set(ShowH1EditPanel, false);
+                                                      Set(SelectedH1, LookUp(Col_Hierarchy1, Hierarchy1_ID = newID))
+                                                  )
+                                              ),
+                                              // UPDATE
+                                              If(
+                                                  Func_UpdateH1(
+                                                      SelectedH1.Hierarchy1_ID,
+                                                      SelectedVersion.ID,
+                                                      Value(txt_H1Code_HierMan.Value),
+                                                      txt_H1Name_HierMan.Value,
+                                                      0, 0, 0, 0, 0, "N", 0,
+                                                      0, 0, 0, 0,
+                                                      0, 0, 0, 0
+                                                  ),
+                                                  Func_GetFullHierarchy(SelectedVersion.ID);
+                                                  Set(ShowH1EditPanel, false)
+                                              )
+                                          )
+                                      );
+                                    Text: ="Save"
+                                    Width: =100
+      - cont_H2EditPanel_HierMan:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            Visible: =ShowH2EditPanel
+            Width: =Parent.Width
+          Children:
+            - cont_H2EditContent_HierMan:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =App.Theme.Colors.Lighter80
+                  Height: =600
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                Children:
+                  - cont_H2EditHeader_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =App.Theme.Colors.Primary
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =15
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                      Children:
+                        - lbl_H2EditTitle_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =1
+                              Height: =Parent.Height
+                              Size: =22
+                              Text: =If(IsBlank(SelectedH2) || SelectedH2.Hierarchy2_ID = 0, "Add Level 2 Item", "Edit Level 2 Item")
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: =FontWeight.Bold
+                        - img_CloseH2Edit_HierMan:
+                            Control: Image@2.2.3
+                            Properties:
+                              Height: =40
+                              HoverFill: =App.Theme.Colors.Primary
+                              Image: =Func_IconSvg("Close",App.Theme.Colors.Darker60)
+                              ImagePosition: =ImagePosition.Fill
+                              OnSelect: =Set(ShowH2EditPanel, false); Set(SelectedH2, Blank());
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Tooltip: ="Close"
+                              Width: =40
+                  - cont_H2EditBody_HierMan:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(0,0,0,0)
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =15
+                        PaddingBottom: =20
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                        PaddingTop: =20
+                      Children:
+                        - lbl_H2Parent_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              Height: =30
+                              Size: =12
+                              Text: |-
+                                ="Parent: " & SelectedH1.Hierarchy1_Name
+                              VerticalAlign: =VerticalAlign.Middle
+                        - lbl_H2Code_Label_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              Height: =25
+                              Text: ="Code"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: =FontWeight.Semibold
+                        - txt_H2Code_HierMan:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Height: =40
+                              Value: =If(IsBlank(SelectedH2), "", Text(SelectedH2.Hierarchy2_Code))
+                        - lbl_H2Name_Label_HierMan:
+                            Control: Text@0.0.51
+                            Properties:
+                              Fill: =RGBA(0,0,0,0)
+                              Height: =25
+                              Text: ="Name"
+                              VerticalAlign: =VerticalAlign.Middle
+                              Weight: =FontWeight.Semibold
+                        - txt_H2Name_HierMan:
+                            Control: TextInput@0.0.54
+                            Properties:
+                              Height: =40
+                              Value: =If(IsBlank(SelectedH2), "", SelectedH2.Hierarchy2_Name)
+                        - cont_H2EditActions_HierMan:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =RGBA(0,0,0,0)
+                              FillPortions: =0
+                              Height: =50
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutJustifyContent: =LayoutJustifyContent.End
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - btn_CancelH2_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =40
+                                    OnSelect: =Set(ShowH2EditPanel, false); Set(SelectedH2, Blank());
+                                    Text: ="Cancel"
+                                    Width: =100
+                              - btn_SaveH2_HierMan:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Height: =40
+                                    OnSelect: |-
+                                      =If(
+                                          IsBlank(txt_H2Code_HierMan.Value) || IsBlank(txt_H2Name_HierMan.Value),
+                                          Notify("Code and Name are required", NotificationType.Error),
+                                          If(
+                                              IsBlank(SelectedH2) || SelectedH2.Hierarchy2_ID = 0,
+                                              // INSERT
+                                              With(
+                                                  {newID: Func_InsertH2(
+                                                      SelectedVersion.ID,
+                                                      SelectedH1.Hierarchy1_ID,
+                                                      Value(txt_H2Code_HierMan.Value),
+                                                      txt_H2Name_HierMan.Value,
+                                                      0, 0, 0, 0, 0, "N", 0,
+                                                      0, 0, 0, 0,
+                                                      0, 0, 0, 0
+                                                  )},
+                                                  If(
+                                                      newID > 0,
+                                                      Func_GetFullHierarchy(SelectedVersion.ID);
+                                                      Set(ShowH2EditPanel, false);
+                                                      Set(SelectedH2, LookUp(Col_Hierarchy2, Hierarchy2_ID = newID))
+                                                  )
+                                              ),
+                                              // UPDATE
+                                              If(
+                                                  Func_UpdateH2(
+                                                      SelectedH2.Hierarchy2_ID,
+                                                      SelectedVersion.ID,
+                                                      SelectedH1.Hierarchy1_ID,
+                                                      Value(txt_H2Code_HierMan.Value),
+                                                      txt_H2Name_HierMan.Value,
+                                                      0, 0, 0, 0, 0, "N", 0,
+                                                      0, 0, 0, 0,
+                                                      0, 0, 0, 0
+                                                  ),
+                                                  Func_GetFullHierarchy(SelectedVersion.ID);
+                                                  Set(ShowH2EditPanel, false)
+                                              )
+                                          )
+                                      );
+                                    Text: ="Save"
+      - cmp_NavMenu_HierMan:
+          Control: CanvasComponent
+          ComponentName: NavMenu
+          Properties:
+            Height: =App.DesignHeight
+            Visible: =Vis_Nav
+            Width: =App.DesignWidth

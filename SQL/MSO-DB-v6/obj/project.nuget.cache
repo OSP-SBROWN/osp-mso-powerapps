@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t+xXVjiHSXo=",
+  "dgSpecHash": "1x1nk9XJmuY=",
   "success": true,
-  "projectFilePath": "C:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj",
+  "projectFilePath": "c:\\VS-Code\\OSP\\MSO - October Power Apps Refresh\\MSO-October2025\\SQL\\MSO-DB-v6\\MSO-DB-v6.sqlproj",
   "expectedPackageFiles": [
     "C:\\Users\\ShaunBrown\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
     "C:\\Users\\ShaunBrown\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net20\\1.0.3\\microsoft.netframework.referenceassemblies.net20.1.0.3.nupkg.sha512",
