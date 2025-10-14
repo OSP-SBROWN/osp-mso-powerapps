@@ -685,6 +685,11 @@ Func_AddHierarchyVersion(VersionName: Text, VersionStatus: Text, DuplicateFromID
                 Set(AppStatus,"Loading");
                 Set(AppStatusText,"Refreshing hierarchy versions list...");
                 Func_GetHierarchyVersions();
+                // Sync local selection with refreshed data and hydrate hierarchy view
+                Set(SelectedVersion, LookUp(Col_HierarchyVersions, ID = Sel_HierarchyVersion_ID));
+                If(!IsBlank(SelectedVersion),
+                    Func_GetFullHierarchy(SelectedVersion.ID)
+                );
                 // Restore success message
                 Set(AppStatus,"Success");
                 Set(AppStatusText,"Version '" & VersionName & "' created successfully!")
@@ -774,7 +779,7 @@ Func_GetFullHierarchy(VersionID: Number): Void =
     Set(AppStatusText,"Loading full hierarchy data from database, please wait...");
     
     With({SQL: sp.uiHierMan2GetFullHierarchy({
-        HierarchyVersion_ID: VersionID
+        Hier_Version: VersionID
     })},
         If(IsBlank(SQL),
             // Handle case where SQL call fails completely
@@ -787,9 +792,10 @@ Func_GetFullHierarchy(VersionID: Number): Void =
             // If successful, populate collections from multiple result sets
             If(AppStatus = "Success",
                 // Clear and populate hierarchy collections from the three result sets
-                ClearCollect(Col_Hierarchy1, SQL.ResultSets.Table1);
-                ClearCollect(Col_Hierarchy2, SQL.ResultSets.Table2);  
-                ClearCollect(Col_Hierarchy3, SQL.ResultSets.Table3);
+                ClearCollect(Col_HierarchyFull, SQL.ResultSets.Table1);
+                ClearCollect(Col_Hierarchy1, SQL.ResultSets.Table2);
+                ClearCollect(Col_Hierarchy2, SQL.ResultSets.Table3);  
+                ClearCollect(Col_Hierarchy3, SQL.ResultSets.Table4);
                 // Update status with final success message
                 Set(AppStatusText, 
                     SQL.OutputParameters.SQL_Message & 
@@ -850,7 +856,7 @@ Func_GetH2Details(VersionID: Number, H2_ID: Number): Void =
     Set(AppStatus,"Loading"); 
     Set(AppStatusText,"Loading H2 item details from database, please wait...");
     
-    With({SQL: sp.uiHierMan2GetH2Details({
+    With({SQL: sp.uiHierMan2GetHierarchy2Details({
         HierarchyVersion_ID: VersionID,
         Hierarchy2_ID: H2_ID
     })},
@@ -876,7 +882,7 @@ Func_GetH3Details(VersionID: Number, H3_ID: Number): Void =
     Set(AppStatus,"Loading"); 
     Set(AppStatusText,"Loading H3 item details from database, please wait...");
     
-    With({SQL: sp.uiHierMan2GetH3Details({
+    With({SQL: sp.uiHierMan2GetHierarchy3Details({
         HierarchyVersion_ID: VersionID,
         Hierarchy3_ID: H3_ID
     })},
@@ -892,6 +898,498 @@ Func_GetH3Details(VersionID: Number, H3_ID: Number): Void =
                     SQL.OutputParameters.SQL_Message & 
                     " H3 '" & Selected_H3_Details.Hierarchy3_Name & "' ready for editing.")
             )
+        )
+    )
+};
+
+//============================================================================
+// PHASE 3: INSERT FUNCTIONS
+//============================================================================
+
+//Insert H1 - Create new Hierarchy Level 1 record
+Func_InsertH1(
+    VersionID: Number,
+    H1_Code: Number, 
+    H1_Name: Text,
+    // Optional fields with defaults
+    Trend: Number,
+    MinBays: Number,
+    MaxBays: Number,
+    DOS: Number,
+    COS: Number,
+    ExcludeFromAnalysis: Text,
+    BayRoundingThreshold: Number,
+    // Metrics (must sum to 100 or all be blank)
+    Metric1: Number,
+    Metric2: Number,
+    Metric3: Number,
+    Metric4: Number,
+    // Drivers (must sum to 100 or all be blank)
+    Driver1: Number,
+    Driver2: Number,
+    Driver3: Number,
+    Driver4: Number
+): Number = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Creating new H1 record...");
+    
+    With({SQL: sp.uiHierMan2Insert1({
+        HierarchyVersion_ID: VersionID,
+        Hierarchy1_Code: H1_Code,
+        Hierarchy1_Name: H1_Name,
+        Trend: Trend,
+        MinBays: MinBays,
+        MaxBays: MaxBays,
+        DOS: DOS,
+        COS: COS,
+        Exclude_From_Analysis: ExcludeFromAnalysis,
+        BayRoundingThreshold: BayRoundingThreshold,
+        Metric1: Metric1,
+        Metric2: Metric2,
+        Metric3: Metric3,
+        Metric4: Metric4,
+        Driver1: Driver1,
+        Driver2: Driver2,
+        Driver3: Driver3,
+        Driver4: Driver4
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            0, // Return 0 for failed insert
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H1 record created"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return the new ID if successful, 0 if failed
+            If(AppStatus = "Success",
+                Coalesce(SQL.OutputParameters.Hierarchy1_ID, 0),
+                0
+            )
+        )
+    )
+};
+
+//Insert H2 - Create new Hierarchy Level 2 record
+Func_InsertH2(
+    VersionID: Number,
+    ParentH1_ID: Number,
+    H2_Code: Number, 
+    H2_Name: Text,
+    // Optional fields with defaults
+    Trend: Number,
+    MinBays: Number,
+    MaxBays: Number,
+    DOS: Number,
+    COS: Number,
+    ExcludeFromAnalysis: Text,
+    BayRoundingThreshold: Number,
+    // Metrics (must sum to 100 or all be blank)
+    Metric1: Number,
+    Metric2: Number,
+    Metric3: Number,
+    Metric4: Number,
+    // Drivers (must sum to 100 or all be blank)
+    Driver1: Number,
+    Driver2: Number,
+    Driver3: Number,
+    Driver4: Number
+): Number = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Creating new H2 record...");
+    
+    With({SQL: sp.uiHierMan2Insert2({
+        HierarchyVersion_ID: VersionID,
+        ParentHierarchy_ID: ParentH1_ID,
+        Hierarchy2_Code: H2_Code,
+        Hierarchy2_Name: H2_Name,
+        Trend: Trend,
+        MinBays: MinBays,
+        MaxBays: MaxBays,
+        DOS: DOS,
+        COS: COS,
+        Exclude_From_Analysis: ExcludeFromAnalysis,
+        BayRoundingThreshold: BayRoundingThreshold,
+        Metric1: Metric1,
+        Metric2: Metric2,
+        Metric3: Metric3,
+        Metric4: Metric4,
+        Driver1: Driver1,
+        Driver2: Driver2,
+        Driver3: Driver3,
+        Driver4: Driver4
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            0, // Return 0 for failed insert
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H2 record created"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return the new ID if successful, 0 if failed
+            If(AppStatus = "Success",
+                Coalesce(SQL.OutputParameters.Hierarchy2_ID, 0),
+                0
+            )
+        )
+    )
+};
+
+//Insert H3 - Create new Hierarchy Level 3 record  
+Func_InsertH3(
+    VersionID: Number,
+    ParentH2_ID: Number,
+    H3_Code: Number, 
+    H3_Name: Text,
+    FlowNumber: Number,
+    // Optional fields with defaults
+    Trend: Number,
+    MinBays: Number,
+    MaxBays: Number,
+    DOS: Number,
+    COS: Number,
+    ExcludeFromAnalysis: Text,
+    BayRoundingThreshold: Number,
+    // Metrics (must sum to 100 or all be blank)
+    Metric1: Number,
+    Metric2: Number,
+    Metric3: Number,
+    Metric4: Number,
+    // Drivers (must sum to 100 or all be blank)
+    Driver1: Number,
+    Driver2: Number,
+    Driver3: Number,
+    Driver4: Number
+): Number = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Creating new H3 record...");
+    
+    With({SQL: sp.uiHierMan2Insert3({
+        HierarchyVersion_ID: VersionID,
+        ParentHierarchy_ID: ParentH2_ID,
+        Hierarchy3_Code: H3_Code,
+        Hierarchy3_Name: H3_Name,
+        FlowNumber: FlowNumber,
+        Trend: Trend,
+        MinBays: MinBays,
+        MaxBays: MaxBays,
+        DOS: DOS,
+        COS: COS,
+        Exclude_From_Analysis: ExcludeFromAnalysis,
+        BayRoundingThreshold: BayRoundingThreshold,
+        Metric1: Metric1,
+        Metric2: Metric2,
+        Metric3: Metric3,
+        Metric4: Metric4,
+        Driver1: Driver1,
+        Driver2: Driver2,
+        Driver3: Driver3,
+        Driver4: Driver4
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            0, // Return 0 for failed insert
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H3 record created"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return the new ID if successful, 0 if failed
+            If(AppStatus = "Success",
+                Coalesce(SQL.OutputParameters.Hierarchy3_ID, 0),
+                0
+            )
+        )
+    )
+};
+
+//============================================================================
+// PHASE 4: UPDATE FUNCTIONS
+//============================================================================
+
+//Update H1 - Modify existing Hierarchy Level 1 record
+Func_UpdateH1(
+    H1_ID: Number,
+    VersionID: Number,
+    H1_Code: Number, 
+    H1_Name: Text,
+    // Optional fields with defaults
+    Trend: Number,
+    MinBays: Number,
+    MaxBays: Number,
+    DOS: Number,
+    COS: Number,
+    ExcludeFromAnalysis: Text,
+    BayRoundingThreshold: Number,
+    // Metrics (must sum to 100 or all be blank)
+    Metric1: Number,
+    Metric2: Number,
+    Metric3: Number,
+    Metric4: Number,
+    // Drivers (must sum to 100 or all be blank)
+    Driver1: Number,
+    Driver2: Number,
+    Driver3: Number,
+    Driver4: Number
+): Boolean = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Updating H1 record...");
+    
+    With({SQL: sp.uiHierMan2Update1({
+        Hierarchy1_ID: H1_ID,
+        HierarchyVersion_ID: VersionID,
+        Hierarchy1_Code: H1_Code,
+        Hierarchy1_Name: H1_Name,
+        Trend: Trend,
+        MinBays: MinBays,
+        MaxBays: MaxBays,
+        DOS: DOS,
+        COS: COS,
+        Exclude_From_Analysis: ExcludeFromAnalysis,
+        BayRoundingThreshold: BayRoundingThreshold,
+        Metric1: Metric1,
+        Metric2: Metric2,
+        Metric3: Metric3,
+        Metric4: Metric4,
+        Driver1: Driver1,
+        Driver2: Driver2,
+        Driver3: Driver3,
+        Driver4: Driver4
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            false, // Return false for failed update
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H1 record updated"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return success status
+            SQL.OutputParameters.SQL_Success = true
+        )
+    )
+};
+
+//Update H2 - Modify existing Hierarchy Level 2 record
+Func_UpdateH2(
+    H2_ID: Number,
+    VersionID: Number,
+    ParentH1_ID: Number,
+    H2_Code: Number, 
+    H2_Name: Text,
+    // Optional fields with defaults
+    Trend: Number,
+    MinBays: Number,
+    MaxBays: Number,
+    DOS: Number,
+    COS: Number,
+    ExcludeFromAnalysis: Text,
+    BayRoundingThreshold: Number,
+    // Metrics (must sum to 100 or all be blank)
+    Metric1: Number,
+    Metric2: Number,
+    Metric3: Number,
+    Metric4: Number,
+    // Drivers (must sum to 100 or all be blank)
+    Driver1: Number,
+    Driver2: Number,
+    Driver3: Number,
+    Driver4: Number
+): Boolean = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Updating H2 record...");
+    
+    With({SQL: sp.uiHierMan2Update2({
+        Hierarchy2_ID: H2_ID,
+        HierarchyVersion_ID: VersionID,
+        ParentHierarchy_ID: ParentH1_ID,
+        Hierarchy2_Code: H2_Code,
+        Hierarchy2_Name: H2_Name,
+        Trend: Trend,
+        MinBays: MinBays,
+        MaxBays: MaxBays,
+        DOS: DOS,
+        COS: COS,
+        Exclude_From_Analysis: ExcludeFromAnalysis,
+        BayRoundingThreshold: BayRoundingThreshold,
+        Metric1: Metric1,
+        Metric2: Metric2,
+        Metric3: Metric3,
+        Metric4: Metric4,
+        Driver1: Driver1,
+        Driver2: Driver2,
+        Driver3: Driver3,
+        Driver4: Driver4
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            false, // Return false for failed update
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H2 record updated"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return success status
+            SQL.OutputParameters.SQL_Success = true
+        )
+    )
+};
+
+//Update H3 - Modify existing Hierarchy Level 3 record
+Func_UpdateH3(
+    H3_ID: Number,
+    VersionID: Number,
+    ParentH2_ID: Number,
+    H3_Code: Number, 
+    H3_Name: Text,
+    FlowNumber: Number,
+    // Optional fields with defaults
+    Trend: Number,
+    MinBays: Number,
+    MaxBays: Number,
+    DOS: Number,
+    COS: Number,
+    ExcludeFromAnalysis: Text,
+    BayRoundingThreshold: Number,
+    // Metrics (must sum to 100 or all be blank)
+    Metric1: Number,
+    Metric2: Number,
+    Metric3: Number,
+    Metric4: Number,
+    // Drivers (must sum to 100 or all be blank)
+    Driver1: Number,
+    Driver2: Number,
+    Driver3: Number,
+    Driver4: Number
+): Boolean = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Updating H3 record...");
+    
+    With({SQL: sp.uiHierMan2Update3({
+        Hierarchy3_ID: H3_ID,
+        HierarchyVersion_ID: VersionID,
+        ParentHierarchy_ID: ParentH2_ID,
+        Hierarchy3_Code: H3_Code,
+        Hierarchy3_Name: H3_Name,
+        FlowNumber: FlowNumber,
+        Trend: Trend,
+        MinBays: MinBays,
+        MaxBays: MaxBays,
+        DOS: DOS,
+        COS: COS,
+        Exclude_From_Analysis: ExcludeFromAnalysis,
+        BayRoundingThreshold: BayRoundingThreshold,
+        Metric1: Metric1,
+        Metric2: Metric2,
+        Metric3: Metric3,
+        Metric4: Metric4,
+        Driver1: Driver1,
+        Driver2: Driver2,
+        Driver3: Driver3,
+        Driver4: Driver4
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            false, // Return false for failed update
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H3 record updated"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return success status
+            SQL.OutputParameters.SQL_Success = true
+        )
+    )
+};
+
+//============================================================================
+// PHASE 5: DELETE FUNCTIONS
+//============================================================================
+
+//Delete H1 - Remove Hierarchy Level 1 record and all children (cascade delete)
+Func_DeleteH1(H1_ID: Number, VersionID: Number): Boolean = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Deleting H1 record and all children...");
+    
+    With({SQL: sp.uiHierMan2Delete1({
+        Hier1_ID: H1_ID,
+        HierarchyVersion_ID: VersionID
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            false, // Return false for failed delete
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H1 record deleted"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return success status
+            SQL.OutputParameters.SQL_Success = true
+        )
+    )
+};
+
+//Delete H2 - Remove Hierarchy Level 2 record and all children (cascade delete)
+Func_DeleteH2(H2_ID: Number, VersionID: Number): Boolean = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Deleting H2 record and all children...");
+    
+    With({SQL: sp.uiHierMan2Delete2({
+        Hier2_ID: H2_ID,
+        HierarchyVersion_ID: VersionID
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            false, // Return false for failed delete
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H2 record deleted"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return success status
+            SQL.OutputParameters.SQL_Success = true
+        )
+    )
+};
+
+//Delete H3 - Remove Hierarchy Level 3 record (leaf node)
+Func_DeleteH3(H3_ID: Number, VersionID: Number): Boolean = 
+{
+    Set(AppStatus,"Processing"); 
+    Set(AppStatusText,"Deleting H3 record...");
+    
+    With({SQL: sp.uiHierMan2Delete3({
+        Hier3_ID: H3_ID,
+        HierarchyVersion_ID: VersionID
+    })},
+        If(IsBlank(SQL),
+            // Handle case where SQL call fails completely
+            Set(AppStatus,"Error");
+            Set(AppStatusText,"SQL call failed - no response from database");
+            false, // Return false for failed delete
+            // Handle SQL response
+            Set(AppStatusText, Coalesce(SQL.OutputParameters.SQL_Message, "H3 record deleted"));
+            Set(AppStatus, If(SQL.OutputParameters.SQL_Success = true, "Success", "Error"));
+            
+            // Return success status
+            SQL.OutputParameters.SQL_Success = true
         )
     )
 };
