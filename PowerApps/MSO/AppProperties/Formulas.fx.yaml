@@ -373,6 +373,7 @@ Func_GetReportDetails(ReportID: Number): Void =
             Set(Selected_Report_Details,sql.OutputParameters);
             // Create true copy for modifications (bind controls to this)
             Set(Updated_Report_Details, sql.OutputParameters);
+            Set(Selected_HierarchyVersion, Updated_Report_Details.RVA_UMDID);
             // Initialize UI selections
             Func_SetComboBoxSelections()))
     )
